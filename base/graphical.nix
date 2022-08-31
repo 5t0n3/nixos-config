@@ -7,6 +7,9 @@ in {
     mkEnableOption "X server and various common programs";
 
   config = mkIf cfg {
+    # TODO: remove when I get it working
+    environment.systemPackages = [ pkgs.xmobar ];
+
     services.xserver = {
       enable = true;
       layout = "us";
@@ -24,7 +27,7 @@ in {
                       password-alignment = left
 
                       [greeter-theme]
-            	        font-size = 3rem
+            	        font-size = 2rem
                       text-color = #eceff4
                       window-color = #88c0d0
                       border-color = #0d1327

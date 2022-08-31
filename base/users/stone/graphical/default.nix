@@ -42,15 +42,13 @@ in {
 
     programs.rofi = {
       enable = true;
-      extraConfig = { theme = "purple"; };
+      theme = "purple";
     };
 
     # TODO: Bring xmonad into here as well
 
-    programs.xmobar = {
-      enable = true;
-      extraConfig = builtins.readFile ./xmobarrc;
-    };
+    programs.xmobar.enable = true;
+    xdg.configFile."xmobar/xmobarrc".source = ./xmobarrc;
 
     services.xscreensaver.enable = true;
     services.dunst.enable = true;

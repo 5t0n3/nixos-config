@@ -30,6 +30,7 @@
   programs.zoxide.enable = true;
   programs.git = {
     enable = true;
+    # TODO: figure out delta theming
     delta.enable = true;
 
     userName = "Zane Othman";
