@@ -1,0 +1,28 @@
+Config { overrideRedirect = False
+       , font = "xft:JetBrainsMono Nerd Font Mono-12:weight=medium,spacing=mono"
+       , bgColor = "black"
+       , fgColor = "grey"
+       , position = Top
+       , commands = [ Run Cpu
+                       [ "-L", "3"
+                       , "-H", "50"
+                       , "--high", "red"
+                       , "--normal", "green"
+                       ] 10
+                   , Run Memory ["--template", "Mem: <usedratio>%"] 10
+                   , Run Wireless "wlp3s0" [] 10
+                   -- TODO: figure out if the timezone offset can be configured here
+                   , Run Date "%a %-d.%m.%Y - %H:%M:%S" "date" 10
+                   , Run Battery [] 600
+                       -- [ "--template", "<acstatus><watts> (<left>%)"
+                       -- , "-L", "10", "-H", "80", "-p", "3"
+                       -- , "-l", "red", "-m", "blue", "-h", "green"
+                       -- ] 600
+                   , Run XMonadLog
+                   ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       -- TODO: make a better template
+       , template = "%XMonadLog% }{ %cpu% | %memory% |  %battery% | %wlp3s0wi% | %date%"
+       }
+
