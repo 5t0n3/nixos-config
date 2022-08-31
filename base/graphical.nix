@@ -34,9 +34,6 @@ in {
         };
       };
 
-      # hack to manage window manager through home-manager (?)
-      desktopManager.xterm.enable = true;
-
       libinput = {
         enable = true;
         touchpad.naturalScrolling = true;

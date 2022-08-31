@@ -45,6 +45,8 @@ in {
       theme = "purple";
     };
 
+    xsession.enable = true;
+
     # TODO: bring xmonad config into here (?)
     xsession.windowManager.xmonad = {
       enable = true;
