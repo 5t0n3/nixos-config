@@ -31,7 +31,7 @@ baseConfig = def
 
 customLayout = tiled ||| Mirror tiled ||| Full
   where
-    tiled = Tall nmain delta ratio
+    tiled = Tall nmin delta ratio
     nmin = 1 -- Default number of main windows
     ratio = 1/2 -- Default portion of screen main window takes up
     delta = 3/100 -- Step size of resizing windows
