@@ -45,7 +45,12 @@ in {
       theme = "purple";
     };
 
-    # TODO: Bring xmonad into here as well
+    # TODO: bring xmonad config into here (?)
+    xsession.windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+      extraPackages = haskellPackages: [ haskellPackages.xmobar ];
+    };
 
     programs.xmobar.enable = true;
     xdg.configFile."xmobar/xmobarrc".source = ./xmobarrc;

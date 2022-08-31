@@ -2,7 +2,6 @@
 
 {
   networking.wireguard.enable = true;
-  boot.kernelModules = [ "wireguard" ];
 
   # Allow wireguard UDP traffic through dedicated port
   networking.firewall.allowedUDPPorts = [ 51822 ];
@@ -10,7 +9,6 @@
   age.secrets.wg-privatekey.file = ../secrets/wg-solosis.age;
 
   systemd.network = {
-    enable = true;
     netdevs = {
       "10-wg0" = {
         netdevConfig = {

@@ -7,9 +7,6 @@ in {
     mkEnableOption "X server and various common programs";
 
   config = mkIf cfg {
-    # TODO: remove when I get it working
-    environment.systemPackages = [ pkgs.xmobar ];
-
     services.xserver = {
       enable = true;
       layout = "us";
@@ -37,18 +34,10 @@ in {
         };
       };
 
-      # TODO: move to home-manager
-      windowManager.xmonad = {
+      libinput = {
         enable = true;
-        enableContribAndExtras = true;
-        enableConfiguredRecompile = true;
-        config = ./xmonad-config.hs;
-
-        extraPackages = haskellPackages: [ haskellPackages.xmobar ];
+        touchpad.naturalScrolling = true;
       };
-
-      # TODO: is this necessary?
-      displayManager.defaultSession = "none+xmonad";
     };
 
     fonts.fonts = with pkgs;
