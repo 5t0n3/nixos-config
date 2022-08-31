@@ -1,7 +1,7 @@
 { config, ... }:
 
 {
-  # networking.wireguard.enable = true;
+  networking.wireguard.enable = true;
   boot.kernelModules = [ "wireguard" ];
 
   # Allow wireguard UDP traffic through dedicated port
