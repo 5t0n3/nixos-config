@@ -13,6 +13,7 @@ in {
 
       # hack for home-manager managed window manager (?)
       desktopManager.xterm.enable = true;
+      displayManager.defaultSession = "xterm";
 
       # LightDM display manager
       displayManager.lightdm = {

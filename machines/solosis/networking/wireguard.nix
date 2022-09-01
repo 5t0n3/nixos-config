@@ -6,7 +6,10 @@
   # Allow wireguard UDP traffic through dedicated port
   networking.firewall.allowedUDPPorts = [ 51822 ];
 
-  age.secrets.wg-privatekey.file = ../secrets/wg-solosis.age;
+  age.secrets.wg-privatekey = {
+    file = ../secrets/wg-solosis.age;
+    owner = "systemd-network";
+  };
 
   systemd.network = {
     netdevs = {
