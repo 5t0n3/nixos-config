@@ -11,6 +11,9 @@ in {
       enable = true;
       layout = "us";
 
+      # hack for home-manager managed window manager (?)
+      desktopManager.xterm.enable = true;
+
       # LightDM display manager
       displayManager.lightdm = {
         enable = true;
@@ -24,7 +27,7 @@ in {
                       password-alignment = left
 
                       [greeter-theme]
-            	        font-size = 2rem
+            	        font-size = 1rem
                       text-color = #eceff4
                       window-color = #88c0d0
                       border-color = #0d1327
@@ -40,6 +43,7 @@ in {
       };
     };
 
+    fonts.enableDefaultFonts = true;
     fonts.fonts = with pkgs;
       [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
   };
