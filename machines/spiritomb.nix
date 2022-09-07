@@ -7,6 +7,7 @@
     enable = true;
     defaultUser = "stone";
     startMenuLaunchers = true;
+    wslConf.network.hostname = "spiritomb";
   };
 
   networking.hostName = "spiritomb";
