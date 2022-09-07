@@ -135,11 +135,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1662440485,
-        "narHash": "sha256-1dS1sAM4Jf5vEiyeaPV5RhLfEUXkrLBJvkzTxDZc0Uw=",
+        "lastModified": 1662571687,
+        "narHash": "sha256-Kt9zhb7HN61vDUIFFassIdrukE/1KeXh+OBxwWvRpTU=",
         "owner": "5t0n3",
         "repo": "pg-13",
-        "rev": "c8c5cebdcf97dbdee2c8ec1c2528d8fe00881b7c",
+        "rev": "a467ae66d1770f5554c18c85a72e35c8bc86b477",
         "type": "github"
       },
       "original": {
