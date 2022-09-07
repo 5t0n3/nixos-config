@@ -39,6 +39,7 @@
           ./machines/solosis
 
           # PG-13 development
+          # TODO: use containers instead?
           ({ config, ... }: {
             age.secrets.pg13-config = {
               file = ./machines/solosis/secrets/pg13-devconfig.age;
