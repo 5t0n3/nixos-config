@@ -18,8 +18,6 @@
   home-manager.useUserPackages = true;
 
   nix = {
-    # Enable flakes support
-    package = pkgs.nixFlakes;
     settings = {
       auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
