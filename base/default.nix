@@ -20,13 +20,13 @@
   nix = {
     # Enable flakes support
     package = pkgs.nixFlakes;
-    extraOptions = ''
-      keep-outputs = true
-      keep-derivations = true
-      experimental-features = nix-command flakes
-    '';
+    settings = {
+      auto-optimise-store = true;
+      experimental-features = [ "nix-command" "flakes" ];
+      keep-outputs = true;
+      keep-derivations = true;
+    };
 
-    settings.auto-optimise-store = true;
     gc = {
       automatic = true;
       dates = "weekly";
