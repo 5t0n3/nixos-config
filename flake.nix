@@ -31,6 +31,10 @@
             home-manager.nixosModules.home-manager
             pg-13.nixosModules.default
             ./base
+            ({
+              system.configurationRevision =
+                nixpkgs.lib.mkIf (self ? rev) self.rev;
+            })
           ] ++ extraModules;
         };
     in {
