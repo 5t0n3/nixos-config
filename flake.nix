@@ -39,6 +39,8 @@
         };
     in {
       nixosConfigurations = {
+        cryogonal = mkSystem [ ./machines/cryogonal ];
+
         solosis = mkSystem [
           ./machines/solosis
 

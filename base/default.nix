@@ -5,7 +5,6 @@
 
   time.timeZone = "America/Los_Angeles";
 
-  networking.useDHCP = false;
   networking.firewall.enable = true;
   services.openssh.enable = true;
 
