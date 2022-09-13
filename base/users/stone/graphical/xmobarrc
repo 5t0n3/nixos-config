@@ -23,6 +23,6 @@ Config { overrideRedirect = False
        , sepChar = "%"
        , alignSep = "}{"
        -- TODO: make a better template
-       , template = "%XMonadLog% }{ %cpu% | %memory% |  %battery% | %wlp3s0wi% | %date%"
+       , template = "%XMonadLog% }{ %cpu% | %memory% |  %battery% | %date%"
        }
 
