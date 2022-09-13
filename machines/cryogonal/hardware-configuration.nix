@@ -36,6 +36,11 @@
     options = [ "zfsutil" "X-mount.mkdir" ];
   };
 
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/6800-9909";
+    fsType = "vfat";
+  };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
