@@ -10,7 +10,7 @@ Config { overrideRedirect = False
                        , "--normal", "green"
                        ] 10
                    , Run Memory ["--template", "Mem: <usedratio>%"] 10
-                   , Run Wireless "wlp3s0" [] 10
+                   -- , Run Wireless "wlp3s0" [] 10
                    -- TODO: figure out if the timezone offset can be configured here
                    , Run Date "%a %-d.%m.%Y - %H:%M:%S" "date" 10
                    , Run Battery [] 600
