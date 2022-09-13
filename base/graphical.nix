@@ -12,8 +12,17 @@ in {
       layout = "us";
 
       # hack for home-manager managed window manager (?)
-      desktopManager.xterm.enable = true;
-      displayManager.defaultSession = "xterm";
+      displayManager.session = [
+        { 
+        manage = "desktop";
+        name = "xsession";
+        start = ''
+          ${pkgs.runtimeShell} $HOME/.xsession &
+          waitPID=$!
+        '';
+        }
+      ];
+      displayManager.defaultSession = "xsession";
 
       # LightDM display manager
       displayManager.lightdm = {
