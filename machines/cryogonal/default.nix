@@ -27,7 +27,23 @@
   };
 
   networking.useNetworkd = true;
+  networking.dhcpcd.enable = false;
   networking.interfaces.wlp0s20f3.useDHCP = true;
+  stone.wireless = {
+    enable = true;
+    interfaces = [ "wlp0s20f3" ];
+  };
+
+  systemd.network = {
+    enable = true;
+    networks = {
+      "45-wl-dhcp" = {
+        matchConfig.Name = "wl*";
+        networkConfig.DHCP = "ipv4";
+      };
+    };
+    wait-online.anyInterface = true;
+  };
 
   hardware.cpu.intel.updateMicrocode = true;
 
