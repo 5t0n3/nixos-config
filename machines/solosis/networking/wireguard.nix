@@ -28,20 +28,18 @@
         wireguardPeers = [{
           wireguardPeerConfig = {
             PublicKey = "RHgmEgSpcSA1daZKGeY48UD66c5zESTrvEAe8k9ahxQ=";
-            AllowedIPs = [ "0.0.0.0/0" ];
-            Endpoint = "50.45.159.39:51821";
+            AllowedIPs = [ "0.0.0.0/0" "192.168.1.1/24" ];
+            Endpoint = "othman.io:51821";
             PersistentKeepalive = 25;
           };
         }];
       };
     };
 
-    # TODO: learn more about the prefix numbers :)
     networks."10-wg0" = {
       matchConfig.Name = "wg0";
       address = [ "10.0.0.3/32" ];
-      # TODO: figure out whether I need to add this
-      dns = [ "10.0.0.1" ];
+      dns = [ "192.168.1.242" ];
     };
   };
 }
