@@ -28,8 +28,8 @@
         wireguardPeers = [{
           wireguardPeerConfig = {
             PublicKey = "RHgmEgSpcSA1daZKGeY48UD66c5zESTrvEAe8k9ahxQ=";
-            AllowedIPs = [ "0.0.0.0/0" "192.168.1.1/24" ];
-            Endpoint = "othman.io:51821";
+            AllowedIPs = [ "0.0.0.0/0" "192.168.1.0/24" ];
+            Endpoint = "50.45.159.39:51821";
             PersistentKeepalive = 25;
           };
         }];
@@ -37,9 +37,22 @@
     };
 
     networks."10-wg0" = {
-      matchConfig.Name = "wg0";
+      name = "wg0";
       address = [ "10.0.0.3/32" ];
       dns = [ "192.168.1.242" ];
+      networkConfig = {
+        DNSDefaultRoute = true;
+        Domains = [ "~." ];
+        # Fails for pi hole local dns entries
+        DNSSEC = false;
+      };
+      routes = [{
+        routeConfig = {
+          Gateway = "10.0.0.1";
+          GatewayOnLink = true;
+          Destination = "192.168.1.0/24";
+        };
+      }];
     };
   };
 }
