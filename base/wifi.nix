@@ -21,13 +21,19 @@ in {
 
       environmentFile = config.age.secrets.wifi-psks.path;
       networks = {
-        Cygnus.pskRaw = "@CYGNUS_PSK@";
-        eduroam.auth = ''
-          eap = PEAP
-          phase2 = "auth=MSCHAPV2"
-          identity = "@EDUROAM_EMAIL@"
-          password = "@EDUROAM_PASS@"
-        '';
+        Cygnus = {
+          authProtocols = [ "WPA-PSK" ];
+          pskRaw = "@CYGNUS_PSK@";
+        };
+        eduroam = {
+          authProtocols = [ "WPA-EAP" ];
+          auth = ''
+            eap=PEAP
+            phase2="auth=MSCHAPV2"
+            identity="@EDUROAM_EMAIL@"
+            password="@EDUROAM_PASS@"
+          '';
+        };
       };
     };
   };
