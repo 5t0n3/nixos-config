@@ -1,7 +1,7 @@
 { config, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configuration.nix ./networking ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -17,9 +17,6 @@
 
   networking.hostName = "cryogonal";
 
-  boot.cleanTmpDir = false;
-  boot.tmpOnTmpfs = true;
-
   # ZFS settings
   networking.hostId = "c1d359ee";
   services.zfs = {
@@ -33,25 +30,6 @@
     device = "/dev/nvme0n1p3";
     fsType = "ntfs";
     options = [ "rw" "uid=1000" ];
-  };
-
-  networking.useNetworkd = true;
-  networking.dhcpcd.enable = false;
-  networking.interfaces.wlp0s20f3.useDHCP = true;
-  stone.wireless = {
-    enable = true;
-    interfaces = [ "wlp0s20f3" ];
-  };
-
-  systemd.network = {
-    enable = true;
-    networks = {
-      "45-wl-dhcp" = {
-        matchConfig.Name = "wl*";
-        networkConfig.DHCP = "ipv4";
-      };
-    };
-    wait-online.anyInterface = true;
   };
 
   hardware.cpu.intel.updateMicrocode = true;

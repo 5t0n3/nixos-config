@@ -14,6 +14,10 @@ let
 in {
   "secrets/wifi-psks.age".publicKeys = stone ++ [ solosis cryogonal ];
 
+  # cryogonal
+  "machines/cryogonal/secrets/wg-privkey.age".publicKeys = stone
+    ++ [ cryogonal ];
+
   # solosis
   "machines/solosis/secrets/rsync-secrets.age".publicKeys = stone
     ++ [ solosis ];
