@@ -36,6 +36,23 @@
 
   stone.graphical = true;
 
+  services.xserver = {
+    xkbOptions = "caps:swapescape";
+    xrandrHeads = [
+      # laptop screen
+      "eDP-1"
+
+      # external monitor through thunderbolt
+      {
+        output = "DP-1";
+        primary = true;
+        monitorConfig = ''
+          Option "LeftOf" "eDP-1"
+        '';
+      }
+    ];
+  };
+
   system.stateVersion = "22.05";
 }
 
