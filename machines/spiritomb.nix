@@ -18,6 +18,8 @@
     nameserver 1.1.1.1
   '';
 
+  environment.noXlibs = false;
+
   networking.hostName = "spiritomb";
 
   system.stateVersion = "22.05";
