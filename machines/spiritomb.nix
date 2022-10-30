@@ -7,8 +7,16 @@
     enable = true;
     defaultUser = "stone";
     startMenuLaunchers = true;
-    wslConf.network.hostname = "spiritomb";
+    wslConf.network = {
+      hostname = "spiritomb";
+      generateResolvConf = false;
+    };
   };
+
+  environment.etc."resolv.conf".text = ''
+    nameserver 192.168.1.242
+    nameserver 1.1.1.1
+  '';
 
   networking.hostName = "spiritomb";
 
