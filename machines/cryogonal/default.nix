@@ -12,9 +12,8 @@
 
   # Required to get graphics working
   boot.extraModprobeConfig = ''
-    options i915 force_probe=46a6
+    options i915 force_probe=46a6,5693
   '';
-  # options i915 force_probe=5693
 
   networking.hostName = "cryogonal";
 
@@ -39,19 +38,20 @@
 
   services.xserver = {
     xkbOptions = "caps:swapescape";
-#     xrandrHeads = [
-#       # laptop screen
-#       "eDP-1"
-# 
-#       # external monitor through thunderbolt
-#       {
-#         output = "DP-1";
-#         primary = true;
-#         monitorConfig = ''
-#           Option "LeftOf" "eDP-1"
-#         '';
-#       }
-#     ];
+    xrandrHeads = [
+      # laptop screen
+      # TODO: specify resolution?
+      "eDP-1"
+
+      # external monitor
+      {
+        output = "DP-1";
+        primary = true;
+        monitorConfig = ''
+          Option "LeftOf" "eDP-1"
+        '';
+      }
+    ];
   };
 
   system.stateVersion = "22.05";
