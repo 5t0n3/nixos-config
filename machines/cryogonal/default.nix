@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ./networking ];
@@ -34,24 +34,17 @@
 
   hardware.cpu.intel.updateMicrocode = true;
 
-  stone.graphical = true;
+  # Wayland time :)
+  stone.graphical.enable = true;
+  stone.graphical.type = "wayland";
 
-  services.xserver = {
-    xkbOptions = "caps:swapescape";
-    xrandrHeads = [
-      # laptop screen
-      # TODO: specify resolution?
-      "eDP-1"
-
-      # external monitor
-      {
-        output = "DP-1";
-        primary = true;
-        monitorConfig = ''
-          Option "LeftOf" "eDP-1"
-        '';
-      }
-    ];
+  security.doas = {
+    enable = true;
+    extraRules = [{
+      groups = [ "wheel" ];
+      noPass = false;
+      keepEnv = true;
+    }];
   };
 
   system.stateVersion = "22.05";

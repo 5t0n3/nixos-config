@@ -1,63 +1,69 @@
 { config, pkgs, lib, nixosConfig, ... }:
 
 with lib;
-let enabled = config.stone.graphical;
+let
+  cfg = config.stone.graphical;
+  graphicalType = nixosConfig.stone.graphical.type;
 in {
-  options.stone.graphical = mkOption {
+  options.stone.graphical.enable = mkOption {
     description =
       "Whether to enable a graphical user environment & common programs.";
-    default = nixosConfig.stone.graphical;
+    default = nixosConfig.stone.graphical.enable;
     example = true;
     type = types.bool;
   };
 
-  config = mkIf enabled {
-    # TODO: betterdiscord plugins/themes?
-    home.packages = with pkgs; [
-      # internet
-      discord
-      betterdiscordctl
-      firefox
+  config = mkIf cfg.enable (mkMerge [
+    {
+      # TODO: betterdiscord plugins/themes?
+      home.packages = with pkgs; [
+        # internet
+        discord
+        betterdiscordctl
+        firefox
 
-      # command line utilities
-      brightnessctl
-      scrot
-      xclip
-      xorg.xmodmap
+        # command line utilities
+        brightnessctl
+        scrot
+        xclip
+        xorg.xmodmap
 
-      # themes
-      nordic
-      zafiro-icons
-      capitaine-cursors
+        # themes
+        nordic
+        zafiro-icons
+        capitaine-cursors
 
-      # other stuff?
-      alacritty
-      libreoffice
-      # (retroarch.override { cores = [ libretro.mgba ]; })
-    ];
+        # other stuff?
+        alacritty
+        libreoffice
+        # (retroarch.override { cores = [ libretro.mgba ]; })
+      ];
 
-    xdg.configFile."alacritty/alacritty.yml".source = ./alacritty.yml;
+      xdg.configFile."alacritty/alacritty.yml".source = ./alacritty.yml;
 
-    programs.feh.enable = true;
+      services.dunst.enable = true;
+    }
+    (mkIf (graphicalType == "x") {
+      programs.feh.enable = true;
 
-    programs.rofi = {
-      enable = true;
-      theme = "purple";
-    };
+      programs.rofi = {
+        enable = true;
+        theme = "purple";
+      };
 
-    xsession.enable = true;
+      xsession.enable = true;
 
-    # TODO: bring xmonad config into here (?)
-    xsession.windowManager.xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
-      extraPackages = haskellPackages: [ haskellPackages.xmobar ];
-    };
+      # TODO: bring xmonad config into here (?)
+      xsession.windowManager.xmonad = {
+        enable = true;
+        enableContribAndExtras = true;
+        extraPackages = haskellPackages: [ haskellPackages.xmobar ];
+      };
 
-    programs.xmobar.enable = true;
-    xdg.configFile."xmobar/xmobarrc".source = ./xmobarrc;
+      programs.xmobar.enable = true;
+      xdg.configFile."xmobar/xmobarrc".source = ./xmobarrc;
 
-    services.xscreensaver.enable = true;
-    services.dunst.enable = true;
-  };
+      services.xscreensaver.enable = true;
+    })
+  ]);
 }

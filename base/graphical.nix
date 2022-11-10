@@ -3,11 +3,18 @@
 with lib;
 let cfg = config.stone.graphical;
 in {
-  options.stone.graphical =
-    mkEnableOption "X server and various common programs";
+  options.stone.graphical = {
+    enable = mkEnableOption "graphical programs/config";
+    type = mkOption {
+      type = types.enum [ "x" "wayland" ];
+      default = "x";
+      example = "wayland";
+      description = "Which display server to run";
+    };
+  };
 
-  config = mkIf cfg {
-    services.xserver = {
+  config = mkIf cfg.enable {
+    services.xserver = mkIf (cfg.type == "x") {
       enable = true;
       layout = "us";
 
@@ -49,6 +56,11 @@ in {
         enable = true;
         touchpad.naturalScrolling = true;
       };
+    };
+
+    programs = mkIf (cfg.type == "wayland") {
+      hyprland.enable = true;
+      waybar.enable = true;
     };
 
     fonts.enableDefaultFonts = true;

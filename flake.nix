@@ -14,6 +14,7 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland.url = "github:hyprwm/Hyprland";
 
     pg-13 = {
       url = "github:5t0n3/pg-13";
@@ -21,7 +22,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, nixos-wsl, pg-13 }:
+  outputs = { self, nixpkgs, home-manager, agenix, nixos-wsl, hyprland, pg-13 }:
     let
       mkSystem = extraModules:
         nixpkgs.lib.nixosSystem {
@@ -29,6 +30,7 @@
           modules = [
             agenix.nixosModules.age
             home-manager.nixosModules.home-manager
+            hyprland.nixosModules.default
             pg-13.nixosModules.default
             ./base
             ({

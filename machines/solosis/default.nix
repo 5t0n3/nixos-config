@@ -51,7 +51,7 @@
     secretsFile = config.age.secrets.rsyncd-secrets.path;
   };
 
-  stone.graphical = true;
+  stone.graphical.enable = true;
 
   security.doas = {
     enable = true;
