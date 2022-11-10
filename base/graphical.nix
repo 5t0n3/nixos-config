@@ -13,58 +13,62 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    services.xserver = mkIf (cfg.type == "x") {
-      enable = true;
-      layout = "us";
-
-      # hack for home-manager managed window manager (?)
-      displayManager.session = [{
-        manage = "desktop";
-        name = "xsession";
-        start = ''
-          ${pkgs.runtimeShell} $HOME/.xsession &
-          waitPID=$!
-        '';
-      }];
-      displayManager.defaultSession = "xsession";
-
-      # LightDM display manager
-      displayManager.lightdm = {
+  config = mkIf cfg.enable (mkMerge [
+    (mkIf (cfg.type == "x") {
+      services.xserver = {
         enable = true;
+        layout = "us";
 
-        greeters.mini = {
-          enable = true;
-          user = "stone";
-          extraConfig = ''
-                      [greeter]
-                      show-password-label = false
-                      password-alignment = left
-
-                      [greeter-theme]
-            	        font-size = 1rem
-                      text-color = #eceff4
-                      window-color = #88c0d0
-                      border-color = #0d1327
-                      background-color = #2e3440
-                      background-image = ""
+        # hack for home-manager managed window manager (?)
+        displayManager.session = [{
+          manage = "desktop";
+          name = "xsession";
+          start = ''
+            ${pkgs.runtimeShell} $HOME/.xsession &
+            waitPID=$!
           '';
+        }];
+        displayManager.defaultSession = "xsession";
+
+        # LightDM display manager
+        displayManager.lightdm = {
+          enable = true;
+
+          greeters.mini = {
+            enable = true;
+            user = "stone";
+            extraConfig = ''
+                        [greeter]
+                        show-password-label = false
+                        password-alignment = left
+
+                        [greeter-theme]
+              	        font-size = 1rem
+                        text-color = #eceff4
+                        window-color = #88c0d0
+                        border-color = #0d1327
+                        background-color = #2e3440
+                        background-image = ""
+            '';
+          };
+        };
+
+        libinput = {
+          enable = true;
+          touchpad.naturalScrolling = true;
         };
       };
+    })
 
-      libinput = {
-        enable = true;
-        touchpad.naturalScrolling = true;
-      };
-    };
-
-    programs = mkIf (cfg.type == "wayland") {
-      hyprland.enable = true;
+    (mkIf (cfg.type == "wayland") {
+      programs.hyprland.enable = true;
       environment.systemPackages = with pkgs; [ waybar wofi ];
-    };
+    })
 
-    fonts.enableDefaultFonts = true;
-    fonts.fonts = with pkgs;
-      [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
-  };
+    {
+      fonts.enableDefaultFonts = true;
+      fonts.fonts = with pkgs;
+        [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
+    }
+  ]);
 }
