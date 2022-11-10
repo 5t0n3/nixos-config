@@ -60,7 +60,7 @@ in {
 
     programs = mkIf (cfg.type == "wayland") {
       hyprland.enable = true;
-      waybar.enable = true;
+      environment.systemPackages = with pkgs; [ waybar wofi ];
     };
 
     fonts.enableDefaultFonts = true;
