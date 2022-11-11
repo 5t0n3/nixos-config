@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 with lib;
 let cfg = config.stone.graphical;
@@ -61,8 +61,22 @@ in {
     })
 
     (mkIf (cfg.type == "wayland") {
-      programs.hyprland.enable = true;
-      environment.systemPackages = with pkgs; [ waybar wofi ];
+      nixpkgs.overlays = [
+        inputs.nixpkgs-wayland.overlays.default
+        inputs.hyprpaper.overlays.default
+      ];
+
+      # add relevant cachix servers
+      nix.settings = {
+        substituters = [
+          "https://nixpkgs-wayland.cachix.org"
+          "https://hyprland.cachix.org"
+        ];
+        trusted-public-keys = [
+          "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
+          "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+        ];
+      };
     })
 
     {

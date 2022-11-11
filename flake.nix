@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-22.05";
@@ -14,7 +15,20 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland.url = "github:hyprwm/Hyprland";
+
+    # Display-related stuff
+    nixpkgs-wayland = {
+      url = "github:nix-community/nixpkgs-wayland";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    hyprpaper = {
+      url = "github:hyprwm/hyprpaper";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     pg-13 = {
       url = "github:5t0n3/pg-13";
@@ -22,7 +36,8 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, nixos-wsl, hyprland, pg-13 }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, agenix, nixos-wsl
+    , nixpkgs-wayland, hyprland, hyprpaper, pg-13 }@inputs:
     let
       mkSystem = extraModules:
         nixpkgs.lib.nixosSystem {
@@ -32,11 +47,16 @@
             home-manager.nixosModules.home-manager
             hyprland.nixosModules.default
             pg-13.nixosModules.default
-            ./base
             ({
+              # Provide flake inputs to regular & home-manager config modules
+              _module.args = { inherit inputs; };
+              home-manager.extraSpecialArgs = { inherit inputs; };
+
+              # Include git revision of config in nixos-verison output
               system.configurationRevision =
                 nixpkgs.lib.mkIf (self ? rev) self.rev;
             })
+            ./base
           ] ++ extraModules;
         };
     in {

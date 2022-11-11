@@ -1,10 +1,12 @@
-{ config, pkgs, lib, nixosConfig, ... }:
+{ config, pkgs, lib, nixosConfig, inputs, ... }:
 
 with lib;
 let
   cfg = config.stone.graphical;
   graphicalType = nixosConfig.stone.graphical.type;
 in {
+  imports = [ inputs.hyprland.homeManagerModules.default ];
+
   options.stone.graphical.enable = mkOption {
     description =
       "Whether to enable a graphical user environment & common programs.";
@@ -20,22 +22,24 @@ in {
         # internet
         discord
         betterdiscordctl
-        firefox
 
         # command line utilities
         brightnessctl
-        scrot
-        xclip
-        xorg.xmodmap
 
         # themes
         nordic
         zafiro-icons
         capitaine-cursors
 
+        # productivity?
+        libreoffice
+        nextcloud-client
+        obsidian
+
         # other stuff?
         alacritty
-        libreoffice
+        cider
+        ghidra
         # (retroarch.override { cores = [ libretro.mgba ]; })
       ];
 
@@ -43,6 +47,7 @@ in {
 
       services.dunst.enable = true;
     }
+
     (mkIf (graphicalType == "x") {
       programs.feh.enable = true;
 
@@ -50,6 +55,9 @@ in {
         enable = true;
         theme = "purple";
       };
+
+      # Screenshotting/clipboard utilities
+      home.packages = with pkgs; [ scrot xclip firefox ];
 
       xsession.enable = true;
 
@@ -64,6 +72,18 @@ in {
       xdg.configFile."xmobar/xmobarrc".source = ./xmobarrc;
 
       services.xscreensaver.enable = true;
+    })
+
+    (mkIf (graphicalType == "wayland") {
+      wayland.windowManager.hyprland.enable = true;
+
+      home.packages = with pkgs; [
+        hyprpaper
+        swaylock
+        waybar
+        wofi
+        firefox-wayland
+      ];
     })
   ]);
 }
