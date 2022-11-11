@@ -62,7 +62,7 @@ in {
 
     (mkIf (cfg.type == "wayland") {
       nixpkgs.overlays = [
-        inputs.nixpkgs-wayland.overlays.default
+        # inputs.nixpkgs-wayland.overlays.default
         inputs.hyprpaper.overlays.default
       ];
 
