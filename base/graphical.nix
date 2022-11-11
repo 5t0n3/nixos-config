@@ -61,6 +61,9 @@ in {
     })
 
     (mkIf (cfg.type == "wayland") {
+      # TODO: get working inside home-manager
+      programs.hyprland.enable = true;
+
       nixpkgs.overlays = [
         # inputs.nixpkgs-wayland.overlays.default
         inputs.hyprpaper.overlays.default

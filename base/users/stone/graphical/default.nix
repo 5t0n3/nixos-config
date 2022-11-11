@@ -75,7 +75,8 @@ in {
     })
 
     (mkIf (graphicalType == "wayland") {
-      wayland.windowManager.hyprland.enable = true;
+      # complains about seatd socket not existing?
+      # wayland.windowManager.hyprland.enable = true;
 
       home.packages = with pkgs; [
         hyprpaper
