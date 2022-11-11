@@ -17,10 +17,7 @@
     };
 
     # Display-related stuff
-    nixpkgs-wayland = {
-      url = "github:nix-community/nixpkgs-wayland";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
     hyprland = {
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
