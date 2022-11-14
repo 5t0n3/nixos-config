@@ -64,6 +64,9 @@ in {
       # TODO: get working inside home-manager
       programs.hyprland.enable = true;
 
+      # Swaylock needs this for authentication (?)
+      security.pam.services.swaylock = { };
+
       nixpkgs.overlays = [
         # inputs.nixpkgs-wayland.overlays.default
         inputs.hyprpaper.overlays.default
