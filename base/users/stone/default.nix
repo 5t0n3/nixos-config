@@ -4,7 +4,6 @@
   imports = [ ./graphical ];
 
   home.packages = with pkgs; [ vis du-dust ];
-  programs.emacs.enable = true;
 
   # fish config
   programs.fish.enable = true;

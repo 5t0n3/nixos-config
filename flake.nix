@@ -2,18 +2,26 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-22.05";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.utils.follows = "flake-utils";
     };
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.flake-utils.follows = "flake-utils";
+    };
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
 
     # Display-related stuff
@@ -33,11 +41,13 @@
     pg-13 = {
       url = "github:5t0n3/pg-13";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.utils.follows = "flake-utils";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, agenix, nixos-wsl
-    , nixpkgs-wayland, hyprland, hyprpaper, pg-13 }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, agenix
+    , emacs-overlay, nixos-wsl, nixpkgs-wayland, hyprland, hyprpaper, pg-13
+    }@inputs:
     let
       mkSystem = extraModules:
         nixpkgs.lib.nixosSystem {
