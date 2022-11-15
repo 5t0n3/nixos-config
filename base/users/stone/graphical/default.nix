@@ -11,8 +11,8 @@ let
     paths = [ pkgs.${pname} ];
     buildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
-      wrapProgram $out/bin/${pname}
-        --add-flags "--enable-features=UseOzonePlatform"
+      wrapProgram $out/bin/${pname} \
+        --add-flags "--enable-features=UseOzonePlatform" \
         --add-flags "--ozone-platform=wayland"
     '';
   };
