@@ -6,12 +6,16 @@ let
   graphicalType = nixosConfig.stone.graphical.type;
 
   # This probably doesn't work in all cases but eh
-  waylandElectron = pname:
-    pkgs.writeShellScriptBin pname ''
-      exec ${
-        pkgs.${pname}
-      }/bin/${pname} --enable-features=UseOzonePlatform --ozone-platform=wayland
+  waylandElectron = pname: pkgs.symlinkJoin {
+    name = pname;
+    paths = [ pkgs.${pname} ];
+    buildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/${pname}
+        --add-flags "--enable-features=UseOzonePlatform"
+        --add-flags "--ozone-platform=wayland"
     '';
+  };
 in {
   imports = [ inputs.hyprland.homeManagerModules.default ];
 
