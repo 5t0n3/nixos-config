@@ -4,6 +4,14 @@ with lib;
 let
   cfg = config.stone.graphical;
   graphicalType = nixosConfig.stone.graphical.type;
+
+  # This probably doesn't work in all cases but eh
+  waylandElectron = pname:
+    pkgs.writeShellScriptBin pname ''
+      exec ${
+        pkgs.${pname}
+      }/bin/${pname} --enable-features=UseOzonePlatform --ozone-platform=wayland
+    '';
 in {
   imports = [ inputs.hyprland.homeManagerModules.default ];
 
@@ -31,14 +39,12 @@ in {
         zafiro-icons
         capitaine-cursors
 
-        # productivity?
+        # productivity
         libreoffice
         nextcloud-client
-        obsidian
 
         # other stuff?
         alacritty
-        cider
         ghidra
         # (retroarch.override { cores = [ libretro.mgba ]; })
       ];
@@ -56,8 +62,7 @@ in {
         theme = "purple";
       };
 
-      # Screenshotting/clipboard utilities
-      home.packages = with pkgs; [ scrot xclip firefox ];
+      home.packages = with pkgs; [ scrot xclip firefox obsidian cider ];
 
       xsession.enable = true;
 
@@ -75,23 +80,28 @@ in {
     })
 
     (mkIf (graphicalType == "wayland") {
-      # complains about seatd socket not existing?
+      # complains about seatd socket not existing/EGL context?
       # wayland.windowManager.hyprland = {
-        # enable = true;
+      # enable = true;
 
-        # Allow for tweaking config on the fly
-        # extraConfig = ''
-        #   source = ~/.config/hypr/hyprland-extra.conf
-        # '';
+      # Allow for tweaking config on the fly
+      # extraConfig = ''
+      #   source = ~/.config/hypr/hyprland-extra.conf
+      # '';
       # };
 
-      home.packages = with pkgs; [
-        hyprpaper
-        swaylock
-        waybar
-        wofi
-        firefox-wayland
-      ];
+      home.packages = with pkgs;
+        [
+          # utilities :)
+          hyprpaper
+          swaylock
+          waybar
+          wofi
+          wl-clipboard
+
+          # actual apps
+          firefox-wayland
+        ] ++ map waylandElectron [ "obsidian" "cider" ];
     })
   ]);
 }
