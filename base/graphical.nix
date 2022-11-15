@@ -89,6 +89,11 @@ in {
       fonts.enableDefaultFonts = true;
       fonts.fonts = with pkgs;
         [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
+
+      # sound-related stuff
+      sound.enable = true;
+      sound.mediaKeys.enable = true;
+      hardware.pulseaudio.enable = true;
     }
   ]);
 }
