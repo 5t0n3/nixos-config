@@ -69,7 +69,6 @@ in {
 
       # TODO: move into home-manager?
       nixpkgs.overlays = [
-        inputs.nixpkgs-wayland.overlays.default
         inputs.hyprpaper.overlays.default
         inputs.hyprland.overlays.default
       ];

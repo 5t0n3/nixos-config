@@ -17,6 +17,8 @@ let
           --add-flags "--ozone-platform=wayland"
       '';
     };
+
+  waylandPkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
 in {
   imports = [ inputs.hyprland.homeManagerModules.default ];
 
@@ -50,7 +52,7 @@ in {
 
         # other stuff?
         alacritty
-        ghidra
+        ghidra # broken on wayland (untested on X)
         # (retroarch.override { cores = [ libretro.mgba ]; })
       ];
 
@@ -99,20 +101,13 @@ in {
       # '';
       # };
 
-      home.packages = with pkgs;
-        [
-          # utilities :)
-          hyprpaper
-          swaylock
-          waybar-hyprland
-          wofi
-          wl-clipboard
-
-          # actual apps
-          firefox-wayland
-        ] ++ map waylandElectron [ "obsidian" "cider" ];
+      home.packages = builtins.attrValues {
+        inherit (pkgs) hyprpaper firefox-wayland;
+        inherit (waylandPkgs) swaylock waybar wofi wl-clipboard;
+      } ++ map waylandElectron [ "obsidian" "cider" ];
 
       programs.emacs.package = pkgs.emacsPgtkNativeComp;
+      services.dunst.package = waylandPkgs.dunst;
     })
   ]);
 }
