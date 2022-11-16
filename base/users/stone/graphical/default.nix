@@ -54,10 +54,7 @@ in {
         # (retroarch.override { cores = [ libretro.mgba ]; })
       ];
 
-      programs.emacs = {
-        enable = true;
-        package = pkgs.emacsPgtkNativeComp;
-      };
+      programs.emacs.enable = true;
 
       xdg.configFile."alacritty/alacritty.yml".source = ./alacritty.yml;
 
@@ -71,6 +68,8 @@ in {
         enable = true;
         theme = "purple";
       };
+
+      programs.emacs.package = pkgs.emacsGitNativeComp;
 
       home.packages = with pkgs; [ scrot xclip firefox obsidian cider ];
 
@@ -105,13 +104,15 @@ in {
           # utilities :)
           hyprpaper
           swaylock
-          waybar
+          waybar-hyprland
           wofi
           wl-clipboard
 
           # actual apps
           firefox-wayland
         ] ++ map waylandElectron [ "obsidian" "cider" ];
+
+      programs.emacs.package = pkgs.emacsPgtkNativeComp;
     })
   ]);
 }
