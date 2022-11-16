@@ -68,10 +68,8 @@ in {
       security.pam.services.swaylock = { };
 
       # TODO: move into home-manager?
-      nixpkgs.overlays = [
-        inputs.hyprpaper.overlays.default
-        inputs.hyprland.overlays.default
-      ];
+      nixpkgs.overlays =
+        [ inputs.hyprpaper.overlays.default inputs.hyprland.overlays.default ];
 
       # add relevant cachix servers
       nix.settings = {

@@ -19,6 +19,11 @@ let
     };
 
   waylandPkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
+
+  # Taken from hyprland overlay
+  waybar-experimental = waylandPkgs.waybar.overrideAttrs (oldAttrs: {
+    mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+  });
 in {
   imports = [ inputs.hyprland.homeManagerModules.default ];
 
@@ -103,7 +108,8 @@ in {
 
       home.packages = builtins.attrValues {
         inherit (pkgs) hyprpaper firefox-wayland;
-        inherit (waylandPkgs) swaylock waybar wofi wl-clipboard;
+        inherit (waylandPkgs) swaylock wofi wl-clipboard;
+        inherit waybar-experimental;
       } ++ map waylandElectron [ "obsidian" "cider" ];
 
       programs.emacs.package = pkgs.emacsPgtkNativeComp;
