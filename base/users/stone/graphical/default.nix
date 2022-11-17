@@ -19,6 +19,7 @@ let
     };
 
   waylandPkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
+  unstablePkgs = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 
   # Taken from hyprland overlay
   waybar-experimental = waylandPkgs.waybar.overrideAttrs (oldAttrs: {
@@ -57,7 +58,7 @@ in {
 
         # other stuff?
         alacritty
-        ghidra # broken on wayland (untested on X)
+        unstablePkgs.ghidra # broken on wayland (untested on X)
         # (retroarch.override { cores = [ libretro.mgba ]; })
       ];
 
