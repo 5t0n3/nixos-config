@@ -109,7 +109,7 @@ in {
 
       home.packages = builtins.attrValues {
         inherit (pkgs) hyprpaper firefox-wayland;
-        inherit (waylandPkgs) swaylock wofi wl-clipboard;
+        inherit (waylandPkgs) swaylock wofi wl-clipboard grim slurp imv;
         inherit waybar-experimental;
       } ++ map waylandElectron [ "obsidian" "cider" ];
 

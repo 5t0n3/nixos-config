@@ -69,7 +69,7 @@ in {
 
       # TODO: move into home-manager?
       nixpkgs.overlays =
-        [ inputs.hyprpaper.overlays.default inputs.hyprland.overlays.default ];
+        [ inputs.hyprpaper.overlays.default ];
 
       # add relevant cachix servers
       nix.settings = {
