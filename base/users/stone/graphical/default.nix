@@ -1,7 +1,12 @@
-{ config, pkgs, lib, nixosConfig, inputs, ... }:
-
-with lib;
-let
+{
+  config,
+  pkgs,
+  lib,
+  nixosConfig,
+  inputs,
+  ...
+}:
+with lib; let
   cfg = config.stone.graphical;
   graphicalType = nixosConfig.stone.graphical.type;
 
@@ -9,8 +14,8 @@ let
   waylandElectron = pname:
     pkgs.symlinkJoin {
       name = pname;
-      paths = [ pkgs.${pname} ];
-      buildInputs = [ pkgs.makeWrapper ];
+      paths = [pkgs.${pname}];
+      buildInputs = [pkgs.makeWrapper];
       postBuild = ''
         wrapProgram $out/bin/${pname} \
           --add-flags "--enable-features=UseOzonePlatform" \
@@ -23,14 +28,13 @@ let
 
   # Taken from hyprland overlay
   waybar-experimental = waylandPkgs.waybar.overrideAttrs (oldAttrs: {
-    mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+    mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
   });
 in {
-  imports = [ inputs.hyprland.homeManagerModules.default ];
+  imports = [inputs.hyprland.homeManagerModules.default];
 
   options.stone.graphical.enable = mkOption {
-    description =
-      "Whether to enable a graphical user environment & common programs.";
+    description = "Whether to enable a graphical user environment & common programs.";
     default = nixosConfig.stone.graphical.enable;
     example = true;
     type = types.bool;
@@ -79,7 +83,7 @@ in {
 
       programs.emacs.package = pkgs.emacsGitNativeComp;
 
-      home.packages = with pkgs; [ scrot xclip firefox obsidian cider ];
+      home.packages = with pkgs; [scrot xclip firefox obsidian cider];
 
       xsession.enable = true;
 
@@ -87,7 +91,7 @@ in {
       xsession.windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
-        extraPackages = haskellPackages: [ haskellPackages.xmobar ];
+        extraPackages = haskellPackages: [haskellPackages.xmobar];
       };
 
       programs.xmobar.enable = true;
@@ -107,11 +111,13 @@ in {
       # '';
       # };
 
-      home.packages = builtins.attrValues {
-        inherit (pkgs) hyprpaper firefox-wayland;
-        inherit (waylandPkgs) swaylock wofi wl-clipboard grim slurp imv;
-        inherit waybar-experimental;
-      } ++ map waylandElectron [ "obsidian" "cider" ];
+      home.packages =
+        builtins.attrValues {
+          inherit (pkgs) hyprpaper firefox-wayland;
+          inherit (waylandPkgs) swaylock wofi wl-clipboard grim slurp imv;
+          inherit waybar-experimental;
+        }
+        ++ map waylandElectron ["obsidian" "cider"];
 
       programs.emacs.package = pkgs.emacsPgtkNativeComp;
       services.dunst.package = waylandPkgs.dunst;

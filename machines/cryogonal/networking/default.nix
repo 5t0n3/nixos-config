@@ -1,5 +1,5 @@
 {
-  imports = [ ./wireguard.nix ];
+  imports = [./wireguard.nix];
 
   networking.useNetworkd = true;
   networking.dhcpcd.enable = false;
@@ -21,7 +21,7 @@
 
   stone.wireless = {
     enable = true;
-    interfaces = [ "wlp0s20f3" ];
+    interfaces = ["wlp0s20f3"];
   };
 
   networking.interfaces.wlp0s20f3.useDHCP = true;

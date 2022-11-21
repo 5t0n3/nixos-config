@@ -1,7 +1,7 @@
 {
-  imports = [ ./networkd.nix ./wireguard.nix ];
+  imports = [./networkd.nix ./wireguard.nix];
   stone.wireless = {
     enable = true;
-    interfaces = [ "wlp3s0" ];
+    interfaces = ["wlp3s0"];
   };
 }

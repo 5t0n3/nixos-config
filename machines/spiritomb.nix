@@ -1,7 +1,5 @@
-{ modulesPath, ... }:
-
-{
-  imports = [ "${modulesPath}/profiles/minimal.nix" ];
+{modulesPath, ...}: {
+  imports = ["${modulesPath}/profiles/minimal.nix"];
 
   wsl = {
     enable = true;

@@ -1,13 +1,15 @@
-{ config, lib, ... }:
-
 {
-  imports = [ ./hardware-configuration.nix ./networking ];
+  config,
+  lib,
+  ...
+}: {
+  imports = [./hardware-configuration.nix ./networking];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.supportedFilesystems = [ "zfs" "ntfs" ];
+  boot.supportedFilesystems = ["zfs" "ntfs"];
   boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
 
   # Required to get graphics working
@@ -29,7 +31,7 @@
   fileSystems."/mnt/windows" = {
     device = "/dev/nvme0n1p3";
     fsType = "ntfs";
-    options = [ "rw" "uid=1000" ];
+    options = ["rw" "uid=1000"];
   };
 
   hardware.cpu.intel.updateMicrocode = true;
@@ -43,13 +45,14 @@
 
   security.doas = {
     enable = true;
-    extraRules = [{
-      groups = [ "wheel" ];
-      noPass = false;
-      keepEnv = true;
-    }];
+    extraRules = [
+      {
+        groups = ["wheel"];
+        noPass = false;
+        keepEnv = true;
+      }
+    ];
   };
 
   system.stateVersion = "22.05";
 }
-

@@ -1,6 +1,10 @@
-{ config, lib, ... }:
-with lib;
-let cfg = config.stone.wireless;
+{
+  config,
+  lib,
+  ...
+}:
+with lib; let
+  cfg = config.stone.wireless;
 in {
   options.stone.wireless = {
     enable = mkEnableOption "wireless networking";
@@ -22,11 +26,11 @@ in {
       environmentFile = config.age.secrets.wifi-psks.path;
       networks = {
         Cygnus = {
-          authProtocols = [ "WPA-PSK" ];
+          authProtocols = ["WPA-PSK"];
           pskRaw = "@CYGNUS_PSK@";
         };
         eduroam = {
-          authProtocols = [ "WPA-EAP" ];
+          authProtocols = ["WPA-EAP"];
           auth = ''
             eap=PEAP
             phase2="auth=MSCHAPV2"

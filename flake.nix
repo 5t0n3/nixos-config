@@ -9,10 +9,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.utils.follows = "flake-utils";
     };
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -38,6 +34,16 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # Config-specific stuff
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    alejandra = {
+      url = "github:kamadorueda/alejandra/3.0.0";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     pg-13 = {
       url = "github:5t0n3/pg-13";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,63 +51,82 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, agenix
-    , emacs-overlay, nixos-wsl, nixpkgs-wayland, hyprland, hyprpaper, pg-13
-    }@inputs:
-    let
-      mkSystem = extraModules:
-        nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
+  outputs = {
+    self,
+    nixpkgs,
+    nixpkgs-unstable,
+    flake-utils,
+    home-manager,
+    emacs-overlay,
+    nixos-wsl,
+    nixpkgs-wayland,
+    hyprland,
+    hyprpaper,
+    agenix,
+    alejandra,
+    pg-13,
+  } @ inputs: let
+    system = "x86_64-linux";
+    mkSystem = extraModules:
+      nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules =
+          [
             agenix.nixosModules.age
             home-manager.nixosModules.home-manager
             hyprland.nixosModules.default
             pg-13.nixosModules.default
-            ({
+            {
               # Provide flake inputs to regular & home-manager config modules
-              _module.args = { inherit inputs; };
-              home-manager.extraSpecialArgs = { inherit inputs; };
+              _module.args = {inherit inputs;};
+              home-manager.extraSpecialArgs = {inherit inputs;};
 
               # Include git revision of config in nixos-verison output
               system.configurationRevision =
                 nixpkgs.lib.mkIf (self ? rev) self.rev;
-            })
+            }
             ./base
-          ] ++ extraModules;
-        };
-    in {
-      nixosConfigurations = {
-        cryogonal = mkSystem [ ./machines/cryogonal ];
+          ]
+          ++ extraModules;
+      };
+    alejandra-pkg = alejandra.packages.${system}.default;
+    agenix-pkg = agenix.packages.${system}.agenix;
+  in {
+    nixosConfigurations = {
+      cryogonal = mkSystem [./machines/cryogonal];
 
-        solosis = mkSystem [
-          ./machines/solosis
+      solosis = mkSystem [
+        ./machines/solosis
 
-          # PG-13 development
-          # TODO: use containers instead?
-          ({ config, ... }: {
-            age.secrets.pg13-config = {
-              file = ./machines/solosis/secrets/pg13-devconfig.age;
-              path = "/var/lib/pg-13/config.toml";
-              owner = "pg-13";
-              group = "pg-13";
-            };
+        # PG-13 development
+        # TODO: use containers instead?
+        # TODO: move to cryogonal
+        {
+          age.secrets.pg13-config = {
+            file = ./machines/solosis/secrets/pg13-devconfig.age;
+            path = "/var/lib/pg-13/config.toml";
+            owner = "pg-13";
+            group = "pg-13";
+          };
 
-            services.pg-13.enable = true;
-          })
-        ];
+          services.pg-13.enable = true;
+        }
+      ];
 
-        simulacrum = mkSystem [ ./machines/simulacrum ];
+      simulacrum = mkSystem [./machines/simulacrum];
 
-        spiritomb =
-          mkSystem [ nixos-wsl.nixosModules.wsl ./machines/spiritomb.nix ];
+      spiritomb =
+        mkSystem [nixos-wsl.nixosModules.wsl ./machines/spiritomb.nix];
+    };
+
+    devShells.${system}.default = let
+      unstablePkgs = import nixpkgs-unstable {inherit system;};
+    in
+      unstablePkgs.mkShell {
+        # alejandra is included so it doesn't get garbage collected (?)
+        packages = [agenix-pkg alejandra-pkg];
       };
 
-      devShells.x86_64-linux.default =
-        let pkgs = import nixpkgs { system = "x86_64-linux"; };
-        in pkgs.mkShell {
-          packages = [ agenix.packages.x86_64-linux.agenix pkgs.nixfmt ];
-        };
-
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
-    };
+    formatter.${system} = alejandra-pkg;
+  };
 }

@@ -5,27 +5,28 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBPZCD9GNDRshukMA6onTDPdzNGbeo/s0S9ZrqBR1AXn stone@spiritomb"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPfzxRJsns5aoksFDBVIoL7u2StSPB+9kxQmY5ddnD+s stone@cryogonal"
   ];
-  cryogonal =
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3dntUaHeHCAKZ/ki0SQ5e7Dvg602RseZvtR1R5XoQ1";
-  solosis =
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJtnVjsCoTunr6ePI25yiRgzvHg5hOVsFEttGcA0wjsV";
-  simulacrum =
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICL9JQGalPr7Y4f1cez4PKhxNrdSp52/xGnQPXbyCJLC";
+  cryogonal = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3dntUaHeHCAKZ/ki0SQ5e7Dvg602RseZvtR1R5XoQ1";
+  solosis = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJtnVjsCoTunr6ePI25yiRgzvHg5hOVsFEttGcA0wjsV";
+  simulacrum = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICL9JQGalPr7Y4f1cez4PKhxNrdSp52/xGnQPXbyCJLC";
 in {
-  "secrets/wifi-psks.age".publicKeys = stone ++ [ solosis cryogonal ];
+  "secrets/wifi-psks.age".publicKeys = stone ++ [solosis cryogonal];
 
   # cryogonal
-  "machines/cryogonal/secrets/wg-privkey.age".publicKeys = stone
-    ++ [ cryogonal ];
+  "machines/cryogonal/secrets/wg-privkey.age".publicKeys =
+    stone
+    ++ [cryogonal];
 
   # solosis
-  "machines/solosis/secrets/rsync-secrets.age".publicKeys = stone
-    ++ [ solosis ];
-  "machines/solosis/secrets/pg13-devconfig.age".publicKeys = stone
-    ++ [ solosis ];
-  "machines/solosis/secrets/wg-solosis.age".publicKeys = stone ++ [ solosis ];
+  "machines/solosis/secrets/rsync-secrets.age".publicKeys =
+    stone
+    ++ [solosis];
+  "machines/solosis/secrets/pg13-devconfig.age".publicKeys =
+    stone
+    ++ [solosis];
+  "machines/solosis/secrets/wg-solosis.age".publicKeys = stone ++ [solosis];
 
   # simulacrum
-  "machines/simulacrum/secrets/pg13-config.age".publicKeys = stone
-    ++ [ simulacrum ];
+  "machines/simulacrum/secrets/pg13-config.age".publicKeys =
+    stone
+    ++ [simulacrum];
 }

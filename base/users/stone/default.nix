@@ -1,9 +1,7 @@
-{ pkgs, ... }:
+{pkgs, ...}: {
+  imports = [./graphical];
 
-{
-  imports = [ ./graphical ];
-
-  home.packages = with pkgs; [ vis du-dust ];
+  home.packages = with pkgs; [vis du-dust];
 
   # fish config
   programs.fish.enable = true;
@@ -23,7 +21,7 @@
   # misc command line utilities
   programs.bat = {
     enable = true;
-    config = { theme = "Nord"; };
+    config = {theme = "Nord";};
   };
   programs.bottom.enable = true;
   programs.zoxide.enable = true;

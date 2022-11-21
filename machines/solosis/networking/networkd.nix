@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   networking.useDHCP = true;
 
   # Enable & configure systemd-networkd

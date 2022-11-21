@@ -1,11 +1,13 @@
-{ config, pkgs, ... }:
-
 {
-  imports = [ ./hardware-configuration.nix ./networking ./backups.nix ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [./hardware-configuration.nix ./networking ./backups.nix];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.supportedFilesystems = [ "zfs" "ntfs" ];
+  boot.supportedFilesystems = ["zfs" "ntfs"];
 
   networking.hostName = "solosis";
 
@@ -25,7 +27,7 @@
   fileSystems."/mnt/windows" = {
     device = "/dev/nvme0n1p3";
     fsType = "ntfs";
-    options = [ "rw" "uid=1000" ];
+    options = ["rw" "uid=1000"];
   };
 
   # enable microcode updates
@@ -41,7 +43,7 @@
   age.secrets.rsyncd-secrets.file = ./secrets/rsync-secrets.age;
   stone.backups = {
     enable = true;
-    hosts = [ "192.168.1.174" ];
+    hosts = ["192.168.1.174"];
     shares = {
       stoneHome = {
         path = "/home/stone";
@@ -55,11 +57,13 @@
 
   security.doas = {
     enable = true;
-    extraRules = [{
-      groups = [ "wheel" ];
-      noPass = false;
-      keepEnv = true;
-    }];
+    extraRules = [
+      {
+        groups = ["wheel"];
+        noPass = false;
+        keepEnv = true;
+      }
+    ];
   };
 
   system.stateVersion = "20.09";

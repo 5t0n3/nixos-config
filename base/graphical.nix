@@ -1,12 +1,17 @@
-{ config, pkgs, lib, inputs, ... }:
-
-with lib;
-let cfg = config.stone.graphical;
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
+with lib; let
+  cfg = config.stone.graphical;
 in {
   options.stone.graphical = {
     enable = mkEnableOption "graphical programs/config";
     type = mkOption {
-      type = types.enum [ "x" "wayland" ];
+      type = types.enum ["x" "wayland"];
       default = "x";
       example = "wayland";
       description = "Which display server to run";
@@ -20,14 +25,16 @@ in {
         layout = "us";
 
         # hack for home-manager managed window manager (?)
-        displayManager.session = [{
-          manage = "desktop";
-          name = "xsession";
-          start = ''
-            ${pkgs.runtimeShell} $HOME/.xsession &
-            waitPID=$!
-          '';
-        }];
+        displayManager.session = [
+          {
+            manage = "desktop";
+            name = "xsession";
+            start = ''
+              ${pkgs.runtimeShell} $HOME/.xsession &
+              waitPID=$!
+            '';
+          }
+        ];
         displayManager.defaultSession = "xsession";
 
         # LightDM display manager
@@ -38,17 +45,17 @@ in {
             enable = true;
             user = "stone";
             extraConfig = ''
-                        [greeter]
-                        show-password-label = false
-                        password-alignment = left
+               [greeter]
+               show-password-label = false
+               password-alignment = left
 
-                        [greeter-theme]
-              	        font-size = 1rem
-                        text-color = #eceff4
-                        window-color = #88c0d0
-                        border-color = #0d1327
-                        background-color = #2e3440
-                        background-image = ""
+               [greeter-theme]
+              font-size = 1rem
+               text-color = #eceff4
+               window-color = #88c0d0
+               border-color = #0d1327
+               background-color = #2e3440
+               background-image = ""
             '';
           };
         };
@@ -65,11 +72,10 @@ in {
       programs.hyprland.enable = true;
 
       # Swaylock needs this for authentication (?)
-      security.pam.services.swaylock = { };
+      security.pam.services.swaylock = {};
 
       # TODO: move into home-manager?
-      nixpkgs.overlays =
-        [ inputs.hyprpaper.overlays.default ];
+      nixpkgs.overlays = [inputs.hyprpaper.overlays.default];
 
       # add relevant cachix servers
       nix.settings = {
@@ -86,15 +92,14 @@ in {
 
     {
       fonts.enableDefaultFonts = true;
-      fonts.fonts = with pkgs;
-        [ (nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
+      fonts.fonts = with pkgs; [(nerdfonts.override {fonts = ["JetBrainsMono"];})];
 
       # sound-related stuff
       sound.enable = true;
       sound.mediaKeys.enable = true;
       hardware.pulseaudio.enable = true;
 
-      nixpkgs.overlays = [ inputs.emacs-overlay.overlays.emacs ];
+      nixpkgs.overlays = [inputs.emacs-overlay.overlays.emacs];
     }
   ]);
 }

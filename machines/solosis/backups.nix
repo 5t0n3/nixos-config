@@ -1,8 +1,9 @@
-{ config, lib, ... }:
-
-with lib;
-
-let
+{
+  config,
+  lib,
+  ...
+}:
+with lib; let
   cfg = config.stone.backups;
   shareType = {
     options = {
@@ -40,7 +41,7 @@ in {
 
     hosts = mkOption {
       type = with types; listOf str;
-      example = [ "192.168.1.2" "192.168.1.10" ];
+      example = ["192.168.1.2" "192.168.1.10"];
       description = "The IP of the BackupPC server.";
     };
 
@@ -56,18 +57,20 @@ in {
   };
 
   config = mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [ 873 ];
+    networking.firewall.allowedTCPPorts = [873];
 
     services.rsyncd.enable = true;
 
-    services.rsyncd.settings = {
-      global = {
-        uid = 1000;
-        gid = "*";
-        "use chroot" = true;
-        "max connections" = 2;
-        "log file" = "/tmp/rsyncd.log";
-      };
-    } // mapAttrs (_: value: commonShareAttrs // value) cfg.shares;
+    services.rsyncd.settings =
+      {
+        global = {
+          uid = 1000;
+          gid = "*";
+          "use chroot" = true;
+          "max connections" = 2;
+          "log file" = "/tmp/rsyncd.log";
+        };
+      }
+      // mapAttrs (_: value: commonShareAttrs // value) cfg.shares;
   };
 }
