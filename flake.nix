@@ -74,7 +74,7 @@
           [
             agenix.nixosModules.age
             home-manager.nixosModules.home-manager
-            hyprland.nixosModules.default
+            # hyprland.nixosModules.default
             pg-13.nixosModules.default
             {
               # Provide flake inputs to regular & home-manager config modules

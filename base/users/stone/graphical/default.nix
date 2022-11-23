@@ -102,14 +102,14 @@ in {
 
     (mkIf (graphicalType == "wayland") {
       # complains about seatd socket not existing/EGL context?
-      # wayland.windowManager.hyprland = {
-      # enable = true;
+      wayland.windowManager.hyprland = {
+        enable = true;
 
-      # Allow for tweaking config on the fly
-      # extraConfig = ''
-      #   source = ~/.config/hypr/hyprland-extra.conf
-      # '';
-      # };
+        # Allow for tweaking config on the fly
+        extraConfig = ''
+          source = ~/.config/hypr/hyprland-extra.conf
+        '';
+      };
 
       home.packages =
         builtins.attrValues {
