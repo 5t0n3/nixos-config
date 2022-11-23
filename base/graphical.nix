@@ -69,7 +69,7 @@ in {
 
     (mkIf (cfg.type == "wayland") {
       # TODO: get working inside home-manager
-      # programs.hyprland.enable = true;
+      programs.hyprland.enable = true;
 
       # Swaylock needs this for authentication (?)
       security.pam.services.swaylock = {};

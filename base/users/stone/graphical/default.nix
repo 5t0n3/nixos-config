@@ -31,7 +31,7 @@ with lib; let
     mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
   });
 in {
-  imports = [inputs.hyprland.homeManagerModules.default];
+  # imports = [inputs.hyprland.homeManagerModules.default];
 
   options.stone.graphical.enable = mkOption {
     description = "Whether to enable a graphical user environment & common programs.";
@@ -102,14 +102,14 @@ in {
 
     (mkIf (graphicalType == "wayland") {
       # complains about seatd socket not existing/EGL context?
-      wayland.windowManager.hyprland = {
-        enable = true;
+      # wayland.windowManager.hyprland = {
+      #   enable = true;
 
-        # Allow for tweaking config on the fly
-        extraConfig = ''
-          source = ~/.config/hypr/hyprland-extra.conf
-        '';
-      };
+      #   # Allow for tweaking config on the fly
+      #   extraConfig = ''
+      #     source = ~/.config/hypr/hyprland-extra.conf
+      #   '';
+      # };
 
       home.packages =
         builtins.attrValues {
