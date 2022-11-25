@@ -40,6 +40,12 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # Testing
+    nix-alien = {
+      url = "github:thiagokokada/nix-alien";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     pg-13 = {
       url = "github:5t0n3/pg-13";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -59,6 +65,7 @@
     hyprland,
     hyprpaper,
     agenix,
+    nix-alien,
     pg-13,
   } @ inputs: let
     system = "x86_64-linux";
