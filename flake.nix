@@ -39,10 +39,6 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    alejandra = {
-      url = "github:kamadorueda/alejandra/3.0.0";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
 
     pg-13 = {
       url = "github:5t0n3/pg-13";
@@ -63,7 +59,6 @@
     hyprland,
     hyprpaper,
     agenix,
-    alejandra,
     pg-13,
   } @ inputs: let
     system = "x86_64-linux";
@@ -89,8 +84,7 @@
           ]
           ++ extraModules;
       };
-    alejandra-pkg = alejandra.packages.${system}.default;
-    agenix-pkg = agenix.packages.${system}.agenix;
+    unstablePkgs = nixpkgs-unstable.legacyPackages.${system};
   in {
     nixosConfigurations = {
       cryogonal = mkSystem [./machines/cryogonal];
@@ -119,14 +113,11 @@
         mkSystem [nixos-wsl.nixosModules.wsl ./machines/spiritomb.nix];
     };
 
-    devShells.${system}.default = let
-      unstablePkgs = import nixpkgs-unstable {inherit system;};
-    in
-      unstablePkgs.mkShell {
-        # alejandra is included so it doesn't get garbage collected (?)
-        packages = [agenix-pkg alejandra-pkg];
-      };
+    devShells.${system}.default = unstablePkgs.mkShell {
+      # alejandra is included so it doesn't get garbage collected (?)
+      packages = [agenix.packages.${system}.agenix unstablePkgs.alejandra];
+    };
 
-    formatter.${system} = alejandra-pkg;
+    formatter.${system} = unstablePkgs.alejandra;
   };
 }
