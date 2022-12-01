@@ -67,6 +67,7 @@ in {
       xdg.configFile."alacritty/alacritty.yml".source = ./alacritty.yml;
 
       gtk = {
+        enable = true;
         theme = {
           package = pkgs.nordic;
           name = "Nordic";
