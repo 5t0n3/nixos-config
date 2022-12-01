@@ -42,19 +42,14 @@ in {
 
   config = mkIf cfg.enable (mkMerge [
     {
-      # TODO: betterdiscord plugins/themes?
       home.packages = with pkgs; [
         # internet
+        firefox
         discord
         betterdiscordctl
 
         # command line utilities
         brightnessctl
-
-        # themes
-        nordic
-        zafiro-icons
-        capitaine-cursors
 
         # productivity
         libreoffice
@@ -62,13 +57,33 @@ in {
 
         # other stuff?
         alacritty
-        unstablePkgs.ghidra # broken on wayland (untested on X)
+        # unstablePkgs.ghidra (seems to be broken on both X and wayland)
         # (retroarch.override { cores = [ libretro.mgba ]; })
       ];
 
       programs.emacs.enable = true;
+      services.emacs.enable = true;
 
       xdg.configFile."alacritty/alacritty.yml".source = ./alacritty.yml;
+
+      gtk = {
+        theme = {
+          package = pkgs.nordic;
+          name = "Nordic";
+        };
+        iconTheme = {
+          package = pkgs.zafiro-icons;
+          name = "Zafiro-icons";
+        };
+      };
+
+      home.pointerCursor = {
+        package = pkgs.capitaine-cursors;
+        name = "capitaine-cursors";
+        # TODO: verify if this works on wayland too
+        x11.enable = true;
+        gtk.enable = true;
+      };
 
       services.dunst.enable = true;
     }
@@ -83,7 +98,7 @@ in {
 
       programs.emacs.package = pkgs.emacsGitNativeComp;
 
-      home.packages = with pkgs; [scrot xclip firefox obsidian cider];
+      home.packages = with pkgs; [scrot xclip obsidian cider];
 
       xsession.enable = true;
 
@@ -113,7 +128,7 @@ in {
 
       home.packages =
         builtins.attrValues {
-          inherit (pkgs) hyprpaper firefox-wayland;
+          inherit (pkgs) hyprpaper;
           inherit (waylandPkgs) swaylock wofi wl-clipboard grim slurp imv;
           inherit waybar-experimental;
         }
