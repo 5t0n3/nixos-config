@@ -55,10 +55,13 @@ in {
         libreoffice
         nextcloud-client
 
+        # sound
+        pavucontrol
+        cider
+
         # other stuff?
         alacritty
-        pavucontrol
-        # unstablePkgs.ghidra (seems to be broken on both X and wayland)
+        ghidra
         # (retroarch.override { cores = [ libretro.mgba ]; })
       ];
 
@@ -134,7 +137,7 @@ in {
           inherit (waylandPkgs) swaylock wofi wl-clipboard grim slurp imv;
           inherit waybar-experimental;
         }
-        ++ map waylandElectron ["obsidian" "cider"];
+        ++ map waylandElectron ["obsidian"];
 
       programs.emacs.package = pkgs.emacsPgtkNativeComp;
       services.dunst.package = waylandPkgs.dunst;
