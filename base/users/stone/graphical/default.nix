@@ -57,6 +57,7 @@ in {
 
         # other stuff?
         alacritty
+        pavucontrol
         # unstablePkgs.ghidra (seems to be broken on both X and wayland)
         # (retroarch.override { cores = [ libretro.mgba ]; })
       ];
