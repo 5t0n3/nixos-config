@@ -101,7 +101,7 @@ in {
         theme = "purple";
       };
 
-      programs.emacs.package = pkgs.emacsGitNativeComp;
+      programs.emacs.package = pkgs.emacsGit;
 
       home.packages = with pkgs; [scrot xclip obsidian cider];
 
@@ -139,7 +139,7 @@ in {
         }
         ++ map waylandElectron ["obsidian"];
 
-      programs.emacs.package = pkgs.emacsPgtkNativeComp;
+      programs.emacs.package = pkgs.emacsPgtk;
       services.dunst.package = waylandPkgs.dunst;
     })
   ]);
