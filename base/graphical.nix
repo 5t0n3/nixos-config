@@ -65,6 +65,10 @@ in {
           touchpad.naturalScrolling = true;
         };
       };
+
+      # sound-related stuff
+      sound.enable = true;
+      hardware.pulseaudio.enable = true;
     })
 
     (mkIf (cfg.type == "wayland") {
@@ -77,6 +81,14 @@ in {
         # disabled because hyprland provides xdg-desktop-portal-hyprland
         # wlr.enable = true;
         extraPortals = [pkgs.xdg-desktop-portal-gtk];
+      };
+
+      # fix for hyprland portal?
+      security.rtkit.enable = true;
+      services.pipewire = {
+        enable = true;
+        pulse.enable = true;
+        wireplumber.enable = true;
       };
 
       # Swaylock needs this for authentication (?)
@@ -101,11 +113,6 @@ in {
     {
       fonts.enableDefaultFonts = true;
       fonts.fonts = with pkgs; [(nerdfonts.override {fonts = ["JetBrainsMono"];})];
-
-      # sound-related stuff
-      sound.enable = true;
-      sound.mediaKeys.enable = true;
-      hardware.pulseaudio.enable = true;
 
       nixpkgs.overlays = [inputs.emacs-overlay.overlays.emacs];
     }
