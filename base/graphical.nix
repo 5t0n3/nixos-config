@@ -73,7 +73,9 @@ in {
 
       # hack to make gtk startup not take forever?? (nixpkgs issue #156830)
       xdg.portal = {
-        wlr.enable = true;
+        enable = true;
+        # disabled because hyprland provides xdg-desktop-portal-hyprland
+        # wlr.enable = true;
         extraPortals = [pkgs.xdg-desktop-portal-gtk];
       };
 
