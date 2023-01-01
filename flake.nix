@@ -48,7 +48,7 @@
 
     pg-13 = {
       url = "github:5t0n3/pg-13";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.utils.follows = "flake-utils";
     };
   };
@@ -96,23 +96,7 @@
     nixosConfigurations = {
       cryogonal = mkSystem [./machines/cryogonal];
 
-      solosis = mkSystem [
-        ./machines/solosis
-
-        # PG-13 development
-        # TODO: use containers instead?
-        # TODO: move to cryogonal
-        {
-          age.secrets.pg13-config = {
-            file = ./machines/solosis/secrets/pg13-devconfig.age;
-            path = "/var/lib/pg-13/config.toml";
-            owner = "pg-13";
-            group = "pg-13";
-          };
-
-          services.pg-13.enable = true;
-        }
-      ];
+      solosis = mkSystem [./machines/solosis];
 
       simulacrum = mkSystem [./machines/simulacrum];
 

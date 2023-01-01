@@ -11,14 +11,10 @@
     };
   };
 
-  environment.etc."resolv.conf".text = ''
-    nameserver 192.168.1.242
-    nameserver 1.1.1.1
-  '';
+  networking.hostName = "spiritomb";
+  networking.nameservers = ["192.168.1.242" "1.1.1.1"];
 
   environment.noXlibs = false;
-
-  networking.hostName = "spiritomb";
 
   system.stateVersion = "22.05";
 }
