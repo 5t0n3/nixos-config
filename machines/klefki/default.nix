@@ -31,21 +31,19 @@
     enable = true;
     environmentFile = config.age.secrets.vaultwarden-env.path;
     config = {
+      DOMAIN = "https://vault.othman.io";
       SIGNUPS_ALLOWED = false;
+
+      ROCKET_ADDRESS = "0.0.0.0";
+      ROCKET_PORT = 6666;
+
+      WEBSOCKET_ENABLED = true;
+      WEBSOCKET_ADDRESS = "0.0.0.0";
+      WEBSOCKET_PORT = 3012;
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 ];
-
-  services.nginx = {
-    enable = true;
-    virtualHosts.klefki = {
-      locations."/" = {
-        recommendedProxySettings = true;
-        proxyPass = "http://127.0.0.1:8000";
-      };
-    };
-  };
+  networking.firewall.allowedTCPPorts = [3012 6666];
 
   hardware.cpu.intel.updateMicrocode = true;
 
