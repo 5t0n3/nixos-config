@@ -102,6 +102,8 @@
 
       spiritomb =
         mkSystem [nixos-wsl.nixosModules.wsl ./machines/spiritomb.nix];
+
+      klefki = mkSystem [./machines/klefki];
     };
 
     devShells.${system}.default = unstablePkgs.mkShell {
