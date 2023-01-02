@@ -35,7 +35,7 @@
       SIGNUPS_ALLOWED = false;
 
       ROCKET_ADDRESS = "0.0.0.0";
-      ROCKET_PORT = 6666;
+      ROCKET_PORT = 8016;
 
       WEBSOCKET_ENABLED = true;
       WEBSOCKET_ADDRESS = "0.0.0.0";
@@ -43,7 +43,7 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [3012 6666];
+  networking.firewall.allowedTCPPorts = [3012 8016];
 
   hardware.cpu.intel.updateMicrocode = true;
 
