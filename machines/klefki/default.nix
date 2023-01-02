@@ -35,6 +35,18 @@
     };
   };
 
+  networking.firewall.allowedTCPPorts = [ 80 ];
+
+  services.nginx = {
+    enable = true;
+    virtualHosts.klefki = {
+      locations."/" = {
+        recommendedProxySettings = true;
+        proxyPass = "http://127.0.0.1:8000";
+      };
+    };
+  };
+
   hardware.cpu.intel.updateMicrocode = true;
 
   system.stateVersion = "22.11";
