@@ -33,6 +33,7 @@
     config = {
       DOMAIN = "https://vault.othman.io";
       SIGNUPS_ALLOWED = false;
+      IP_HEADER = "X-Forwarded-For";
 
       ROCKET_ADDRESS = "0.0.0.0";
       ROCKET_PORT = 8016;
