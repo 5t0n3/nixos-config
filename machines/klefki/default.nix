@@ -41,6 +41,12 @@
       WEBSOCKET_ENABLED = true;
       WEBSOCKET_ADDRESS = "0.0.0.0";
       WEBSOCKET_PORT = 3012;
+
+      SMTP_HOST = "smtp.gmail.com";
+      SMTP_FROM = "cuber.zee@gmail.com";
+      SMTP_USERNAME = "cuber.zee@gmail.com";
+      SMTP_PORT = 465;
+      SMTP_SECURITY = "force_tls";
     };
   };
 
