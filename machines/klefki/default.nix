@@ -1,6 +1,7 @@
 {config, ...}: {
   imports = [
     ./hardware-configuration.nix
+    ./fail2ban.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
