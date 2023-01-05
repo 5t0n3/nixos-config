@@ -1,4 +1,6 @@
 {
+  description = "My totally not cursed NixOS configurations :)";
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -39,6 +41,11 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.utils.follows = "flake-utils";
+    };
 
     # Testing
     nix-alien = {
@@ -65,6 +72,7 @@
     hyprland,
     hyprpaper,
     agenix,
+    deploy-rs,
     nix-alien,
     pg-13,
   } @ inputs: let
@@ -91,6 +99,15 @@
           ]
           ++ extraModules;
       };
+    mkNode = host: hostConfig: {
+      hostname = "${host}.localdomain";
+      fastConnection = true;
+
+      profiles.system = {
+        sshUser = "root";
+        path = deploy-rs.lib.${system}.activate.nixos hostConfig;
+      };
+    };
     unstablePkgs = nixpkgs-unstable.legacyPackages.${system};
   in {
     nixosConfigurations = {
@@ -106,11 +123,15 @@
       klefki = mkSystem [./machines/klefki];
     };
 
+    deploy.nodes = builtins.mapAttrs mkNode self.nixosConfigurations;
+
     devShells.${system}.default = unstablePkgs.mkShell {
       # alejandra is included so it doesn't get garbage collected (?)
-      packages = [agenix.packages.${system}.agenix unstablePkgs.alejandra];
+      packages = [agenix.packages.${system}.agenix deploy-rs.packages.${system}.deploy-rs unstablePkgs.alejandra];
     };
 
     formatter.${system} = unstablePkgs.alejandra;
+
+    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
   };
 }
