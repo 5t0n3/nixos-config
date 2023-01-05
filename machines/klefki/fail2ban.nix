@@ -14,7 +14,7 @@
 
     services.fail2ban.jails.${name} = ''
       enabled = true
-      port = 80,443,8016
+      port = 8016
       backend = systemd
       filter = ${name}[journalmatch='_SYSTEMD_UNIT=vaultwarden.service']
       banaction = %(banaction_allports)s
