@@ -7,8 +7,8 @@
       before = common.conf
 
       [Definition]
-      failregex = Username or password is incorrect\\. Try again\\. IP: <ADDR>\\. Username:
-                  Invalid admin token\\. IP: <ADDR>$
+      failregex = Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:
+                  Invalid admin token\. IP: <ADDR>$
                   Invalid TOTP code! Server time: .* IP: <ADDR>$
       ignoreregex =
     '';
