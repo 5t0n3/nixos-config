@@ -26,9 +26,11 @@
 in
   lib.mkMerge ([
       {
+        environment.etc."fail2ban/action.d/iptables-forward.local".source = ./iptables-forward.local;
+
         services.fail2ban = {
           enable = true;
-          banaction-allports = "iptables[type=allports]";
+          banaction-allports = "iptables-forward[type=allports]";
         };
       }
     ]
