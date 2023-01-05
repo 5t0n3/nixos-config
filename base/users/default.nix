@@ -18,5 +18,8 @@
     ];
   };
 
+  # deploy-rs hack?
+  users.users.root.openssh.authorizedKeys.keys = config.users.users.stone.openssh.authorizedKeys.keys;
+
   home-manager.users.stone = import ./stone;
 }
