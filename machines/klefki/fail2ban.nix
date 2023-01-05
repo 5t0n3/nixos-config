@@ -1,40 +1,31 @@
-{lib, ...}: let
-  mkJail = name: failregex: {
-    environment.etc."fail2ban-filter-${name}" = {
-      target = "fail2ban/filter.d/${name}.local";
-      text = ''
-        [INCLUDES]
-        before = common.conf
+{
+  environment.etc = {
+    "fail2ban/action.d/iptables-forward.local".source = ./iptables-forward.local;
 
-        [Definition]
-        failregex = ${failregex}
-        ignoreregex =
-      '';
-    };
+    "fail2ban/filter.d/vaultwarden.local".text = ''
+      [INCLUDES]
+      before = common.conf
 
-    services.fail2ban.jails.${name} = ''
+      [Definition]
+      failregex = Username or password is incorrect\\. Try again\\. IP: <ADDR>\\. Username:
+                  Invalid admin token\\. IP: <ADDR>$
+                  Invalid TOTP code! Server time: .* IP: <ADDR>$
+      ignoreregex =
+    '';
+  };
+
+  services.fail2ban = {
+    enable = true;
+    banaction-allports = "iptables-forward[type=allports]";
+    jails.vaultwarden = ''
       enabled = true
       port = 8016
       backend = systemd
-      filter = ${name}[journalmatch='_SYSTEMD_UNIT=vaultwarden.service']
+      filter = vaultwarden[journalmatch='_SYSTEMD_UNIT=vaultwarden.service']
       banaction = %(banaction_allports)s
       maxretry = 3
       bantime = 14400
       findtime = 14400
     '';
   };
-in
-  lib.mkMerge ([
-      {
-        environment.etc."fail2ban/action.d/iptables-forward.local".source = ./iptables-forward.local;
-
-        services.fail2ban = {
-          enable = true;
-          banaction-allports = "iptables-forward[type=allports]";
-        };
-      }
-    ]
-    ++ lib.mapAttrsToList mkJail {
-      vaultwarden = "Username or password is incorrect\\. Try again\\. IP: <ADDR>\\. Username:";
-      vaultwarden-admin = "Invalid admin token. IP: <ADDR>$";
-    })
+}
