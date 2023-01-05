@@ -48,7 +48,8 @@ actioncheck = <_ipt_check_rules>
 # Tags:    See jail.conf(5) man page
 # Values:  CMD
 #
-actionban = <iptables> -I f2b-<name> 1 -p <protocol> --dport <port> -m string --algo bm --string 'X-Forwarded-For: <ip>' -j <blocktype>
+# HAProxy appears to lowercase all headers for some reason
+actionban = <iptables> -I f2b-<name> 1 -p <protocol> --dport <port> -m string --algo bm --string 'x-forwarded-for: <ip>' -j <blocktype>
 
 # Option:  actionunban
 # Notes.:  command executed when unbanning an IP. Take care that the
@@ -56,7 +57,7 @@ actionban = <iptables> -I f2b-<name> 1 -p <protocol> --dport <port> -m string --
 # Tags:    See jail.conf(5) man page
 # Values:  CMD
 #
-actionunban = <iptables> -D f2b-<name> -p <protocol> --dport <port> -m string --algo bm --string 'X-Forwarded-For: <ip>' -j <blocktype>
+actionunban = <iptables> -D f2b-<name> -p <protocol> --dport <port> -m string --algo bm --string 'x-forwarded-for: <ip>' -j <blocktype>
 
 # Option:  pre-rule
 # Notes.:  prefix parameter(s) inserted to the begin of rule. No default (empty)
