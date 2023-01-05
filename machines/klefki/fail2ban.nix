@@ -26,7 +26,10 @@
 in
   lib.mkMerge ([
       {
-        services.fail2ban.enable = true;
+        services.fail2ban = {
+          enable = true;
+          banaction-allports = "iptables[type=allports]";
+        };
       }
     ]
     ++ lib.mapAttrsToList mkJail {
