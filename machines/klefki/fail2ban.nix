@@ -16,16 +16,18 @@
 
   services.fail2ban = {
     enable = true;
-    banaction-allports = "iptables-forward[type=allports]";
     jails.vaultwarden = ''
       enabled = true
       port = 8016
       backend = systemd
       filter = vaultwarden[journalmatch='_SYSTEMD_UNIT=vaultwarden.service']
-      banaction = %(banaction_allports)s
-      maxretry = 3
-      bantime = 14400
+      # Ban both proxied and direct traffic
+      banaction = iptables-forward[type=allports]
+                  iptables[type=allports]
+      # ban duration: 4 hours
       findtime = 14400
+      bantime = 14400
+      maxretry = 3
     '';
   };
 }
