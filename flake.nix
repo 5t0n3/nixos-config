@@ -94,6 +94,10 @@
               # Include git revision of config in nixos-verison output
               system.configurationRevision =
                 nixpkgs.lib.mkIf (self ? rev) self.rev;
+
+              # pin <nixpkgs> path & registry entry to current nixos-unstable rev
+              nix.nixPath = [ "nixpkgs=${inputs.nixpkgs-unstable}" ];
+              nix.registry.nixpkgs.flake = inputs.nixpkgs-unstable;
             }
             ./base
           ]
