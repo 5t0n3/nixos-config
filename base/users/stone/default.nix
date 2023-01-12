@@ -1,5 +1,9 @@
-{pkgs, ...}: {
-  imports = [./graphical];
+{
+  pkgs,
+  inputs,
+  ...
+}: {
+  imports = [./graphical inputs.nix-index-db.hmModules.nix-index];
 
   home.packages = with pkgs; [vis du-dust];
 
@@ -17,6 +21,8 @@
   # direnv
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
+
+  programs.nix-index.enable = true;
 
   # misc command line utilities
   programs.bat = {

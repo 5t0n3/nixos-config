@@ -40,5 +40,9 @@
     };
   };
 
+  # command-not-found doesn't work with flakes; use nix-index instead
+  # (configured in home-manager)
+  programs.command-not-found.enable = false;
+
   nixpkgs.config.allowUnfree = true;
 }

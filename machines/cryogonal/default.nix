@@ -56,9 +56,5 @@
     ];
   };
 
-  # nix-alien setup (?)
-  programs.nix-ld.enable = true;
-  environment.systemPackages = lib.attrVals ["nix-alien" "nix-index-update"] inputs.nix-alien.packages.${pkgs.system} ++ [pkgs.nix-index];
-
   system.stateVersion = "22.05";
 }

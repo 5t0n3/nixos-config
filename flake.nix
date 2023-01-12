@@ -21,6 +21,10 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.flake-utils.follows = "flake-utils";
     };
+    nix-index-db = {
+      url = "github:Mic92/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Display-related stuff
     nixpkgs-wayland = {
@@ -67,6 +71,7 @@
     flake-utils,
     home-manager,
     emacs-overlay,
+    nix-index-db,
     nixos-wsl,
     nixpkgs-wayland,
     hyprland,
@@ -96,7 +101,7 @@
                 nixpkgs.lib.mkIf (self ? rev) self.rev;
 
               # pin <nixpkgs> path & registry entry to current nixos-unstable rev
-              nix.nixPath = [ "nixpkgs=${inputs.nixpkgs-unstable}" ];
+              nix.nixPath = ["nixpkgs=${inputs.nixpkgs-unstable}"];
               nix.registry.nixpkgs.flake = inputs.nixpkgs-unstable;
             }
             ./base
@@ -115,7 +120,14 @@
     unstablePkgs = nixpkgs-unstable.legacyPackages.${system};
   in {
     nixosConfigurations = {
-      cryogonal = mkSystem [./machines/cryogonal];
+      cryogonal = mkSystem [
+        ./machines/cryogonal
+        ({pkgs, ...}: {
+          # nix-alien setup for testing
+          programs.nix-ld.enable = true;
+          environment.systemPackages = [nix-alien.packages.${pkgs.system}.nix-alien];
+        })
+      ];
 
       solosis = mkSystem [./machines/solosis];
 
