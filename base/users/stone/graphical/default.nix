@@ -134,10 +134,30 @@ in {
       home.packages =
         builtins.attrValues {
           inherit (pkgs) hyprpaper;
-          inherit (waylandPkgs) swaylock wofi wl-clipboard grim slurp imv;
+          inherit (waylandPkgs) swaylock-effects wofi wl-clipboard grim slurp imv;
           inherit waybar-experimental;
         }
         ++ map waylandElectron ["obsidian"];
+
+      services.swayidle = {
+        enable = true;
+        package = waylandPkgs.swayidle;
+        timeouts = [
+          {
+            timeout = 300;
+            command = "swaylock -fF -c 2e3440";
+          }
+          {
+            timeout = 600;
+            command = "hyprctl dispatch dpms off";
+            resumeCommand = "hyprctl dispatch dpms on";
+          }
+          {
+            timeout = 1800;
+            command = "systemctl poweroff";
+          }
+        ];
+      };
 
       programs.emacs.package = pkgs.emacsPgtk;
       services.dunst.package = waylandPkgs.dunst;
