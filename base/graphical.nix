@@ -73,17 +73,15 @@ in {
 
     (mkIf (cfg.type == "wayland") {
       # TODO: get working inside home-manager
-      # programs.hyprland.enable = true;
+      programs.hyprland.enable = true;
 
       # hack to make gtk startup not take forever?? (nixpkgs issue #156830)
       xdg.portal = {
         enable = true;
-        # disabled because hyprland provides xdg-desktop-portal-hyprland
-        # wlr.enable = true;
         extraPortals = [pkgs.xdg-desktop-portal-gtk];
       };
 
-      # fix for hyprland portal?
+      # Needed for hyprland portal
       security.rtkit.enable = true;
       services.pipewire = {
         enable = true;
@@ -94,7 +92,6 @@ in {
       # Swaylock needs this for authentication (?)
       security.pam.services.swaylock = {};
 
-      # TODO: move into home-manager?
       nixpkgs.overlays = [inputs.hyprpaper.overlays.default];
 
       # add relevant cachix servers

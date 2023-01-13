@@ -61,6 +61,7 @@ in {
 
         # other stuff?
         alacritty
+        kitty
         ghidra
         # (retroarch.override { cores = [ libretro.mgba ]; })
       ];
@@ -85,7 +86,6 @@ in {
       home.pointerCursor = {
         package = pkgs.capitaine-cursors;
         name = "capitaine-cursors";
-        # TODO: verify if this works on wayland too
         x11.enable = true;
         gtk.enable = true;
       };
@@ -121,39 +121,32 @@ in {
     })
 
     (mkIf (graphicalType == "wayland") {
-      # complains about seatd socket not existing/EGL context?
-      wayland.windowManager.hyprland = {
-        enable = true;
-
-        # Allow for tweaking config on the fly
-        # extraConfig = ''
-        #  source = ~/.config/hypr/hyprland-extra.conf
-        # '';
-        extraConfig = null;
-      };
-
       home.packages =
         builtins.attrValues {
           inherit (pkgs) hyprpaper;
           inherit (waylandPkgs) swaylock-effects wofi wl-clipboard grim slurp imv;
           inherit waybar-experimental;
-        }
-        ++ map waylandElectron ["obsidian"];
+        };
 
       services.swayidle = {
         enable = true;
         package = waylandPkgs.swayidle;
+        # TODO: check if this actually works?
+        systemdTarget = "graphical-session.target";
         timeouts = [
           {
-            timeout = 300;
+            # lock after 3 minutes
+            timeout = 180;
             command = "swaylock -fF -c 2e3440";
           }
           {
+            # turn screen(s) off after 10 minutes
             timeout = 600;
             command = "hyprctl dispatch dpms off";
             resumeCommand = "hyprctl dispatch dpms on";
           }
           {
+            # turn off after 30 minutes
             timeout = 1800;
             command = "systemctl poweroff";
           }
