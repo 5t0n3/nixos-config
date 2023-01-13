@@ -73,7 +73,7 @@ in {
 
     (mkIf (cfg.type == "wayland") {
       # TODO: get working inside home-manager
-      programs.hyprland.enable = true;
+      # programs.hyprland.enable = true;
 
       # hack to make gtk startup not take forever?? (nixpkgs issue #156830)
       xdg.portal = {
