@@ -43,18 +43,7 @@
   stone.graphical.type = "wayland";
 
   # RGB keyboard action
-  hardware.ckb-next.enable = true;
-
-  security.doas = {
-    enable = true;
-    extraRules = [
-      {
-        groups = ["wheel"];
-        noPass = false;
-        keepEnv = true;
-      }
-    ];
-  };
+  # hardware.ckb-next.enable = true;
 
   system.stateVersion = "22.05";
 }

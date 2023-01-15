@@ -55,16 +55,5 @@
 
   stone.graphical.enable = true;
 
-  security.doas = {
-    enable = true;
-    extraRules = [
-      {
-        groups = ["wheel"];
-        noPass = false;
-        keepEnv = true;
-      }
-    ];
-  };
-
   system.stateVersion = "20.09";
 }

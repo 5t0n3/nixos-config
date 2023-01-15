@@ -40,6 +40,18 @@
     };
   };
 
+  security.sudo.enable = false;
+  security.doas = {
+    enable = true;
+    extraRules = [
+      {
+        groups = ["wheel"];
+        noPass = false;
+        keepEnv = true;
+      }
+    ];
+  };
+
   # command-not-found doesn't work with flakes; use nix-index instead
   # (configured in home-manager)
   programs.command-not-found.enable = false;

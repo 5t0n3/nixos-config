@@ -121,12 +121,11 @@ in {
     })
 
     (mkIf (graphicalType == "wayland") {
-      home.packages =
-        builtins.attrValues {
-          inherit (pkgs) hyprpaper;
-          inherit (waylandPkgs) swaylock-effects wofi wl-clipboard grim slurp imv;
-          inherit waybar-experimental;
-        };
+      home.packages = builtins.attrValues {
+        inherit (pkgs) hyprpaper;
+        inherit (waylandPkgs) swaylock-effects wofi wl-clipboard grim slurp imv;
+        inherit waybar-experimental;
+      };
 
       services.swayidle = {
         enable = true;

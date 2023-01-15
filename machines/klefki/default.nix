@@ -1,4 +1,13 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+# TODO: move unstable to overlay or just use unstable universally
+let
+  vaultwarden-latest = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.vaultwarden;
+in {
   imports = [
     ./hardware-configuration.nix
     ./fail2ban.nix
@@ -30,6 +39,8 @@
 
   services.vaultwarden = {
     enable = true;
+    package = vaultwarden-latest;
+    webVaultPackage = vaultwarden-latest.webvault;
     environmentFile = config.age.secrets.vaultwarden-env.path;
     config = {
       DOMAIN = "https://vault.othman.io";
