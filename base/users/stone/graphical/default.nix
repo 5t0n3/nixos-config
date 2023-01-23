@@ -107,7 +107,7 @@ in {
         theme = "purple";
       };
 
-      programs.emacs.package = pkgs.emacsGit;
+      services.emacs.package = pkgs.emacsGit;
 
       home.packages = with pkgs; [scrot xclip obsidian cider];
 
@@ -158,7 +158,7 @@ in {
         ];
       };
 
-      programs.emacs.package = pkgs.emacsPgtk;
+      services.emacs.package = pkgs.emacsPgtk;
       services.dunst.package = waylandPkgs.dunst;
     })
   ]);
