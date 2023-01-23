@@ -139,7 +139,12 @@
       klefki = mkSystem [./machines/klefki];
     };
 
-    deploy.nodes = builtins.mapAttrs mkNode self.nixosConfigurations;
+    # Not every machine has to be deployed to (e.g. cryogonal is where I deploy from)
+    deploy.nodes = let
+      isDeployed = name: _: builtins.elem name ["simulacrum" "klefki"];
+      configs = nixpkgs.lib.filterAttrs isDeployed self.nixosConfigurations;
+    in
+      builtins.mapAttrs mkNode configs;
 
     devShells.${system}.default = unstablePkgs.mkShell {
       # alejandra is included so it doesn't get garbage collected (?)
@@ -148,6 +153,7 @@
 
     formatter.${system} = unstablePkgs.alejandra;
 
+    # taken directly from deploy-rs repo
     checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
   };
 }

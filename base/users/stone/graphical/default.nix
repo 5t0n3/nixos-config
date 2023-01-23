@@ -31,7 +31,10 @@ with lib; let
     mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
   });
 in {
-  imports = [inputs.hyprland.homeManagerModules.default];
+  imports = [
+    inputs.hyprland.homeManagerModules.default
+    inputs.nix-index-db.hmModules.nix-index
+  ];
 
   options.stone.graphical.enable = mkOption {
     description = "Whether to enable a graphical user environment & common programs.";
@@ -66,8 +69,13 @@ in {
         # (retroarch.override { cores = [ libretro.mgba ]; })
       ];
 
-      programs.emacs.enable = true;
+      # development things
       services.emacs.enable = true;
+      services.emacs.client.enable = true;
+
+      programs.nix-index.enable = true;
+      programs.direnv.enable = true;
+      programs.direnv.nix-direnv.enable = true;
 
       xdg.configFile."alacritty/alacritty.yml".source = ./alacritty.yml;
 

@@ -10,7 +10,7 @@
   networking.firewall.enable = true;
   services.openssh.enable = true;
 
-  environment.systemPackages = with pkgs; [vis git exa ripgrep];
+  environment.systemPackages = with pkgs; [vis helix du-dust git exa ripgrep];
   environment.variables = {EDITOR = "vis";};
 
   boot.cleanTmpDir = lib.mkDefault true;
@@ -22,10 +22,6 @@
     settings = {
       auto-optimise-store = true;
       experimental-features = ["nix-command" "flakes"];
-
-      # for direnv
-      keep-outputs = true;
-      keep-derivations = true;
 
       substituters = ["https://nix-community.cachix.org/"];
       trusted-public-keys = [
@@ -40,6 +36,7 @@
     };
   };
 
+  # doas <3
   security.sudo.enable = false;
   security.doas = {
     enable = true;

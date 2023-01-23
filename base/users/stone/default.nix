@@ -3,9 +3,7 @@
   inputs,
   ...
 }: {
-  imports = [./graphical inputs.nix-index-db.hmModules.nix-index];
-
-  home.packages = with pkgs; [vis du-dust];
+  imports = [./graphical];
 
   # fish config
   programs.fish.enable = true;
@@ -17,12 +15,6 @@
     "vis/lexers/nix.lua".source = ./vis/nix.lua;
     "vis/themes/gruvbox.lua".source = ./vis/gruvbox.lua;
   };
-
-  # direnv
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
-
-  programs.nix-index.enable = true;
 
   # misc command line utilities
   programs.bat = {

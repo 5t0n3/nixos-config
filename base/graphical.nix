@@ -109,9 +109,12 @@ in {
 
     {
       fonts.enableDefaultFonts = true;
-      fonts.fonts = with pkgs; [(nerdfonts.override {fonts = ["JetBrainsMono"];})];
+      fonts.fonts = with pkgs; [(nerdfonts.override {fonts = ["JetBrainsMono" "Monoid"];})];
 
       nixpkgs.overlays = [inputs.emacs-overlay.overlays.emacs];
+
+      # nix-direnv requires this (keep-derivations is on by default)
+      nix.settings.keep-outputs = true;
     }
   ]);
 }
