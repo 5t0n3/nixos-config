@@ -49,6 +49,13 @@
     ];
   };
 
+  services.openssh.hostKeys = [
+    {
+      path = "/etc/ssh/ssh_host_ed25519_key";
+      type = "ed25519";
+    }
+  ];
+
   # command-not-found doesn't work with flakes; use nix-index instead
   # (configured in home-manager)
   programs.command-not-found.enable = false;
