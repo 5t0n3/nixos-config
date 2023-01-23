@@ -33,7 +33,6 @@ with lib; let
 in {
   imports = [
     inputs.hyprland.homeManagerModules.default
-    inputs.nix-index-db.hmModules.nix-index
   ];
 
   options.stone.graphical.enable = mkOption {
@@ -73,7 +72,6 @@ in {
       services.emacs.enable = true;
       services.emacs.client.enable = true;
 
-      programs.nix-index.enable = true;
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true;
 

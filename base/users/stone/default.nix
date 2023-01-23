@@ -1,9 +1,13 @@
 {
+  config,
   pkgs,
   inputs,
   ...
 }: {
-  imports = [./graphical];
+  imports = [
+    ./graphical
+    inputs.nix-index-db.hmModules.nix-index
+  ];
 
   # fish config
   programs.fish.enable = true;
@@ -37,6 +41,15 @@
       pull.rebase = true;
       fetch.prune = true;
     };
+  };
+
+  # nix-index-database enables nix-index by default for some reason
+  # I only want it on on graphical machines
+  programs.nix-index = let
+    graphical = config.stone.graphical.enable;
+  in {
+    enable = graphical;
+    symlinkToCacheHome = graphical;
   };
 
   nixpkgs.config.allowUnfree = true;
