@@ -5,6 +5,7 @@
     enable = true;
     defaultUser = "stone";
     nativeSystemd = true;
+    wslConf.network.generateResolvConf = false;
   };
 
   networking.hostName = "spiritomb";
