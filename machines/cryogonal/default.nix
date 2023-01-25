@@ -57,7 +57,13 @@
   ];
 
   # power management is a thing ig?
-  services.tlp.enable = true;
+  services.tlp = {
+    enable = true;
+    settings = {
+      START_CHARGE_THRESH_BAT0 = 0;
+      STOP_CHARGE_THRESH_BAT0 = 1;
+    };
+  };
 
   system.stateVersion = "22.05";
 }
