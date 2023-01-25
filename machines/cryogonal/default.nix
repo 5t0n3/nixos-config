@@ -42,8 +42,22 @@
   stone.graphical.enable = true;
   stone.graphical.type = "wayland";
 
-  # RGB keyboard action
-  # hardware.ckb-next.enable = true;
+  # taken from nixos-hardware
+  services.fstrim.enable = true; # yay ssds
+
+  # intel graphics stuffs
+  boot.initrd.kernelModules = [ "i915" ];
+
+  environment.variables.VDPAU_DRIVER = "va_gl";
+
+  hardware.opengl.extraPackages = with pkgs; [
+    vaapiIntel
+    libvdpau-va-gl
+    intel-media-driver
+  ];
+
+  # power management is a thing ig?
+  services.tlp.enable = true;
 
   system.stateVersion = "22.05";
 }
