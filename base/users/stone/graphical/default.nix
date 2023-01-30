@@ -25,6 +25,7 @@ with lib; let
 
   waylandPkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
   unstablePkgs = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+  hyprpaper = inputs.hyprpaper.packages.${pkgs.system}.hyprpaper;
 
   # Taken from hyprland overlay
   waybar-experimental = waylandPkgs.waybar.overrideAttrs (oldAttrs: {
@@ -128,9 +129,8 @@ in {
 
     (mkIf (graphicalType == "wayland") {
       home.packages = builtins.attrValues {
-        inherit (pkgs) hyprpaper;
+        inherit hyprpaper waybar-experimental;
         inherit (waylandPkgs) swaylock-effects wofi wl-clipboard grim slurp imv;
-        inherit waybar-experimental;
       };
 
       services.swayidle = {

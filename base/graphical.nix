@@ -92,7 +92,7 @@ in {
       # Swaylock needs this for authentication (?)
       security.pam.services.swaylock = {};
 
-      nixpkgs.overlays = [inputs.hyprpaper.overlays.default];
+      # nixpkgs.overlays = [inputs.hyprpaper.overlays.default];
 
       # add relevant cachix servers
       nix.settings = {
