@@ -46,7 +46,7 @@
   services.fstrim.enable = true; # yay ssds
 
   # intel graphics stuffs
-  boot.initrd.kernelModules = [ "i915" ];
+  boot.initrd.kernelModules = ["i915"];
 
   environment.variables.VDPAU_DRIVER = "va_gl";
 

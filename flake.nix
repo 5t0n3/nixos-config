@@ -125,7 +125,11 @@
         ({pkgs, ...}: {
           # nix-alien setup for testing
           programs.nix-ld.enable = true;
-          environment.systemPackages = [nix-alien.packages.${pkgs.system}.nix-alien];
+          environment.systemPackages = [
+            (nix-alien.packages.${pkgs.system}.nix-alien.overrideAttrs (_: {
+              doCheck = false;
+            }))
+          ];
         })
       ];
 
