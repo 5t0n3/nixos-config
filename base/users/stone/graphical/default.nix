@@ -96,6 +96,8 @@ in {
         x11.enable = true;
         gtk.enable = true;
       };
+      
+      services.gnome-keyring.enable = true;
 
       services.dunst.enable = true;
     }
@@ -110,7 +112,7 @@ in {
 
       services.emacs.package = pkgs.emacsGit;
 
-      home.packages = with pkgs; [scrot xclip obsidian cider];
+      home.packages = with pkgs; [scrot xclip cider];
 
       xsession.enable = true;
 
