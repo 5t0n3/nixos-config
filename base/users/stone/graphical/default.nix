@@ -97,8 +97,6 @@ in {
         gtk.enable = true;
       };
       
-      services.gnome-keyring.enable = true;
-
       services.dunst.enable = true;
     }
 
