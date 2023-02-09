@@ -96,7 +96,7 @@ in {
         x11.enable = true;
         gtk.enable = true;
       };
-      
+
       services.dunst.enable = true;
     }
 

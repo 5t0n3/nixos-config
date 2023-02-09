@@ -65,5 +65,11 @@
     };
   };
 
+  # we do a little virtualization
+  virtualisation.libvirtd.enable = true;
+  environment.systemPackages = [pkgs.virt-manager];
+
+  users.users.stone.extraGroups = ["libvirtd"];
+
   system.stateVersion = "22.05";
 }

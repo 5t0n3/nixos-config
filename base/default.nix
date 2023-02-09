@@ -22,6 +22,7 @@
     settings = {
       auto-optimise-store = true;
       experimental-features = ["nix-command" "flakes"];
+      trusted-users = ["root" "stone"];
 
       substituters = ["https://nix-community.cachix.org/"];
       trusted-public-keys = [
