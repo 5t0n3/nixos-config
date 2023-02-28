@@ -66,8 +66,10 @@
   };
 
   # we do a little virtualization
-  virtualisation.libvirtd.enable = true;
-  environment.systemPackages = [pkgs.virt-manager];
+  # virtualisation.libvirtd.enable = true;
+  # environment.systemPackages = [pkgs.virt-manager];
+  virtualisation.podman.enable = true;
+  environment.systemPackages = [inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.distrobox];
 
   users.users.stone.extraGroups = ["libvirtd"];
 
