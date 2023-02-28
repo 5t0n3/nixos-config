@@ -66,14 +66,17 @@
   };
 
   # we do a little virtualization
-  # virtualisation.libvirtd.enable = true;
-  # environment.systemPackages = [pkgs.virt-manager];
-  virtualisation.podman.enable = true;
   environment.systemPackages = [inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.distrobox];
+  virtualisation.podman.enable = true;
   virtualisation.containers.storage.settings = {
-    storage.driver = "zfs";
+    storage = {
+      driver = "zfs";
+      graphroot = "/var/lib/containers/storage";
+      runroot = "/run/containers/storage";
+    };
   };
 
+  # distrobox moment
   security.sudo.enable = lib.mkForce true;
 
   system.stateVersion = "22.05";
