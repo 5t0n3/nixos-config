@@ -70,6 +70,9 @@
   # environment.systemPackages = [pkgs.virt-manager];
   virtualisation.podman.enable = true;
   environment.systemPackages = [inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.distrobox];
+  virtualisation.containers.containersConf.settings = {
+    storage.driver = "zfs";
+  };
 
   security.sudo.enable = lib.mkForce true;
 
