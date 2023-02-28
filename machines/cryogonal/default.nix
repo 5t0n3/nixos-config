@@ -71,7 +71,7 @@
   virtualisation.podman.enable = true;
   environment.systemPackages = [inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.distrobox];
 
-  users.users.stone.extraGroups = ["libvirtd"];
+  security.sudo.enable = lib.mkForce true;
 
   system.stateVersion = "22.05";
 }
