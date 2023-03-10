@@ -62,10 +62,16 @@ in {
         pavucontrol
         cider
 
+        # ctf stuffs
+        ghidra
+        sage
+        binutils # for `strings` mostly
+        file
+        hexyl
+
         # other stuff?
         alacritty
         kitty
-        ghidra
         # (retroarch.override { cores = [ libretro.mgba ]; })
       ];
 
