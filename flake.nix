@@ -58,7 +58,7 @@
     };
 
     pg-13 = {
-      url = "github:5t0n3/pg-13";
+      url = "github:5t0n3/pg-13/staging";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.utils.follows = "flake-utils";
     };
