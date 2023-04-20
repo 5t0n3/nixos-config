@@ -76,8 +76,8 @@ in {
       ];
 
       # development things
-      services.emacs.enable = true;
-      services.emacs.client.enable = true;
+      # services.emacs.enable = true;
+      # services.emacs.client.enable = true;
 
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true;
@@ -114,7 +114,7 @@ in {
         theme = "purple";
       };
 
-      services.emacs.package = pkgs.emacsGit;
+      # services.emacs.package = pkgs.emacsGit;
 
       home.packages = with pkgs; [scrot xclip cider];
 
@@ -164,8 +164,8 @@ in {
         ];
       };
 
-      services.emacs.package = pkgs.emacsPgtk;
-      services.dunst.package = waylandPkgs.dunst;
+      # services.emacs.package = pkgs.emacsPgtk;
+      # services.dunst.package = waylandPkgs.dunst;
     })
   ]);
 }

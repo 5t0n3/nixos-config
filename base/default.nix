@@ -11,7 +11,7 @@
   services.openssh.enable = true;
 
   environment.systemPackages = with pkgs; [vis helix du-dust git exa ripgrep];
-  environment.variables = {EDITOR = "vis";};
+  environment.variables = {EDITOR = "hx";};
 
   boot.cleanTmpDir = lib.mkDefault true;
 

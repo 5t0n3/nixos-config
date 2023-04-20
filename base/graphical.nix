@@ -111,7 +111,7 @@ in {
       fonts.enableDefaultFonts = true;
       fonts.fonts = with pkgs; [(nerdfonts.override {fonts = ["JetBrainsMono"];})];
 
-      nixpkgs.overlays = [inputs.emacs-overlay.overlays.emacs];
+      # nixpkgs.overlays = [inputs.emacs-overlay.overlays.emacs];
 
       # credential management (?)
       services.gnome.gnome-keyring.enable = true;
