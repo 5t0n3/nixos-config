@@ -10,7 +10,7 @@ with lib; let
   cfg = config.stone.graphical;
   graphicalType = nixosConfig.stone.graphical.type;
 
-  # This probably doesn't work in all cases but eh
+  # Mostly kept for documentation purposes in case I need it in the future
   waylandElectron = pname:
     pkgs.symlinkJoin {
       name = pname;
@@ -25,17 +25,9 @@ with lib; let
 
   waylandPkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
   unstablePkgs = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+  hyprlandPkgs = inputs.hyprland.packages.${pkgs.system};
   hyprpaper = inputs.hyprpaper.packages.${pkgs.system}.hyprpaper;
-
-  # Taken from hyprland overlay
-  waybar-experimental = waylandPkgs.waybar.overrideAttrs (oldAttrs: {
-    mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
-  });
 in {
-  imports = [
-    inputs.hyprland.homeManagerModules.default
-  ];
-
   options.stone.graphical.enable = mkOption {
     description = "Whether to enable a graphical user environment & common programs.";
     default = nixosConfig.stone.graphical.enable;
@@ -49,6 +41,7 @@ in {
         # internet
         firefox
         discord
+        unstablePkgs.webcord
         betterdiscordctl
 
         # command line utilities
@@ -70,9 +63,7 @@ in {
         hexyl
 
         # other stuff?
-        alacritty
         kitty
-        # (retroarch.override { cores = [ libretro.mgba ]; })
       ];
 
       # development things
@@ -81,8 +72,6 @@ in {
 
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true;
-
-      xdg.configFile."alacritty/alacritty.yml".source = ./alacritty.yml;
 
       gtk = {
         enable = true;
@@ -135,8 +124,9 @@ in {
 
     (mkIf (graphicalType == "wayland") {
       home.packages = builtins.attrValues {
-        inherit hyprpaper waybar-experimental;
+        inherit hyprpaper;
         inherit (waylandPkgs) swaylock-effects wofi wl-clipboard grim slurp imv;
+        inherit (hyprlandPkgs) waybar-hyprland;
       };
 
       services.swayidle = {
@@ -165,7 +155,7 @@ in {
       };
 
       # services.emacs.package = pkgs.emacsPgtk;
-      # services.dunst.package = waylandPkgs.dunst;
+      services.dunst.package = waylandPkgs.dunst;
     })
   ]);
 }
