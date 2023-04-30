@@ -556,11 +556,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1682806737,
-        "narHash": "sha256-AO/xmoWoBOXTSGQq17sqqhddochJ0yHBL049gpVLz1s=",
+        "lastModified": 1682837092,
+        "narHash": "sha256-3X8Aa7WSC/OUeM8Y7s6BvwgjdQUaxLVdMQCAv1E5CbA=",
         "owner": "5t0n3",
         "repo": "pg-13",
-        "rev": "7ed834068daf811c2d57a38200f92e0d56745f8d",
+        "rev": "ff5507ca49b2e688c78d3d45898b2cadb716095a",
         "type": "github"
       },
       "original": {
