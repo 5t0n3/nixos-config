@@ -16,11 +16,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
-    emacs-overlay = {
-      url = "github:nix-community/emacs-overlay";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.flake-utils.follows = "flake-utils";
-    };
     nix-index-db = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -70,7 +65,6 @@
     nixpkgs-unstable,
     flake-utils,
     home-manager,
-    emacs-overlay,
     nix-index-db,
     nixos-wsl,
     nixpkgs-wayland,

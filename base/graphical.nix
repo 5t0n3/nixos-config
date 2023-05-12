@@ -111,9 +111,7 @@ in {
       fonts.enableDefaultFonts = true;
       fonts.fonts = with pkgs; [(nerdfonts.override {fonts = ["JetBrainsMono"];})];
 
-      # nixpkgs.overlays = [inputs.emacs-overlay.overlays.emacs];
-
-      # credential management (?)
+      # credential management (mostly for nextcloud client)
       services.gnome.gnome-keyring.enable = true;
 
       # nix-direnv requires this (keep-derivations is on by default)

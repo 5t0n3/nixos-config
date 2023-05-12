@@ -40,9 +40,7 @@ in {
       home.packages = with pkgs; [
         # internet
         firefox
-        discord
         unstablePkgs.webcord
-        betterdiscordctl
 
         # command line utilities
         brightnessctl
@@ -65,10 +63,6 @@ in {
         # other stuff?
         kitty
       ];
-
-      # development things
-      # services.emacs.enable = true;
-      # services.emacs.client.enable = true;
 
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true;
@@ -103,7 +97,6 @@ in {
         theme = "purple";
       };
 
-      # services.emacs.package = pkgs.emacsGit;
 
       home.packages = with pkgs; [scrot xclip cider];
 
@@ -129,7 +122,11 @@ in {
         inherit (hyprlandPkgs) waybar-hyprland;
       };
 
-      services.swayidle = {
+      services.swayidle = let
+        swaylock = "${waylandPkgs.swaylock-effects}/bin/swaylock";
+        hyprctl = "${pkgs.hyprland}/bin/hyprctl";
+        systemctl = "${pkgs.systemd}/bin/systemctl";
+      in {
         enable = true;
         package = waylandPkgs.swayidle;
         # TODO: check if this actually works?
@@ -138,23 +135,30 @@ in {
           {
             # lock after 3 minutes
             timeout = 180;
-            command = "swaylock -fF -c 2e3440";
+            command = "${swaylock} -fF -c 2e3440";
           }
           {
             # turn screen(s) off after 10 minutes
             timeout = 600;
-            command = "hyprctl dispatch dpms off";
-            resumeCommand = "hyprctl dispatch dpms on";
+            command = "${hyprctl} dispatch dpms off";
+            resumeCommand = "${hyprctl} dispatch dpms on";
           }
           {
             # turn off after 30 minutes
             timeout = 1800;
-            command = "systemctl poweroff";
+            command = "${systemctl} poweroff";
           }
         ];
       };
+      
+      # taken from https://git.sr.ht/~misterio/nix-config/tree/main/item/home/misterio/features/desktop/hyprland/default.nix#L9-13
+      # auto-start hyprland if logging in from tty1
+      programs.fish.loginShellInit = ''
+        if test (tty) = "/dev/tty1"
+          exec Hyprland &> /dev/null
+        end
+      '';
 
-      # services.emacs.package = pkgs.emacsPgtk;
       services.dunst.package = waylandPkgs.dunst;
     })
   ]);
