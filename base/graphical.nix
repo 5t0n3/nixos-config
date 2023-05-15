@@ -7,6 +7,7 @@
 }:
 with lib; let
   cfg = config.stone.graphical;
+  unstablePkgs = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in {
   options.stone.graphical = {
     enable = mkEnableOption "graphical programs/config";
@@ -109,7 +110,11 @@ in {
 
     {
       fonts.enableDefaultFonts = true;
-      fonts.fonts = with pkgs; [(nerdfonts.override {fonts = ["JetBrainsMono"];})];
+      fonts.fonts = with pkgs; [
+        (unstablePkgs.nerdfonts.override {
+          fonts = ["JetBrainsMono" "MPlus" "Overpass" "Ubuntu"];
+        })
+      ];
 
       # credential management (mostly for nextcloud client)
       services.gnome.gnome-keyring.enable = true;
