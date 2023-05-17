@@ -78,6 +78,11 @@
 
   # distrobox moment
   security.sudo.enable = lib.mkForce true;
+  
+  # hardware key login maybe?
+  security.pam.u2f.enable = true;
+  security.pam.u2f.interactive = true;
+  security.pam.u2f.cue = true;
 
   system.stateVersion = "22.05";
 }
