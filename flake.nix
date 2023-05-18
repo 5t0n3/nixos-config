@@ -146,7 +146,12 @@
 
     devShells.${system}.default = unstablePkgs.mkShell {
       # alejandra is included so it doesn't get garbage collected (?)
-      packages = [agenix.packages.${system}.agenix deploy-rs.packages.${system}.deploy-rs unstablePkgs.alejandra];
+      packages = [
+        agenix.packages.${system}.agenix 
+        deploy-rs.packages.${system}.deploy-rs 
+        unstablePkgs.alejandra
+        unstablePkgs.nil
+      ];
     };
 
     formatter.${system} = unstablePkgs.alejandra;

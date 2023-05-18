@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   imports = [./wireguard.nix];
 
@@ -19,10 +21,14 @@
     wait-online.anyInterface = true;
   };
 
-  stone.wireless = {
-    enable = true;
-    interfaces = ["wlp0s20f3"];
-  };
+  # stone.wireless = {
+  #   enable = true;
+  #   interfaces = ["wlp0s20f3"];
+  # };
+  
+  # try iwd instead?
+  networking.wireless.iwd.enable = true;
+  environment.systemPackages = [pkgs.iwgtk];
 
   networking.interfaces.wlp0s20f3.useDHCP = true;
   networking.interfaces.enp0s13f0u1u3.useDHCP = true;
