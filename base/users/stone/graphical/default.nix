@@ -46,6 +46,7 @@ in {
         brightnessctl
 
         # productivity
+        unstablePkgs.typst
         libreoffice
         nextcloud-client
 
