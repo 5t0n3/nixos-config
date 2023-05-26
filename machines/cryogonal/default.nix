@@ -78,7 +78,7 @@
 
   # distrobox moment
   security.sudo.enable = lib.mkForce true;
-  
+
   # hardware key login maybe?
   security.pam.u2f.enable = true;
   security.pam.u2f.interactive = true;

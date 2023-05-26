@@ -54,14 +54,18 @@ in {
         cider
 
         # ctf stuffs
-        ghidra
+        unstablePkgs.ghidra
         sage
         binutils # for `strings` mostly
         file
         hexyl
 
+        # fix missing icons maybe?
+        gnome.adwaita-icon-theme
+
         # other stuff?
         kitty
+        xdg-utils
       ];
 
       programs.direnv.enable = true;
@@ -96,7 +100,6 @@ in {
         enable = true;
         theme = "purple";
       };
-
 
       home.packages = with pkgs; [scrot xclip cider];
 
@@ -150,7 +153,7 @@ in {
           }
         ];
       };
-      
+
       # taken from https://git.sr.ht/~misterio/nix-config/tree/main/item/home/misterio/features/desktop/hyprland/default.nix#L9-13
       # auto-start hyprland if logging in from tty1
       programs.fish.loginShellInit = ''

@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   imports = [./wireguard.nix];
 
   networking.useNetworkd = true;
@@ -25,7 +23,7 @@
   #   enable = true;
   #   interfaces = ["wlp0s20f3"];
   # };
-  
+
   # try iwd instead?
   networking.wireless.iwd.enable = true;
   environment.systemPackages = [pkgs.iwgtk];
