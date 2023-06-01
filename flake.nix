@@ -107,6 +107,7 @@
 
       profiles.system = {
         sshUser = "stone";
+        user = "root";
         path = deploy-rs.lib.${system}.activate.nixos hostConfig;
       };
     };
