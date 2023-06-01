@@ -13,7 +13,7 @@
   environment.systemPackages = with pkgs; [vis helix du-dust git exa ripgrep];
   environment.variables = {EDITOR = "hx";};
 
-  boot.cleanTmpDir = lib.mkDefault true;
+  boot.tmp.cleanOnBoot = lib.mkDefault true;
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;

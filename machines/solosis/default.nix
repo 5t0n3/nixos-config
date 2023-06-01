@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   ...
 }: {
   imports = [./hardware-configuration.nix ./networking ./backups.nix];
@@ -12,8 +11,8 @@
   networking.hostName = "solosis";
 
   # Put /tmp on a tmpfs
-  boot.cleanTmpDir = false;
-  boot.tmpOnTmpfs = true;
+  boot.tmp.cleanOnBoot = false;
+  boot.tmp.useTmpfs = true;
 
   # Other ZFS settings
   networking.hostId = "a4513dad";

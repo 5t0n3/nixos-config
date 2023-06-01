@@ -28,7 +28,7 @@ in {
   networking.hostName = "klefki";
   networking.hostId = "82ad974d";
 
-  services.openssh.passwordAuthentication = false;
+  services.openssh.settings.PasswordAuthentication = false;
 
   age.secrets.vaultwarden-env = {
     file = ./secrets/vaultwarden-env.age;
