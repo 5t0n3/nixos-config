@@ -106,7 +106,7 @@
       fastConnection = true;
 
       profiles.system = {
-        sshUser = "root";
+        sshUser = "stone";
         path = deploy-rs.lib.${system}.activate.nixos hostConfig;
       };
     };
