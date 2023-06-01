@@ -108,6 +108,7 @@
       profiles.system = {
         sshUser = "stone";
         user = "root";
+        sudo = "doas -u";
         path = deploy-rs.lib.${system}.activate.nixos hostConfig;
       };
     };
