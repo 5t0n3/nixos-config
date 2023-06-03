@@ -38,7 +38,7 @@
   };
 
   # doas <3
-  security.sudo.enable = false;
+  # security.sudo.enable = false;
   security.doas = {
     enable = true;
     extraRules = [
