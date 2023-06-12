@@ -51,7 +51,7 @@
           routeConfig = {
             Gateway = "10.0.0.1";
             GatewayOnLink = true;
-            Destination = "192.168.1.0/24";
+            # Destination = "192.168.1.0/24";
           };
         }
       ];
