@@ -1,7 +1,4 @@
-{
-  config,
-  ...
-}: {
+{config, ...}: {
   imports = [./hardware-configuration.nix ./networking ./backups.nix];
 
   boot.loader.systemd-boot.enable = true;

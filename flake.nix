@@ -10,6 +10,10 @@
       url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager/release-23.05";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -59,6 +63,7 @@
     nixpkgs-unstable,
     flake-utils,
     home-manager,
+    home-manager-unstable,
     nix-index-db,
     nixos-wsl,
     nixpkgs-wayland,
@@ -102,7 +107,7 @@
         modules =
           [
             agenix.nixosModules.age
-            home-manager.nixosModules.home-manager
+            home-manager-unstable.nixosModules.home-manager
             hyprland.nixosModules.default
             pg-13.nixosModules.default
             {
