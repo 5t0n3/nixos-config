@@ -21,14 +21,13 @@
         wireguardConfig = {
           PrivateKeyFile = config.age.secrets.wg-privatekey.path;
           ListenPort = 51822;
-          FirewallMark = 666666;
         };
 
         wireguardPeers = [
           {
             wireguardPeerConfig = {
               PublicKey = "RHgmEgSpcSA1daZKGeY48UD66c5zESTrvEAe8k9ahxQ=";
-              AllowedIPs = ["0.0.0.0/0"];
+              AllowedIPs = ["0.0.0.0/0" "192.168.1.0/24"];
               Endpoint = "50.39.160.194:51821";
               PersistentKeepalive = 25;
             };
@@ -47,22 +46,12 @@
         # Fails for pi hole local dns entries
         DNSSEC = false;
       };
-      routingPolicyRules = [
-        {
-          routingPolicyRuleConfig = {
-            FirewallMark = 666666;
-            InvertRule = true;
-            Table = 1000;
-            Priority = 10;
-          };
-        }
-      ];
       routes = [
         {
           routeConfig = {
             Gateway = "10.0.0.1";
             GatewayOnLink = true;
-            Table = 1000;
+            Destination = "192.168.1.0/24";
           };
         }
       ];
