@@ -46,11 +46,6 @@
     };
 
     # Testing
-    nix-alien = {
-      url = "github:thiagokokada/nix-alien";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     pg-13 = {
       url = "github:5t0n3/pg-13";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -71,12 +66,38 @@
     hyprpaper,
     agenix,
     deploy-rs,
-    nix-alien,
     pg-13,
   } @ inputs: let
     system = "x86_64-linux";
     mkSystem = extraModules:
       nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules =
+          [
+            agenix.nixosModules.age
+            home-manager.nixosModules.home-manager
+            hyprland.nixosModules.default
+            pg-13.nixosModules.default
+            {
+              # Provide flake inputs to regular & home-manager config modules
+              _module.args = {inherit inputs;};
+              home-manager.extraSpecialArgs = {inherit inputs;};
+
+              # Include git revision of config in nixos-verison output
+              system.configurationRevision =
+                nixpkgs.lib.mkIf (self ? rev) self.rev;
+
+              # pin <nixpkgs> path & registry entry to current nixos-unstable rev
+              nix.nixPath = ["nixpkgs=${inputs.nixpkgs-unstable}"];
+              nix.registry.nixpkgs.flake = inputs.nixpkgs-unstable;
+            }
+            ./base
+          ]
+          ++ extraModules;
+      };
+    # hack for if I decide to not go full unstable
+    mkUnstableSystem = extraModules:
+      nixpkgs-unstable.lib.nixosSystem {
         inherit system;
         modules =
           [
@@ -115,17 +136,8 @@
     unstablePkgs = nixpkgs-unstable.legacyPackages.${system};
   in {
     nixosConfigurations = {
-      cryogonal = mkSystem [
+      cryogonal = mkUnstableSystem [
         ./machines/cryogonal
-        ({pkgs, ...}: {
-          # nix-alien setup for testing
-          programs.nix-ld.enable = true;
-          environment.systemPackages = [
-            (nix-alien.packages.${pkgs.system}.nix-alien.overridePythonAttrs (_: {
-              doCheck = false;
-            }))
-          ];
-        })
       ];
 
       solosis = mkSystem [./machines/solosis];
