@@ -43,11 +43,6 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.utils.follows = "flake-utils";
-    };
 
     # Testing
     pg-13 = {
@@ -70,7 +65,6 @@
     hyprland,
     hyprpaper,
     agenix,
-    deploy-rs,
     pg-13,
   } @ inputs: let
     system = "x86_64-linux";
@@ -127,18 +121,43 @@
           ]
           ++ extraModules;
       };
-    mkNode = host: hostConfig: {
-      hostname = "${host}.localdomain";
-      fastConnection = true;
-
-      profiles.system = {
-        # sshUser = "stone";
-        sshUser = "root";
-        user = "root";
-        path = deploy-rs.lib.${system}.activate.nixos hostConfig;
-      };
-    };
     unstablePkgs = nixpkgs-unstable.legacyPackages.${system};
+    # TODO: move to separate file?
+    deployNodes = ["simulacrum" "klefki"];
+    deployList = unstablePkgs.lib.concatMapStringsSep "\n" (str: " - " + str) deployNodes;
+    deployRegex = "(${unstablePkgs.lib.concatStringsSep "|" deployNodes})";
+    deploy-sh = unstablePkgs.writeShellApplication {
+      name = "deploy";
+
+      runtimeInputs = builtins.attrValues {
+        inherit (unstablePkgs) nixos-rebuild gnugrep git nix-output-monitor;
+      };
+      text = ''
+        # basic usage cause why not
+        if test $# -eq 0 || test "$1" = "--help"; then
+          echo "Usage: deploy <host> [-f]"
+          echo "Deployment targets:"
+          echo "${deployList}"
+        # ensure a valid host was provided
+        elif echo "$1" | grep -v -E -q "${deployRegex}"; then
+          echo "Please specify a valid deployment host! Your choices are:"
+          echo "${deployList}"
+        # clean working tree deployment
+        elif git diff-index --quiet HEAD; then
+          revstr=$(git rev-parse --short HEAD)
+          echo "Deploying configuration version \"$revstr\" to \`$1\`!"
+          nixos-rebuild switch --target-host "$1.localdomain" --fast --use-remote-sudo --flake ".#$1" |& nom
+        # Forced dirty deployment with fancy colors :)
+        elif test $# -eq 2 && test "$2" = "-f"; then 
+            printf "\e[1;91mWARNING!\e[0m"
+            echo " Deploying uncommitted configuration version to \`$1\`!"
+            nixos-rebuild switch --target-host "$1.localdomain" --fast --use-remote-sudo --flake ".#$1" |& nom
+        # dirty working tree warning
+        else
+          echo "Commit your changes before deploying! (or provide the -f flag)"
+        fi
+      '';
+    };
   in {
     nixosConfigurations = {
       cryogonal = mkUnstableSystem [
@@ -155,26 +174,16 @@
       klefki = mkSystem [./machines/klefki];
     };
 
-    # Not every machine has to be deployed to (e.g. cryogonal is where I deploy from)
-    deploy.nodes = let
-      isDeployed = name: _: builtins.elem name ["simulacrum" "klefki"];
-      configs = nixpkgs.lib.filterAttrs isDeployed self.nixosConfigurations;
-    in
-      builtins.mapAttrs mkNode configs;
-
     devShells.${system}.default = unstablePkgs.mkShell {
       # alejandra is included so it doesn't get garbage collected (?)
       packages = [
         agenix.packages.${system}.agenix
-        deploy-rs.packages.${system}.deploy-rs
         unstablePkgs.alejandra
         unstablePkgs.nil
+        deploy-sh
       ];
     };
 
     formatter.${system} = unstablePkgs.alejandra;
-
-    # taken directly from deploy-rs repo
-    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
   };
 }
