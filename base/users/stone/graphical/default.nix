@@ -69,6 +69,9 @@ in {
         xdg-utils
       ];
 
+      # nheko ig?
+      programs.nheko.enable = true;
+
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true;
 
