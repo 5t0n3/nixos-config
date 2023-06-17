@@ -10,6 +10,7 @@ let
   solosis = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJtnVjsCoTunr6ePI25yiRgzvHg5hOVsFEttGcA0wjsV";
   simulacrum = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICL9JQGalPr7Y4f1cez4PKhxNrdSp52/xGnQPXbyCJLC";
   klefki = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH1CxdrXvZ0zyN3x0/Ui+YEvAbG1r4MtiX2yMz7nI5XU";
+  nacli = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKdoVReGphY1HsqCLgyirFBXOTgXHsc2940JLePWsnKg";
 in {
   "secrets/wifi-psks.age".publicKeys = stone ++ [solosis cryogonal];
 
@@ -34,4 +35,7 @@ in {
 
   # klefki
   "machines/klefki/secrets/vaultwarden-env.age".publicKeys = stone ++ [klefki];
+
+  # nacli
+  "machines/nacli/secrets/vaultwarden-env.age".publicKeys = stone ++ [nacli];
 }
