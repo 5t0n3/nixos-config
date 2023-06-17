@@ -123,7 +123,7 @@
       };
     unstablePkgs = nixpkgs-unstable.legacyPackages.${system};
     # TODO: move to separate file?
-    deployNodes = ["simulacrum" "klefki"];
+    deployNodes = ["simulacrum" "klefki" "nacli"];
     deployList = unstablePkgs.lib.concatMapStringsSep "\n" (str: " - " + str) deployNodes;
     deployRegex = "(${unstablePkgs.lib.concatStringsSep "|" deployNodes})";
     deploy-sh = unstablePkgs.writeShellApplication {
@@ -172,6 +172,8 @@
         mkSystem [nixos-wsl.nixosModules.wsl ./machines/spiritomb.nix];
 
       klefki = mkSystem [./machines/klefki];
+
+      nacli = mkSystem [./machines/nacli];
     };
 
     devShells.${system}.default = unstablePkgs.mkShell {
