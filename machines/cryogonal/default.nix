@@ -15,9 +15,9 @@
   boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
 
   # Required to get graphics working
-  boot.extraModprobeConfig = ''
-    options i915 force_probe=5693
-  '';
+  # boot.extraModprobeConfig = ''
+  #   options i915 force_probe=5693
+  # '';
 
   networking.hostName = "cryogonal";
 
