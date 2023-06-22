@@ -65,12 +65,12 @@
     };
   };
 
-  # we do a little virtualization
-  virtualisation.libvirtd.enable = true;
-
-  users.users.stone.extraGroups = ["libvirtd"];
+  # group moment
+  users.users.stone.extraGroups = ["libvirtd" "dialout"];
+  users.users.stone.packages = [ pkgs.gh ];
 
   # we do a little virtualization (also man pages)
+  virtualisation.libvirtd.enable = true;
   documentation.dev.enable = true;
   environment.systemPackages = [pkgs.virt-manager inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.distrobox pkgs.man-pages pkgs.man-pages-posix];
   virtualisation.podman.enable = true;
