@@ -67,6 +67,8 @@ in {
         # other stuff?
         kitty
         xdg-utils
+        nil
+        alejandra
       ];
 
       # nheko ig?
