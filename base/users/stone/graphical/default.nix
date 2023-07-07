@@ -64,6 +64,9 @@ in {
         # fix missing icons maybe?
         gnome.adwaita-icon-theme
 
+        # we do a little gaming
+        prismlauncher
+
         # other stuff?
         kitty
         xdg-utils
