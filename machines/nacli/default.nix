@@ -3,13 +3,13 @@
   pkgs,
   inputs,
   ...
-}:
-let
+}: let
   vaultwarden-latest = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.vaultwarden;
 in {
   imports = [
     ./hardware-configuration.nix
     ./fail2ban.nix
+    ./backups.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

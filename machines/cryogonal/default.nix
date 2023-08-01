@@ -67,7 +67,7 @@
 
   # group moment
   users.users.stone.extraGroups = ["libvirtd" "dialout"];
-  users.users.stone.packages = [ pkgs.gh ];
+  users.users.stone.packages = [pkgs.gh];
 
   # we do a little virtualization (also man pages)
   virtualisation.libvirtd.enable = true;
