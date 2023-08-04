@@ -3,7 +3,7 @@
   lib,
   ...
 }: {
-  imports = [./users ./graphical.nix ./wifi.nix];
+  imports = [./users ./graphical.nix];
 
   time.timeZone = "America/Los_Angeles";
 

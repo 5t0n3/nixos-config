@@ -109,8 +109,8 @@ in {
     })
 
     {
-      fonts.enableDefaultFonts = true;
-      fonts.fonts = with pkgs; [
+      fonts.enableDefaultPackages = true;
+      fonts.packages = [
         (unstablePkgs.nerdfonts.override {
           fonts = ["JetBrainsMono" "MPlus" "Overpass" "Ubuntu"];
         })

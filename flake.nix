@@ -10,7 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager-unstable = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nixos-wsl = {
@@ -22,7 +22,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Display-related stuff
+    # wayland :)
     nixpkgs-wayland = {
       url = "github:nix-community/nixpkgs-wayland";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -36,13 +36,13 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # Config-specific stuff
+    # secret management
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # Testing
+    # my stuff
     pg-13 = {
       url = "github:5t0n3/pg-13";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -74,7 +74,7 @@
             hyprland.nixosModules.default
             pg-13.nixosModules.default
             {
-              # Provide flake inputs to regular & home-manager config modules
+              # Provide flake inputs to system & home-manager config modules
               _module.args = {inherit inputs;};
               home-manager.extraSpecialArgs = {inherit inputs;};
 
@@ -117,9 +117,9 @@
           ]
           ++ extraModules;
       };
-    unstablePkgs = nixpkgs-unstable.legacyPackages.${system};
+    # honestly I have no idea why I did this...I'll probably move back to deploy-rs at some point
     # TODO: move to separate file?
-    deployNodes = ["simulacrum" "klefki" "nacli"];
+    deployNodes = ["simulacrum" "nacli"];
     deployList = unstablePkgs.lib.concatMapStringsSep "\n" (str: " - " + str) deployNodes;
     deployRegex = "(${unstablePkgs.lib.concatStringsSep "|" deployNodes})";
     deploy-sh = unstablePkgs.writeShellApplication {
@@ -154,6 +154,7 @@
         fi
       '';
     };
+    unstablePkgs = nixpkgs-unstable.legacyPackages.${system};
   in {
     nixosConfigurations = {
       cryogonal = mkUnstableSystem [
@@ -167,13 +168,10 @@
       spiritomb =
         mkSystem [nixos-wsl.nixosModules.wsl ./machines/spiritomb.nix];
 
-      klefki = mkSystem [./machines/klefki];
-
       nacli = mkSystem [./machines/nacli];
     };
 
     devShells.${system}.default = unstablePkgs.mkShell {
-      NIX_SSHOPTS = "-t";
       # alejandra is included so it doesn't get garbage collected (?)
       packages = [
         agenix.packages.${system}.agenix

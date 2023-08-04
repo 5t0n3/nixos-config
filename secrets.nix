@@ -12,8 +12,6 @@ let
   klefki = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH1CxdrXvZ0zyN3x0/Ui+YEvAbG1r4MtiX2yMz7nI5XU";
   nacli = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKdoVReGphY1HsqCLgyirFBXOTgXHsc2940JLePWsnKg";
 in {
-  "secrets/wifi-psks.age".publicKeys = stone ++ [solosis cryogonal];
-
   # cryogonal
   "machines/cryogonal/secrets/wg-privkey.age".publicKeys =
     stone
