@@ -7,8 +7,9 @@
 in {
   systemd.timers."vaultwarden-backup" = {
     enable = true;
-    description = "Timer to trigger daily backup of vaultwarden data";
+    description = "Timer to trigger daily backup of Vaultwarden data";
 
+    after = ["network-online.target"];
     wantedBy = ["timers.target"];
 
     timerConfig = {
@@ -22,9 +23,7 @@ in {
     enable = true;
     description = "Vaultwarden backup to Backblaze B2";
 
-    wants = ["network-online.target"];
     after = ["network-online.target"];
-    wantedBy = ["multi-user.target"];
 
     serviceConfig = {
       User = "vaultwarden";
