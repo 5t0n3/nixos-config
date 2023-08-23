@@ -5,11 +5,6 @@
 }: let
   backup-python = pkgs.python3.withPackages (lib.attrVals ["cryptography" "b2sdk"]);
 in {
-  users.users.vaultwarden-backup = {
-    isSystemUser = true;
-    group = "vaultwarden";
-  };
-
   systemd.timers."vaultwarden-backup" = {
     enable = true;
     description = "Timer to trigger daily backup of vaultwarden data";
@@ -32,7 +27,7 @@ in {
     wantedBy = ["multi-user.target"];
 
     serviceConfig = {
-      User = "vaultwarden-backup";
+      User = "vaultwarden";
       WorkingDirectory = "/var/lib/bitwarden_rs";
       PrivateTmp = true;
       LoadCredential = "config.json:/var/lib/bitwarden_rs/backup-config.json";
