@@ -10,6 +10,7 @@ in {
     description = "Timer to trigger daily backup of Vaultwarden data";
 
     after = ["network-online.target"];
+    requires = ["vaultwarden-backup.service"];
     wantedBy = ["timers.target"];
 
     timerConfig = {
