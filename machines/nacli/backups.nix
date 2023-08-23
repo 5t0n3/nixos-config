@@ -31,14 +31,12 @@ in {
     after = ["network-online.target"];
     wantedBy = ["multi-user.target"];
 
-    path = [backup-python];
-
     serviceConfig = {
       User = "vaultwarden-backup";
       WorkingDirectory = "/var/lib/bitwarden_rs";
       PrivateTmp = true;
       LoadCredential = "config.json:/var/lib/bitwarden_rs/backup-config.json";
-      ExecStart = "python3 ${./vw_backup.py}";
+      ExecStart = "${backup-python}/bin/python3 ${./vw_backup.py}";
     };
   };
 }

@@ -177,6 +177,7 @@
     };
 
     devShells.${system}.default = unstablePkgs.mkShell {
+      NIX_SSHOPTS = "-t";
       # alejandra is included so it doesn't get garbage collected (?)
       packages = [
         agenix.packages.${system}.agenix
