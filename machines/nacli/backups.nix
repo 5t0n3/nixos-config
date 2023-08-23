@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  backup-python = pkgs.python3.withPackages (lib.attrVals ["cryptography" "b2sdk"]);
+  backup-python = pkgs.python3.withPackages (lib.attrVals ["cryptography" "b2sdk" "setuptools"]);
 in {
   systemd.timers."vaultwarden-backup" = {
     enable = true;
