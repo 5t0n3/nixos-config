@@ -86,6 +86,11 @@
               nix.nixPath = ["nixpkgs=${inputs.nixpkgs-unstable}"];
               nix.registry.nixpkgs.flake = inputs.nixpkgs-unstable;
             }
+
+            # compatibility shim thing since 23.11 isn't stable yet
+            (nixpkgs.lib.mkAliasOptionModule ["fonts" "packages"] ["fonts" "fonts"])
+            (nixpkgs.lib.mkAliasOptionModule ["fonts" "enableDefaultPackages"] ["fonts" "enableDefaultFonts"])
+
             ./base
           ]
           ++ extraModules;
@@ -161,12 +166,12 @@
         ./machines/cryogonal
       ];
 
-      solosis = mkSystem [./machines/solosis];
+      solosis = mkUnstableSystem [./machines/solosis];
 
       simulacrum = mkSystem [./machines/simulacrum];
 
       spiritomb =
-        mkSystem [nixos-wsl.nixosModules.wsl ./machines/spiritomb.nix];
+        mkUnstableSystem [nixos-wsl.nixosModules.wsl ./machines/spiritomb.nix];
 
       nacli = mkSystem [./machines/nacli];
     };

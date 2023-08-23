@@ -25,7 +25,6 @@ with lib; let
 
   waylandPkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
   unstablePkgs = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
-  hyprlandPkgs = inputs.hyprland.packages.${pkgs.system};
   hyprpaper = inputs.hyprpaper.packages.${pkgs.system}.hyprpaper;
 in {
   options.stone.graphical.enable = mkOption {
@@ -72,6 +71,7 @@ in {
         xdg-utils
         nil
         alejandra
+        veracrypt
       ];
 
       # nheko ig?
@@ -130,8 +130,8 @@ in {
     (mkIf (graphicalType == "wayland") {
       home.packages = builtins.attrValues {
         inherit hyprpaper;
+        inherit (pkgs) waybar;
         inherit (waylandPkgs) swaylock-effects wofi wl-clipboard grim slurp imv;
-        inherit (hyprlandPkgs) waybar-hyprland;
       };
 
       services.swayidle = let
