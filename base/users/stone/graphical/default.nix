@@ -55,7 +55,7 @@ in {
 
         # ctf stuffs
         unstablePkgs.ghidra
-        sage
+        (sage.override {requireSageTests = false;})
         binutils # for `strings` mostly
         file
         hexyl
