@@ -26,6 +26,7 @@ with lib; let
   waylandPkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
   unstablePkgs = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
   hyprpaper = inputs.hyprpaper.packages.${pkgs.system}.hyprpaper;
+  waybar-hyprland = pkgs.waybar.override {hyprlandSupport = true;};
 in {
   options.stone.graphical.enable = mkOption {
     description = "Whether to enable a graphical user environment & common programs.";
@@ -129,8 +130,7 @@ in {
 
     (mkIf (graphicalType == "wayland") {
       home.packages = builtins.attrValues {
-        inherit hyprpaper;
-        inherit (pkgs) waybar;
+        inherit hyprpaper waybar-hyprland;
         inherit (waylandPkgs) swaylock-effects wofi wl-clipboard grim slurp imv;
       };
 
