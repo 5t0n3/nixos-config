@@ -41,6 +41,7 @@ in {
         # internet
         firefox
         unstablePkgs.webcord
+        cinny-desktop
 
         # command line utilities
         brightnessctl
