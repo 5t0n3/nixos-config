@@ -31,8 +31,8 @@
     # TODO: figure out delta theming
     delta.enable = true;
 
-    userName = "Zane Othman";
-    userEmail = "zane.othman@gmail.com";
+    userName = "5t0n3";
+    userEmail = "31430937+5t0n3@users.noreply.github.com";
 
     extraConfig = {
       init.defaultBranch = "main";
