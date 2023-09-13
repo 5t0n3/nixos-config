@@ -10,7 +10,7 @@
   networking.firewall.enable = true;
   services.openssh.enable = true;
 
-  environment.systemPackages = with pkgs; [vis helix du-dust git exa ripgrep];
+  environment.systemPackages = with pkgs; [vis helix du-dust git eza ripgrep];
   environment.variables = {EDITOR = "hx";};
 
   boot.tmp.cleanOnBoot = lib.mkDefault true;
