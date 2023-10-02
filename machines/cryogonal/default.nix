@@ -72,7 +72,7 @@
   # we do a little virtualization (also man pages)
   virtualisation.libvirtd.enable = true;
   documentation.dev.enable = true;
-  environment.systemPackages = [pkgs.virt-manager inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.distrobox pkgs.man-pages pkgs.man-pages-posix];
+  environment.systemPackages = [pkgs.virt-manager inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.distrobox pkgs.man-pages pkgs.man-pages-posix pkgs.podman-compose];
   virtualisation.podman.enable = true;
   virtualisation.containers.storage.settings = {
     storage = {
