@@ -66,21 +66,29 @@
   };
 
   # group moment
-  users.users.stone.extraGroups = ["libvirtd" "dialout"];
+  users.users.stone.extraGroups = ["libvirtd" "dialout" "docker"];
   users.users.stone.packages = [pkgs.gh];
 
   # we do a little virtualization (also man pages)
   virtualisation.libvirtd.enable = true;
-  documentation.dev.enable = true;
-  environment.systemPackages = [pkgs.virt-manager inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.distrobox pkgs.man-pages pkgs.man-pages-posix pkgs.podman-compose];
-  virtualisation.podman.enable = true;
-  virtualisation.containers.storage.settings = {
-    storage = {
-      driver = "zfs";
-      graphroot = "/var/lib/containers/storage";
-      runroot = "/run/containers/storage";
-    };
+  environment.systemPackages = [pkgs.virt-manager inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.distrobox pkgs.man-pages pkgs.man-pages-posix pkgs.docker-compose]; # pkgs.podman-compose];
+
+  virtualisation.docker.enable = true;
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
   };
+
+  # virtualisation.podman.enable = true;
+  # virtualisation.containers.storage.settings = {
+  #   storage = {
+  #     driver = "zfs";
+  #     graphroot = "/var/lib/containers/storage";
+  #     runroot = "/run/containers/storage";
+  #   };
+  # };
+
+  documentation.dev.enable = true;
 
   # distrobox moment
   security.sudo.enable = lib.mkForce true;
