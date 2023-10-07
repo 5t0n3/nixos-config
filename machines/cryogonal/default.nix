@@ -12,7 +12,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.supportedFilesystems = ["zfs" "ntfs"];
-  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+  # boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
 
   # Required to get graphics working
   # boot.extraModprobeConfig = ''
