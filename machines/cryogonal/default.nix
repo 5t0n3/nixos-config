@@ -79,8 +79,13 @@
   #   setSocketVariable = true;
   # };
 
-  virtualisation.podman.enable = true;
-  virtualisation.podman.dockerSocket.enable = true;
+  virtualisation.podman = {
+    enable = true;
+    dockerSocket.enable = true;
+    # make containers reachable from each other
+    defaultNetwork.settings.dns_enabled = true;
+  };
+
   virtualisation.containers.storage.settings = {
     storage = {
       driver = "zfs";
