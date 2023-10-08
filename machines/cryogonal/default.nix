@@ -73,7 +73,7 @@
   virtualisation.libvirtd.enable = true;
   environment.systemPackages = [pkgs.virt-manager inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.distrobox pkgs.man-pages pkgs.man-pages-posix pkgs.docker-compose pkgs.podman-compose];
 
-  # virtualisation.docker.enable = true;
+  virtualisation.docker.enable = true;
   # virtualisation.docker.rootless = {
   #   enable = true;
   #   setSocketVariable = true;
@@ -81,8 +81,8 @@
 
   virtualisation.podman = {
     enable = true;
-    dockerSocket.enable = true;
-    # make containers reachable from each other
+    # dockerSocket.enable = true;
+    # make containers reachable from each other (or not??)
     defaultNetwork.settings.dns_enabled = true;
   };
 
