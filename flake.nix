@@ -91,6 +91,21 @@
             (nixpkgs.lib.mkAliasOptionModule ["fonts" "packages"] ["fonts" "fonts"])
             (nixpkgs.lib.mkAliasOptionModule ["fonts" "enableDefaultPackages"] ["fonts" "enableDefaultFonts"])
 
+            # also exa -> eza :(
+            ({
+              config,
+              lib,
+              ...
+            }: let
+              inherit (lib) mkIf strings;
+            in {
+              nixpkgs.overlays = mkIf (strings.versionOlder config.system.nixos.release "23.11") [
+                (final: prev: {
+                  eza = prev.exa;
+                })
+              ];
+            })
+
             ./base
           ]
           ++ extraModules;
