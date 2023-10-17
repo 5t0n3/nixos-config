@@ -28,7 +28,7 @@
     wg1 = {
       address = ["10.100.1.53/32"];
       dns = ["1.1.1.1"];
-      autostart = false;
+      # autostart = false;
       privateKeyFile = "/etc/sec.key";
 
       peers = [
