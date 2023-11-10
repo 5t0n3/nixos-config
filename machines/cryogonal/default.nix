@@ -1,6 +1,5 @@
 {
   pkgs,
-  config,
   lib,
   inputs,
   ...
@@ -67,7 +66,7 @@
 
   # group moment
   users.users.stone.extraGroups = ["libvirtd" "dialout" "docker"];
-  users.users.stone.packages = [pkgs.gh];
+  users.users.stone.packages = [pkgs.gh pkgs.texlive.combined.scheme-medium];
 
   # we do a little virtualization (also man pages)
   virtualisation.libvirtd.enable = true;
