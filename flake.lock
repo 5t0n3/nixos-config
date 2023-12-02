@@ -299,9 +299,7 @@
     },
     "hyprpaper": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
         "lastModified": 1701083219,
@@ -340,7 +338,7 @@
       "inputs": {
         "flake-parts": "flake-parts",
         "nix-github-actions": "nix-github-actions",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
@@ -445,16 +443,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1701389149,
-        "narHash": "sha256-rU1suTIEd5DGCaAXKW6yHoCfR1mnYjOXQFOaH7M23js=",
-        "owner": "nixos",
+        "lastModified": 1701253981,
+        "narHash": "sha256-ztaDIyZ7HrTAfEEUt9AtTDNoCYxUdSd6NrRHaYOIxtk=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "5de0b32be6e85dc1a9404c75131316e4ffbc634c",
+        "rev": "e92039b55bcd58469325ded85d4f58dd5a4eaf58",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-23.11",
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -533,6 +531,22 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1701389149,
+        "narHash": "sha256-rU1suTIEd5DGCaAXKW6yHoCfR1mnYjOXQFOaH7M23js=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "5de0b32be6e85dc1a9404c75131316e4ffbc634c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-23.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1701045352,
         "narHash": "sha256-iWsDbWzBP4gotkRfg/lH2A3O9wFoJc+yVO8CDuHLRe8=",
         "owner": "NixOS",
@@ -604,7 +618,7 @@
         "hyprpaper": "hyprpaper",
         "nix-index-db": "nix-index-db",
         "nixos-wsl": "nixos-wsl",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixpkgs-wayland": "nixpkgs-wayland",
         "pg-13": "pg-13"
