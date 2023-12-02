@@ -2,11 +2,11 @@
   description = "My totally not cursed NixOS configurations :)";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager-unstable = {
@@ -15,11 +15,11 @@
     };
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nix-index-db = {
       url = "github:Mic92/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # wayland :)
@@ -86,25 +86,6 @@
               nix.nixPath = ["nixpkgs=${inputs.nixpkgs-unstable}"];
               nix.registry.nixpkgs.flake = inputs.nixpkgs-unstable;
             }
-
-            # compatibility shim thing since 23.11 isn't stable yet
-            (nixpkgs.lib.mkAliasOptionModule ["fonts" "packages"] ["fonts" "fonts"])
-            (nixpkgs.lib.mkAliasOptionModule ["fonts" "enableDefaultPackages"] ["fonts" "enableDefaultFonts"])
-
-            # also exa -> eza :(
-            ({
-              config,
-              lib,
-              ...
-            }: let
-              inherit (lib) mkIf strings;
-            in {
-              nixpkgs.overlays = mkIf (strings.versionOlder config.system.nixos.release "23.11") [
-                (final: prev: {
-                  eza = prev.exa;
-                })
-              ];
-            })
 
             ./base
           ]
@@ -181,7 +162,7 @@
         ./machines/cryogonal
       ];
 
-      solosis = mkUnstableSystem [./machines/solosis];
+      # solosis = mkUnstableSystem [./machines/solosis];
 
       simulacrum = mkSystem [./machines/simulacrum];
 

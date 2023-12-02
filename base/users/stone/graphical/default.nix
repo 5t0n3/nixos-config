@@ -50,6 +50,7 @@ in {
         unstablePkgs.typst
         libreoffice
         nextcloud-client
+        logseq
 
         # sound
         pavucontrol
