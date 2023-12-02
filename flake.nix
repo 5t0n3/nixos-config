@@ -33,7 +33,7 @@
     };
     hyprpaper = {
       url = "github:hyprwm/hyprpaper";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # secret management
