@@ -51,6 +51,8 @@ in {
         libreoffice
         nextcloud-client
         logseq
+        pandoc
+        reveal-md
 
         # sound
         pavucontrol
