@@ -23,10 +23,6 @@
     };
 
     # wayland :)
-    nixpkgs-wayland = {
-      url = "github:nix-community/nixpkgs-wayland";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
     hyprland = {
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -57,7 +53,6 @@
     home-manager-unstable,
     nix-index-db,
     nixos-wsl,
-    nixpkgs-wayland,
     hyprland,
     hyprpaper,
     agenix,

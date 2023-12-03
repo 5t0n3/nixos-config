@@ -10,20 +10,6 @@ with lib; let
   cfg = config.stone.graphical;
   graphicalType = nixosConfig.stone.graphical.type;
 
-  # Mostly kept for documentation purposes in case I need it in the future
-  waylandElectron = pname:
-    pkgs.symlinkJoin {
-      name = pname;
-      paths = [pkgs.${pname}];
-      buildInputs = [pkgs.makeWrapper];
-      postBuild = ''
-        wrapProgram $out/bin/${pname} \
-          --add-flags "--enable-features=UseOzonePlatform" \
-          --add-flags "--ozone-platform=wayland"
-      '';
-    };
-
-  waylandPkgs = inputs.nixpkgs-wayland.packages.${pkgs.system};
   unstablePkgs = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
   hyprpaper = inputs.hyprpaper.packages.${pkgs.system}.hyprpaper;
   waybar-hyprland = pkgs.waybar.override {hyprlandSupport = true;};
@@ -135,16 +121,16 @@ in {
     (mkIf (graphicalType == "wayland") {
       home.packages = builtins.attrValues {
         inherit hyprpaper waybar-hyprland;
-        inherit (waylandPkgs) swaylock-effects wofi wl-clipboard grim slurp imv;
+        inherit (pkgs) swaylock-effects wofi wl-clipboard grim slurp imv oculante;
       };
 
       services.swayidle = let
-        swaylock = "${waylandPkgs.swaylock-effects}/bin/swaylock";
+        swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
         hyprctl = "${pkgs.hyprland}/bin/hyprctl";
         systemctl = "${pkgs.systemd}/bin/systemctl";
       in {
         enable = true;
-        package = waylandPkgs.swayidle;
+        package = pkgs.swayidle;
         # TODO: check if this actually works?
         systemdTarget = "graphical-session.target";
         timeouts = [
@@ -175,7 +161,7 @@ in {
         end
       '';
 
-      services.dunst.package = waylandPkgs.dunst;
+      services.dunst.package = pkgs.dunst;
     })
   ]);
 }
