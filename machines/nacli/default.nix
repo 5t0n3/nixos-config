@@ -37,11 +37,6 @@ in {
       IP_HEADER = "X-Forwarded-For";
 
       ROCKET_ADDRESS = "0.0.0.0";
-      ROCKET_PORT = 8016;
-
-      WEBSOCKET_ENABLED = true;
-      WEBSOCKET_ADDRESS = "0.0.0.0";
-      WEBSOCKET_PORT = 3012;
 
       SMTP_HOST = "smtp.gmail.com";
       SMTP_FROM = "cuber.zee@gmail.com";
@@ -51,7 +46,7 @@ in {
     };
   };
 
-  networking.firewall.allowedTCPPorts = [3012 8016];
+  networking.firewall.allowedTCPPorts = [8000];
 
   hardware.cpu.intel.updateMicrocode = true;
 
