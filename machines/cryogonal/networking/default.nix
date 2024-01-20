@@ -19,6 +19,13 @@
     wait-online.anyInterface = true;
   };
 
+  networking.firewall.allowedTCPPortRanges = [
+    {
+      from = 8000;
+      to = 8010;
+    }
+  ];
+
   # stone.wireless = {
   #   enable = true;
   #   interfaces = ["wlp0s20f3"];
