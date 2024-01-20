@@ -26,7 +26,7 @@ in {
       home.packages = with pkgs; [
         # internet
         firefox
-        unstablePkgs.webcord
+        vesktop
         # cinny-desktop
 
         # command line utilities
@@ -46,7 +46,7 @@ in {
 
         # ctf stuffs
         unstablePkgs.ghidra
-        (sage.override {requireSageTests = false;})
+        # (sage.override {requireSageTests = false;})
         binutils # for `strings` mostly
         file
         hexyl
