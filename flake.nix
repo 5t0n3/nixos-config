@@ -78,6 +78,7 @@
                 nixpkgs.lib.mkIf (self ? rev) self.rev;
 
               # pin <nixpkgs> path & registry entry to current nixos-unstable rev
+              # TODO: make stable?
               nix.nixPath = ["nixpkgs=${inputs.nixpkgs-unstable}"];
               nix.registry.nixpkgs.flake = inputs.nixpkgs-unstable;
             }
@@ -113,6 +114,7 @@
           ]
           ++ extraModules;
       };
+    unstablePkgs = nixpkgs-unstable.legacyPackages.${system};
     # honestly I have no idea why I did this...I'll probably move back to deploy-rs at some point
     # TODO: move to separate file?
     deployNodes = ["simulacrum" "nacli"];
@@ -150,7 +152,40 @@
         fi
       '';
     };
-    unstablePkgs = nixpkgs-unstable.legacyPackages.${system};
+    deployListSpaces = unstablePkgs.lib.concatStringsSep " " deployNodes;
+    updatecheck = unstablePkgs.writeShellApplication {
+      name = "updatecheck";
+
+      runtimeInputs = builtins.attrValues {
+        inherit (unstablePkgs) openssh git jq;
+      };
+
+      text = ''
+        hosts=(${deployListSpaces})
+
+        # colors yay
+        red="\e[1;31m"
+        reset="\e[0m"
+
+        # nix string interpolation escaping is fun :)
+        for host in "''${hosts[@]}"; do
+          # obtain configuration commit hash
+          rev=$(ssh "$host" "nixos-version --json" | jq -r .configurationRevision)
+          shortRev=$(git rev-parse --short "$rev")
+
+          # count intervening commits
+          commitsSince=$(git rev-list --count "$shortRev..HEAD")
+
+          echo -n "$host: "
+
+          if [ "$commitsSince" != 0 ]; then
+            echo -e "$red$commitsSince commits out of date$reset ($shortRev)"
+          else
+            echo "up to date"
+          fi
+        done
+      '';
+    };
   in {
     nixosConfigurations = {
       cryogonal = mkUnstableSystem [
@@ -175,6 +210,7 @@
         unstablePkgs.alejandra
         unstablePkgs.nil
         deploy-sh
+        updatecheck
       ];
     };
 
