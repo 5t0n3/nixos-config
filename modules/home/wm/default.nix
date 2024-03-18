@@ -91,7 +91,7 @@ in {
     # TODO: placement
     services.pass-secret-service = {
       enable = true;
-      storePath = "/home/stone/.local/share/password-store";
+      storePath = "${config.xdg.dataHome}/pass-creds";
     };
 
     home.packages =
