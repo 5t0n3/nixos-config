@@ -113,8 +113,8 @@ in {
               "$mainMod, U, togglesplit,"
 
               # brightness
-              "XF86MonBrightnessUp, exec, brightnessctl set +10%"
-              "XF86MonBrightnessDown, exec, brightnessctl set 10%-"
+              ",XF86MonBrightnessUp, exec, brightnessctl set +10%"
+              ",XF86MonBrightnessDown, exec, brightnessctl set 10%-"
 
               # Move focus with mainMod + HJKL (vim ftw)
               "$mainMod, H, movefocus, l"
