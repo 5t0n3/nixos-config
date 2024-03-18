@@ -40,8 +40,15 @@ in {
 
       # TODO: placement
       programs.gpg.enable = true;
-      services.gpg-agent.enable = true;
-      services.gpg-agent.pinentryPackage = pkgs.pinentry.qt;
+      services.gpg-agent = {
+        enable = true;
+        pinentryPackage = pkgs.pinentry.qt;
+
+        # following advice in https://github.com/mdellweg/pass_secret_service/issues/32#issuecomment-1240683046
+        extraConfig = ''
+          no-allow-external-cache
+        '';
+      };
 
       # enable git (lol)
       programs.git.enable = true;
