@@ -62,7 +62,7 @@ in {
       home.packages = lib.attrVals [
         "ghidra"
         "binutils"
-      ];
+      ] pkgs;
     })
   ];
 }
