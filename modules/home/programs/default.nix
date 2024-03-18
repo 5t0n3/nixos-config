@@ -41,6 +41,7 @@ in {
       # TODO: placement
       programs.gpg.enable = true;
       services.gpg-agent.enable = true;
+      services.gpg-agent.pinentryPackage = [pkgs.pinentry.tty];
 
       # enable git (lol)
       programs.git.enable = true;
