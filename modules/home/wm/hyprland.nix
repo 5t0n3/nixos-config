@@ -107,6 +107,17 @@ in {
 
           bind =
             [
+              # locking/shutdown
+              "$mainMod CONTROL_L, L, exec, swaylock -fF -c 2e3440"
+              "$mainMod CONTROL_L, B, exec, systemctl poweroff"
+
+              # Screenshots :)
+              "$mainMod SHIFT, S, exec, grim -g \"$(slurp)\" - | wl-copy -t image/png"
+              "$mainMod CONTROL_L, S, exec, grim -g \"$(slurp)\" \"/tmp/$(date +\"%Y-%m-%d-%H:%M:%S\").png\""
+
+
+              # screenshots
+              
               # launching programs
               "$mainMod SHIFT, Return, exec, kitty"
               "$mainMod, C, killactive,"
