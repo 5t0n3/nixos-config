@@ -38,6 +38,9 @@ in {
         ]
         pkgs;
 
+      # enable git (lol)
+      programs.git.enable = true;
+
       # delta (git pager)
       programs.git.delta = {
         enable = true;
