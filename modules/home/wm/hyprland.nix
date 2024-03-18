@@ -46,6 +46,10 @@ in {
       systemd.enable = true;
       settings =
         lib.recursiveUpdate {
+          exec-once = [
+            "waybar &"
+          ];
+
           input = {
             kb_layout = "us";
             kb_options = "caps:swapescape";

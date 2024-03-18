@@ -18,6 +18,10 @@ in {
   };
 
   config = lib.mkMerge [
+    {
+      # TODO: unhack
+      programs.zoxide.enable = true;
+    }
     (mkIf cfg.all {
       stone.programs = {
         dev = true;

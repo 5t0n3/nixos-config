@@ -89,7 +89,10 @@ in {
     programs.firefox.enable = true;
 
     # TODO: placement
-    services.gnome-keyring.enable = true;
+    services.pass-secret-service = {
+      enable = true;
+      storePath = "/home/stone/.local/share/password-store";
+    };
 
     home.packages =
       lib.attrVals [

@@ -101,6 +101,10 @@
               "DP-1, 2"
               "DP-1, 3"
             ];
+
+            exec-once = [
+              "hyprpaper &"
+            ];
           };
 
           programs.git = {
