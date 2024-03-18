@@ -38,6 +38,10 @@ in {
         ]
         pkgs;
 
+      # TODO: placement
+      programs.gpg.enable = true;
+      services.gpg-agent.enable = true;
+
       # enable git (lol)
       programs.git.enable = true;
 
@@ -71,6 +75,7 @@ in {
       programs.zathura.enable = true;
       programs.pandoc.enable = true;
       services.nextcloud-client.enable = true;
+      services.nextcloud-client.startInBackground = true;
     })
     (mkIf cfg.ctf {
       # TODO: bring in blizzard stuff
