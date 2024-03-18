@@ -34,6 +34,14 @@ in {
         ]
         pkgs;
 
+      # delta (git pager)
+      programs.git.delta = {
+        enable = true;
+        options = {
+          side-by-side = true;
+        };
+      };
+
       # (nix-)direnv stuff
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true;

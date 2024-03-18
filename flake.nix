@@ -103,6 +103,12 @@
             ];
           };
 
+          programs.git = {
+            userName = "Zane";
+            # TODO: fix
+            userEmail = "31430937+5t0n3@users.noreply.github.com";
+          };
+
           stone.programs.all = true;
 
           home.stateVersion = "22.05";
