@@ -103,6 +103,8 @@
             ];
           };
 
+          stone.programs.all = true;
+
           home.stateVersion = "22.05";
         };
       };
