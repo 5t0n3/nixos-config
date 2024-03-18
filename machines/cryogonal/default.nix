@@ -37,10 +37,6 @@
 
   hardware.cpu.intel.updateMicrocode = true;
 
-  # Wayland time :)
-  stone.graphical.enable = true;
-  stone.graphical.type = "wayland";
-
   # taken from nixos-hardware
   services.fstrim.enable = true; # yay ssds
 
@@ -66,7 +62,6 @@
 
   # group moment
   users.users.stone.extraGroups = ["libvirtd" "dialout" "docker"];
-  users.users.stone.packages = [pkgs.gh pkgs.texlive.combined.scheme-medium pkgs.zathura];
 
   # we do a little virtualization (also man pages)
   virtualisation.libvirtd.enable = true;
@@ -94,14 +89,6 @@
   };
 
   documentation.dev.enable = true;
-
-  # distrobox moment
-  security.sudo.enable = lib.mkForce true;
-
-  # hardware key login maybe?
-  security.pam.u2f.enable = true;
-  security.pam.u2f.interactive = true;
-  security.pam.u2f.cue = true;
 
   system.stateVersion = "22.05";
 }

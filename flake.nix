@@ -38,6 +38,12 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # deployment
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     # my stuff
     pg-13 = {
       url = "github:5t0n3/pg-13";
@@ -56,164 +62,95 @@
     hyprland,
     hyprpaper,
     agenix,
+    deploy-rs,
     pg-13,
   } @ inputs: let
-    system = "x86_64-linux";
-    mkSystem = extraModules:
-      nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules =
-          [
-            agenix.nixosModules.age
-            home-manager.nixosModules.home-manager
-            hyprland.nixosModules.default
-            pg-13.nixosModules.default
-            {
-              # Provide flake inputs to system & home-manager config modules
-              _module.args = {inherit inputs;};
-              home-manager.extraSpecialArgs = {inherit inputs;};
-
-              # Include git revision of config in nixos-verison output
-              system.configurationRevision =
-                nixpkgs.lib.mkIf (self ? rev) self.rev;
-
-              # pin <nixpkgs> path & registry entry to current nixos-unstable rev
-              # TODO: make stable?
-              nix.nixPath = ["nixpkgs=${inputs.nixpkgs-unstable}"];
-              nix.registry.nixpkgs.flake = inputs.nixpkgs-unstable;
-            }
-
-            ./base
-          ]
-          ++ extraModules;
-      };
-    # hack for if I decide to not go full unstable
-    mkUnstableSystem = extraModules:
-      nixpkgs-unstable.lib.nixosSystem {
-        inherit system;
-        modules =
-          [
-            agenix.nixosModules.age
-            home-manager-unstable.nixosModules.home-manager
-            hyprland.nixosModules.default
-            pg-13.nixosModules.default
-            {
-              # Provide flake inputs to regular & home-manager config modules
-              _module.args = {inherit inputs;};
-              home-manager.extraSpecialArgs = {inherit inputs;};
-
-              # Include git revision of config in nixos-verison output
-              system.configurationRevision =
-                nixpkgs.lib.mkIf (self ? rev) self.rev;
-
-              # pin <nixpkgs> path & registry entry to current nixos-unstable rev
-              nix.nixPath = ["nixpkgs=${inputs.nixpkgs-unstable}"];
-              nix.registry.nixpkgs.flake = inputs.nixpkgs-unstable;
-            }
-            ./base
-          ]
-          ++ extraModules;
-      };
-    unstablePkgs = nixpkgs-unstable.legacyPackages.${system};
-    # honestly I have no idea why I did this...I'll probably move back to deploy-rs at some point
-    # TODO: move to separate file?
+    hostSystem = "x86_64-linux";
+    mkSystem = import ./modules/flake/mkSystem.nix inputs;
+    hostPkgs = nixpkgs-unstable.legacyPackages.${hostSystem};
     deployNodes = ["simulacrum" "nacli"];
-    deployList = unstablePkgs.lib.concatMapStringsSep "\n" (str: " - " + str) deployNodes;
-    deployRegex = "(${unstablePkgs.lib.concatStringsSep "|" deployNodes})";
-    deploy-sh = unstablePkgs.writeShellApplication {
-      name = "deploy";
+    deployScripts = import ./modules/flake/deploy-scripts.nix hostPkgs deployNodes;
+    mkNode = host: hostConfig: {
+      hostname = "${host}.localdomain";
+      fastConnection = true;
 
-      runtimeInputs = builtins.attrValues {
-        inherit (unstablePkgs) nixos-rebuild gnugrep git nix-output-monitor;
+      profiles.system = {
+        sshUser = "root";
+        # TODO: unhack system attr
+        path = deploy-rs.lib.${hostSystem}.activate.nixos hostConfig;
       };
-      text = ''
-        # basic usage cause why not
-        if [ $# -eq 0 ] || [ "$1" = "--help" ]; then
-          echo "Usage: deploy <host> [-f]"
-          echo "Deployment targets:"
-          echo "${deployList}"
-        # ensure a valid host was provided
-        elif echo "$1" | grep -qvE "${deployRegex}"; then
-          echo "Please specify a valid deployment host! Your choices are:"
-          echo "${deployList}"
-        # clean working tree deployment
-        elif git diff-index --quiet HEAD; then
-          revstr=$(git rev-parse --short HEAD)
-          printf "Deploying configuration version \e[0;92m%s\e[0m to \e[1;97m%s\e[0m!\n" "$revstr" "$1"
-          nixos-rebuild switch --target-host "$1.localdomain" --fast --use-remote-sudo --flake ".#$1" |& nom
-        # Forced dirty deployment with fancy colors :)
-        elif [ $# -eq 2 ] && [ "$2" = "-f" ]; then
-          printf "\e[1;91mWARNING!\e[0m"
-          printf " Deploying uncommitted configuration version to \e[1;97m%s\e[0m!\n" "$1"
-          nixos-rebuild switch --target-host "$1.localdomain" --fast --use-remote-sudo --flake ".#$1" |& nom
-        # dirty working tree warning
-        else
-          echo "Commit your changes before deploying! (or provide the -f flag)"
-        fi
-      '';
-    };
-    deployListSpaces = unstablePkgs.lib.concatStringsSep " " deployNodes;
-    updatecheck = unstablePkgs.writeShellApplication {
-      name = "updatecheck";
-
-      runtimeInputs = builtins.attrValues {
-        inherit (unstablePkgs) openssh git jq;
-      };
-
-      text = ''
-        hosts=(${deployListSpaces})
-
-        # colors yay
-        red="\e[1;31m"
-        reset="\e[0m"
-
-        # nix string interpolation escaping is fun :)
-        for host in "''${hosts[@]}"; do
-          # obtain configuration commit hash
-          rev=$(ssh "$host" "nixos-version --json" | jq -r .configurationRevision)
-          shortRev=$(git rev-parse --short "$rev")
-
-          # count intervening commits
-          commitsSince=$(git rev-list --count "$shortRev..HEAD")
-
-          echo -n "$host: "
-
-          if [ "$commitsSince" != 0 ]; then
-            echo -e "$red$commitsSince commits out of date$reset ($shortRev)"
-          else
-            echo "up to date"
-          fi
-        done
-      '';
     };
   in {
     nixosConfigurations = {
-      cryogonal = mkUnstableSystem [
-        ./machines/cryogonal
-      ];
+      cryogonal = mkSystem {
+        pkgs-input = inputs.nixpkgs-unstable;
+        extraModules = [./modules/system/desktop ./machines/cryogonal];
+        # extraModules = [./machines/cryogonal];
+        stoneConfig = {
+          stone.wm.enable = true;
+          stone.wm.hyprland.extraSettings = {
+            monitor = [
+              "eDP-1,2560x1600,2560x1200,1" # laptop screen
+              "DP-1,2560x1440,0x0,1" # home - external monitor
+              ",preferred,5120x1200,1" # position all other monitors to right of laptop screen
+            ];
 
-      # solosis = mkUnstableSystem [./machines/solosis];
+            # workspace bindings
+            workspace = [
+              "eDP-1, 1"
+              "DP-1, 2"
+              "DP-1, 3"
+            ];
+          };
 
-      simulacrum = mkSystem [./machines/simulacrum];
+          home.stateVersion = "22.05";
+        };
+      };
 
-      spiritomb =
-        mkUnstableSystem [nixos-wsl.nixosModules.wsl ./machines/spiritomb.nix];
+      simulacrum = mkSystem {
+        extraModules = [pg-13.nixosModules.default ./machines/simulacrum];
+        stoneConfig = {
+          home.stateVersion = "22.05";
+        };
+      };
 
-      nacli = mkSystem [./machines/nacli];
+      spiritomb = mkSystem {
+        pkgs-input = inputs.nixpkgs-unstable;
+        extraModules = [nixos-wsl.nixosModules.wsl ./machines/spiritomb.nix];
+        stoneConfig = {
+          home.stateVersion = "22.05";
+        };
+      };
+
+      nacli = mkSystem {
+        extraModules = [./machines/nacli];
+        stoneConfig = {
+          home.stateVersion = "23.05";
+        };
+      };
     };
 
-    devShells.${system}.default = unstablePkgs.mkShell {
+    # TODO: make less hacky
+    deploy.nodes = let
+      isDeployed = name: _: builtins.elem name ["simulacrum" "klefki"];
+      configs = nixpkgs.lib.filterAttrs isDeployed self.nixosConfigurations;
+    in
+      builtins.mapAttrs mkNode configs;
+
+    devShells.${hostSystem}.default = hostPkgs.mkShell {
       NIX_SSHOPTS = "-t";
-      # alejandra is included so it doesn't get garbage collected (?)
-      packages = [
-        agenix.packages.${system}.agenix
-        unstablePkgs.alejandra
-        unstablePkgs.nil
-        deploy-sh
-        updatecheck
-      ];
+      packages =
+        [
+          agenix.packages.${hostSystem}.agenix
+          hostPkgs.alejandra
+          deploy-rs.packages.${hostSystem}.deploy-rs
+        ]
+        ++ deployScripts;
     };
 
-    formatter.${system} = unstablePkgs.alejandra;
+    # as advised in the deploy-rs readme
+    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+
+    formatter.${hostSystem} = hostPkgs.alejandra;
   };
 }
