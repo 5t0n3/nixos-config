@@ -155,7 +155,7 @@ in {
               # moving windows/focus between workspaces
               "$mainMod, ${nStr}, workspace, ${nStr}"
               "$mainMod SHIFT, ${nStr}, movetoworkspace, ${nStr}"
-            ]) (lib.range 1 10));
+            ]) (lib.range 1 9));
 
           # window movement & resizing
           bindm = [
