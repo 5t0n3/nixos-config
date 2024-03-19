@@ -3,7 +3,7 @@ pkgs: deployNodes: let
   deployRegex = "(${pkgs.lib.concatStringsSep "|" deployNodes})";
   # honestly I have no idea why I did this...I'll probably move back to deploy-rs at some point
   deploy-sh = pkgs.writeShellApplication {
-    name = "deploy";
+    name = "deploy-sh";
 
     runtimeInputs = builtins.attrValues {
       inherit (pkgs) nixos-rebuild gnugrep git nix-output-monitor;
