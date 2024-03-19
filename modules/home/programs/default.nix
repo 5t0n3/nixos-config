@@ -79,10 +79,12 @@ in {
     })
     (mkIf cfg.ctf {
       # TODO: bring in blizzard stuff
-      home.packages = lib.attrVals [
-        "ghidra"
-        "binutils"
-      ] pkgs;
+      home.packages =
+        lib.attrVals [
+          "ghidra"
+          "binutils"
+        ]
+        pkgs;
     })
   ];
 }

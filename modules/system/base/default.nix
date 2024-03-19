@@ -46,9 +46,11 @@ in {
   };
 
   # system-level vis configuration
-  environment.etc =
-    lib.genAttrs ["vis/visrc.lua" "vis/nix.lua" "vis/gruvbox.lua"]
-    (file: {source = ./${file};});
+  environment.etc = {
+    "vis/visrc.lua".source = ./vis/visrc.lua;
+    "vis/lexers/nix.lua".source = ./vis/nix.lua;
+    "vis/themes/gruvbox.lua".source = ./vis/gruvbox.lua;
+  };
 
   # common environment variables (and also bat config file)
   environment.variables = {
