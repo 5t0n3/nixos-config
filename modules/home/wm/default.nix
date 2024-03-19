@@ -88,9 +88,6 @@ in {
     # TODO: profile config with arkenfox user.js?
     programs.firefox.enable = true;
 
-    # TODO: placement
-    services.gnome-keyring.enable = true;
-
     home.packages =
       lib.attrVals [
         "oculante" # image viewer
