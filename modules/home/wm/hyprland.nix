@@ -40,7 +40,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    # TODO: bring configs into here lol
+    # TODO: bring waybar config into here/wm section (or separate out)
+
     wayland.windowManager.hyprland = {
       enable = true;
       systemd.enable = true;
@@ -115,9 +116,6 @@ in {
               "$mainMod SHIFT, S, exec, grim -g \"$(slurp)\" - | wl-copy -t image/png"
               "$mainMod CONTROL_L, S, exec, grim -g \"$(slurp)\" \"/tmp/$(date +\"%Y-%m-%d-%H:%M:%S\").png\""
 
-
-              # screenshots
-              
               # launching programs
               "$mainMod SHIFT, Return, exec, kitty"
               "$mainMod, C, killactive,"
@@ -142,6 +140,14 @@ in {
               "$mainMod SHIFT, J, swapwindow, d"
               "$mainMod SHIFT, K, swapwindow, u"
               "$mainMod SHIFT, L, swapwindow, r"
+
+              # scroll between open workspaces
+              "$mainMod, mouse_down, workspace, e+1"
+              "$mainMod, mouse_up, workspace, e-1"
+
+              # trying out a special workspace?
+              "$mainMod SHIFT, X, movetoworkspace, special"
+              "$mainMod, S, togglespecialworkspace,"
             ]
             ++ (lib.concatMap (n: let
               nStr = toString n;

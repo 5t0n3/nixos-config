@@ -89,10 +89,7 @@ in {
     programs.firefox.enable = true;
 
     # TODO: placement
-    services.pass-secret-service = {
-      enable = true;
-      storePath = "${config.xdg.dataHome}/pass-creds";
-    };
+    services.gnome-keyring.enable = true;
 
     home.packages =
       lib.attrVals [
