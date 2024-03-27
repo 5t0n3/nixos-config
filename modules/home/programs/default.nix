@@ -59,7 +59,7 @@ in {
       nix.settings.keep-outputs = true;
     })
     (mkIf cfg.chat {
-      home.packages = [pkgs.vencord];
+      home.packages = [pkgs.vesktop];
       programs.nheko.enable = true;
     })
     (mkIf cfg.prod {
