@@ -14,5 +14,8 @@
 
   networking.useNetworkd = true;
 
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = false;
+
   system.stateVersion = "23.05";
 }
