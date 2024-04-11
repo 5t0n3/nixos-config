@@ -67,7 +67,7 @@ in {
         lib.attrVals [
           "typst"
           "libreoffice"
-          "logseq"
+          # "logseq"
           "reveal-md"
         ]
         pkgs;
