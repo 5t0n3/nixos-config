@@ -68,6 +68,7 @@
     hostSystem = "x86_64-linux";
     mkSystem = import ./modules/flake/mkSystem.nix inputs;
     hostPkgs = nixpkgs-unstable.legacyPackages.${hostSystem};
+    # TODO: add altaria
     deployNodes = ["simulacrum" "nacli"];
     deployScripts = import ./modules/flake/deploy-scripts.nix hostPkgs deployNodes;
     mkNode = host: hostConfig: {
@@ -139,6 +140,13 @@
         extraModules = [./machines/nacli];
         stoneConfig = {
           home.stateVersion = "23.05";
+        };
+      };
+
+      altaria = mkSystem {
+        extraModules = [./machines/altaria];
+        stoneConfig = {
+          home.stateVersion = "23.11";
         };
       };
     };
