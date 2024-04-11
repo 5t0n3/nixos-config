@@ -94,6 +94,8 @@ in {
         "dolphin" # file browser
         "pavucontrol" # volume control
         "wl-clipboard" # clipboard management
+        "xdg-utils" # mostly for xdg-open
+        "brightnessctl" # for brightness
 
         # screenshots
         "grim"
