@@ -87,7 +87,7 @@
         pkgs-input = inputs.nixpkgs-unstable;
         extraModules = [./modules/system/desktop ./machines/cryogonal];
         # extraModules = [./machines/cryogonal];
-        stoneConfig = {pkgs, ...}: {
+        stoneConfig = {
           stone.wm.enable = true;
           stone.wm.hyprland.extraSettings = {
             monitor = [
@@ -116,8 +116,6 @@
           };
 
           stone.programs.all = true;
-
-          home.packages = [pkgs.bitwarden-cli];
 
           home.stateVersion = "22.05";
         };

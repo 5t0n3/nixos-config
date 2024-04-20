@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   inputs,
   ...
 }: {
@@ -65,7 +64,7 @@
 
   # we do a little virtualization (also man pages)
   virtualisation.libvirtd.enable = true;
-  environment.systemPackages = [pkgs.virt-manager inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.distrobox pkgs.man-pages pkgs.man-pages-posix pkgs.docker-compose pkgs.podman-compose pkgs.python3];
+  environment.systemPackages = [pkgs.virt-manager inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.distrobox pkgs.man-pages pkgs.man-pages-posix pkgs.docker-compose pkgs.podman-compose pkgs.python3 pkgs.bitwarden-cli];
 
   virtualisation.docker.enable = true;
   # virtualisation.docker.rootless = {
