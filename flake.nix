@@ -117,6 +117,8 @@
 
           stone.programs.all = true;
 
+          programs.rbw.enable = true;
+
           home.stateVersion = "22.05";
         };
       };

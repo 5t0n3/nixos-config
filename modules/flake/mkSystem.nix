@@ -26,15 +26,19 @@ inputs: let
           ../system/base
 
           # single-user home-manager config
-          {
+          (args: {
             home-manager.users.stone = {
               imports = [
                 ../home
               ];
 
-              config = stoneConfig;
+              # this is kinda hacky but emulates module arguments being optional while still having the import
+              config =
+                if builtins.isAttrs stoneConfig
+                then stoneConfig
+                else stoneConfig args;
             };
-          }
+          })
         ]
         ++ extraModules;
     };

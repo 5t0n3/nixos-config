@@ -64,7 +64,7 @@
 
   # we do a little virtualization (also man pages)
   virtualisation.libvirtd.enable = true;
-  environment.systemPackages = [pkgs.virt-manager inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.distrobox pkgs.man-pages pkgs.man-pages-posix pkgs.docker-compose pkgs.podman-compose pkgs.python3 pkgs.rbw];
+  environment.systemPackages = [pkgs.virt-manager inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.distrobox pkgs.man-pages pkgs.man-pages-posix pkgs.docker-compose pkgs.podman-compose pkgs.python3];
 
   virtualisation.docker.enable = true;
   # virtualisation.docker.rootless = {

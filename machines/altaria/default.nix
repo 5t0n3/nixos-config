@@ -1,8 +1,27 @@
 {
   imports = [
     ./hardware-configuration.nix
-    # TODO: oci-common?
   ];
+
+  # caddy stuff
+  networking.firewall.allowedTCPPorts = [80 443];
+  services.caddy = {
+    enable = true;
+
+    globalConfig = ''
+      email domain@formulaic.cloud
+    '';
+
+    virtualHosts."formulaic.cloud".extraConfig = ''
+      encode zstd gzip
+
+      root * /srv/home/
+      file_server
+
+      @notstatic not path /static/*
+      rewrite @notstatic /index.html
+    '';
+  };
 
   zramSwap.enable = true;
   networking.hostName = "altaria";
