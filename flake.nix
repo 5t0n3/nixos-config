@@ -124,7 +124,7 @@
       zweilous = mkSystem {
         pkgs-input = inputs.nixpkgs-unstable;
         extraModules = [./modules/system/desktop ./machines/zweilous];
-        stoneConfig = {
+        stoneConfig = {pkgs, ...}: {
           stone.wm.enable = true;
           stone.wm.hyprland.extraSettings = {
             monitor = [
@@ -153,7 +153,14 @@
 
           stone.programs.all = true;
 
-          programs.rbw.enable = true;
+          programs.rbw = {
+            enable = true;
+            settings = {
+              email = "zane.othman@gmail.com";
+              base_url = "https://vault.othman.io";
+              pinentry = pkgs.pinentry-gnome3;
+            };
+          };
 
           home.stateVersion = "23.11";
         };

@@ -1,6 +1,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./wireguard.nix
   ];
 
   # caddy stuff

@@ -103,20 +103,7 @@ in {
       ]
       pkgs;
 
-    # GTK & cursor theming
-    gtk = {
-      enable = true;
-      theme = {
-        package = pkgs.nordic;
-        name = "Nordic";
-      };
-      iconTheme = {
-        # TODO: just use adwaita or something? this one seems to be missing some stuff
-        package = pkgs.zafiro-icons;
-        name = "Zafiro-icons";
-      };
-    };
-
+    # cursor theming
     home.pointerCursor = {
       package = pkgs.capitaine-cursors;
       name = "capitaine-cursors";
