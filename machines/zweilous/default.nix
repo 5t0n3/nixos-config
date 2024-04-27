@@ -22,7 +22,7 @@
   # gpg time?
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "gnome";
+    pinentryPackage = pkgs.pinentry-gnome3;
   };
 
   # trying steam
