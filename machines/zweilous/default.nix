@@ -19,6 +19,12 @@
   # group moment
   users.users.stone.extraGroups = ["libvirtd" "dialout"];
 
+  # gpg time?
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryFlavor = "gnome";
+  };
+
   # trying steam
   programs.steam = {
     enable = true;

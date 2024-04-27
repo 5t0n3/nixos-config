@@ -32,11 +32,14 @@ inputs: let
                 ../home
               ];
 
+              # TODO: figure out why args doesn't include pkgs here
+              config = stoneConfig;
+
               # this is kinda hacky but emulates module arguments being optional while still having the import
-              config =
-                if builtins.isAttrs stoneConfig
-                then stoneConfig
-                else stoneConfig args;
+              # config =
+              #   if builtins.isAttrs stoneConfig
+              #   then stoneConfig
+              #   else stoneConfig args;
             };
           }
         ]

@@ -12,6 +12,7 @@ in {
       all = mkEnableOption "all the things";
       dev = mkEnableOption "development programs";
       chat = mkEnableOption "programs for chatting";
+      sec = mkEnableOption "security-related stuff (?)";
       prod = mkEnableOption "productivity stuff";
       ctf = mkEnableOption "CTF-related tools";
     };
@@ -27,6 +28,7 @@ in {
         dev = true;
         chat = true;
         prod = true;
+        sec = true;
         ctf = true;
       };
     })
@@ -37,10 +39,6 @@ in {
           "alejandra"
         ]
         pkgs;
-
-      # TODO: placement
-      # programs.gpg.enable = true;
-      # services.gpg-agent.enable = true;
 
       # enable git (lol)
       programs.git.enable = true;
@@ -57,6 +55,18 @@ in {
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true;
       nix.settings.keep-outputs = true;
+    })
+    (mkIf cfg.sec {
+      programs.rbw = {
+        enable = true;
+        settings = {
+          email = "zane.othman@gmail.com";
+          base_url = "https://vault.othman.io";
+          pinentry = pkgs.pinentry-gnome3;
+        };
+      };
+
+      # TODO: bring GPG into here?
     })
     (mkIf cfg.chat {
       home.packages = [pkgs.vesktop];
