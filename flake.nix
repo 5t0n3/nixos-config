@@ -86,7 +86,6 @@
       cryogonal = mkSystem {
         pkgs-input = inputs.nixpkgs-unstable;
         extraModules = [./modules/system/desktop ./machines/cryogonal];
-        # extraModules = [./machines/cryogonal];
         stoneConfig = {
           stone.wm.enable = true;
           stone.wm.hyprland.extraSettings = {
@@ -111,8 +110,7 @@
 
           programs.git = {
             userName = "Zane";
-            # TODO: fix
-            userEmail = "31430937+5t0n3@users.noreply.github.com";
+            userEmail = "git@formulaic.cloud";
           };
 
           stone.programs.all = true;
@@ -120,6 +118,44 @@
           programs.rbw.enable = true;
 
           home.stateVersion = "22.05";
+        };
+      };
+
+      zweilous = mkSystem {
+        pkgs-input = inputs.nixpkgs-unstable;
+        extraModules = [./modules/system/desktop ./machines/zweilous];
+        stoneConfig = {
+          stone.wm.enable = true;
+          stone.wm.hyprland.extraSettings = {
+            monitor = [
+              "eDP-1,2560x1600,2560x1200,1" # laptop screen
+              "DP-1,2560x1440,0x0,1" # home - external monitor
+              ",preferred,5120x1200,1" # position all other monitors to right of laptop screen
+            ];
+
+            # workspace bindings
+            workspace = [
+              "eDP-1, 1"
+              "DP-1, 2"
+              "DP-1, 3"
+            ];
+
+            exec-once = [
+              "waybar &"
+              "hyprpaper &"
+            ];
+          };
+
+          programs.git = {
+            userName = "Zane";
+            userEmail = "git@formulaic.cloud";
+          };
+
+          stone.programs.all = true;
+
+          programs.rbw.enable = true;
+
+          home.stateVersion = "23.11";
         };
       };
 
