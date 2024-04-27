@@ -26,8 +26,8 @@ inputs: let
           ../system/base
 
           # single-user home-manager config
-          (args: {
-            home-manager.users.stone = {
+          {
+            home-manager.users.stone = args: {
               imports = [
                 ../home
               ];
@@ -38,7 +38,7 @@ inputs: let
                 then stoneConfig
                 else stoneConfig args;
             };
-          })
+          }
         ]
         ++ extraModules;
     };
