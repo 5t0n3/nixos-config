@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [./hardware-configuration.nix ./laptop.nix ./networking];
 
   # Use the systemd-boot EFI boot loader.
@@ -15,8 +19,22 @@
   # group moment
   users.users.stone.extraGroups = ["libvirtd" "dialout"];
 
+  # trying steam
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+  };
+
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "steam"
+      "steam-original"
+      "steam-run"
+      "veracrypt" # also veracrypt
+    ];
+
   # man pages + python ig?
-  environment.systemPackages = [pkgs.man-pages pkgs.man-pages-posix pkgs.python3];
+  environment.systemPackages = [pkgs.man-pages pkgs.man-pages-posix pkgs.python3 pkgs.veracrypt];
   documentation.dev.enable = true;
 
   # we do a little virtualization
