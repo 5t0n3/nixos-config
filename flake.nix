@@ -151,7 +151,10 @@
             userEmail = "git@formulaic.cloud";
 
             # sure let's sign everything, why not :)
-            signing.signByDefault = true;
+            signing = {
+              key = null;
+              signByDefault = true;
+            };
           };
 
           stone.programs.all = true;
