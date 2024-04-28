@@ -17,7 +17,7 @@
   networking.hostName = "zweilous";
 
   # group moment
-  users.users.stone.extraGroups = ["libvirtd" "dialout"];
+  users.users.stone.extraGroups = ["libvirtd" "dialout" "docker"];
 
   # gpg time?
   programs.gnupg.agent = {
@@ -40,7 +40,7 @@
     ];
 
   # man pages + python ig?
-  environment.systemPackages = [pkgs.man-pages pkgs.man-pages-posix pkgs.python3 pkgs.veracrypt];
+  environment.systemPackages = [pkgs.man-pages pkgs.man-pages-posix pkgs.python3 pkgs.veracrypt pkgs.docker-compose];
   documentation.dev.enable = true;
 
   # we do a little virtualization
@@ -55,6 +55,9 @@
       runroot = "/run/containers/storage";
     };
   };
+
+  # can't get rid of docker yet :(
+  virtualisation.docker.enable = true;
 
   system.stateVersion = "23.11";
 }

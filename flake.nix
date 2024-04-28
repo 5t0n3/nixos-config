@@ -149,6 +149,9 @@
           programs.git = {
             userName = "Zane";
             userEmail = "git@formulaic.cloud";
+
+            # sure let's sign everything, why not :)
+            settings.commit.gpgsign = true;
           };
 
           stone.programs.all = true;
