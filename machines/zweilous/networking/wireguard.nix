@@ -1,4 +1,6 @@
 {
+  networking.firewall.allowedUDPPorts = [13336];
+  
   networking.wg-quick.interfaces = {
     wg0 = {
       address = ["10.0.0.9/32"];
@@ -34,6 +36,7 @@
       address = ["10.100.2.47/32"];
       dns = ["1.1.1.1"];
       privateKeyFile = "/etc/sec.key";
+      listenPort = 13336;
 
       peers = [
         {
