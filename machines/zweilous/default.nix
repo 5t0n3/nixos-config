@@ -25,18 +25,9 @@
     pinentryPackage = pkgs.pinentry-gnome3;
   };
 
-  # trying steam
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-  };
-
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
-      "steam"
-      "steam-original"
-      "steam-run"
-      "veracrypt" # also veracrypt
+      "veracrypt" # encryption of removable drives
     ];
 
   # man pages + python ig?
