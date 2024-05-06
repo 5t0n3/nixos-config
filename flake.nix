@@ -38,12 +38,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # deployment
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     # my stuff
     pg-13 = {
       url = "github:5t0n3/pg-13";
@@ -62,25 +56,17 @@
     hyprland,
     hyprpaper,
     agenix,
-    deploy-rs,
     pg-13,
   } @ inputs: let
     hostSystem = "x86_64-linux";
-    mkSystem = import ./modules/flake/mkSystem.nix inputs;
+    mkSystem = import ./modules/flake/mk-system.nix inputs;
     hostPkgs = nixpkgs-unstable.legacyPackages.${hostSystem};
-    # TODO: add altaria
-    deployNodes = ["simulacrum" "nacli"];
-    deployScripts = import ./modules/flake/deploy-scripts.nix hostPkgs deployNodes;
-    mkNode = host: hostConfig: {
-      hostname = "${host}.localdomain";
-      fastConnection = true;
-
-      profiles.system = {
-        sshUser = "root";
-        # TODO: unhack system attr
-        path = deploy-rs.lib.${hostSystem}.activate.nixos hostConfig;
-      };
+    deployNodes = {
+      simulacrum = "simulacrum.localdomain";
+      nacli = "nacli.localdomain";
+      altaria = "10.0.0.10";
     };
+    deployScripts = import ./modules/flake/deploy-scripts.nix hostPkgs deployNodes;
   in {
     nixosConfigurations = {
       cryogonal = mkSystem {
@@ -193,26 +179,15 @@
       };
     };
 
-    # TODO: make less hacky
-    deploy.nodes = let
-      isDeployed = name: _: builtins.elem name ["simulacrum" "klefki"];
-      configs = nixpkgs.lib.filterAttrs isDeployed self.nixosConfigurations;
-    in
-      builtins.mapAttrs mkNode configs;
-
     devShells.${hostSystem}.default = hostPkgs.mkShell {
       NIX_SSHOPTS = "-t";
       packages =
         [
           agenix.packages.${hostSystem}.agenix
           hostPkgs.alejandra
-          deploy-rs.packages.${hostSystem}.deploy-rs
         ]
         ++ deployScripts;
     };
-
-    # as advised in the deploy-rs readme
-    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
     formatter.${hostSystem} = hostPkgs.alejandra;
   };

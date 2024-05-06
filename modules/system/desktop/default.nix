@@ -17,7 +17,7 @@
   fonts.enableDefaultPackages = true;
   fonts.packages = [
     (pkgs.nerdfonts.override {
-      fonts = ["JetBrainsMono" "MPlus" "Overpass" "Ubuntu" "IntelOneMono"];
+      fonts = ["JetBrainsMono" "MPlus" "Ubuntu"];
     })
   ];
 }
