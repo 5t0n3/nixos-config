@@ -1,6 +1,7 @@
 pkgs: deployNodes: let
   inherit (pkgs.lib) concatStringsSep mapAttrsToList;
-  deployList = concatStringsSep " "
+  deployList =
+    concatStringsSep " "
     (mapAttrsToList (name: host: "[${name}]=${host}") deployNodes);
   deploy-sh = pkgs.writeShellApplication {
     name = "deploy-sh";

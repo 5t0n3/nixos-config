@@ -16,7 +16,6 @@ inputs: let
         [
           hm-input.nixosModules.default
           inputs.agenix.nixosModules.age
-          inputs.hyprland.nixosModules.default
           inputs.nix-index-db.nixosModules.nix-index
 
           # flake plumbing (config rev, nix path)

@@ -8,10 +8,6 @@
   cfg = config.stone.wm.hyprland;
   hyprpaper = inputs.hyprpaper.packages.${pkgs.system}.hyprpaper;
 in {
-  imports = [
-    inputs.hyprland.homeManagerModules.default
-  ];
-
   options = {
     stone.wm.hyprland = {
       enable = lib.mkEnableOption "Hyprland & a slew of other basic graphical programs";
