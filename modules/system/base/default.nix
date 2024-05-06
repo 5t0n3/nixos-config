@@ -25,6 +25,7 @@ in {
       "helix"
       "du-dust"
       "eza"
+      "lsd"
       "ripgrep"
       "bottom"
       "bat"
