@@ -100,6 +100,9 @@ in {
         # screenshots
         "grim"
         "slurp"
+
+        # trying it out
+        "wezterm"
       ]
       pkgs;
 

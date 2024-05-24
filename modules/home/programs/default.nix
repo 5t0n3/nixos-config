@@ -76,8 +76,9 @@ in {
       home.packages =
         lib.attrVals [
           "typst"
+          "typst-lsp"
           "libreoffice"
-          # "logseq"
+          "logseq"
           "reveal-md"
         ]
         pkgs;
