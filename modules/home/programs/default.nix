@@ -80,6 +80,7 @@ in {
           "libreoffice"
           "logseq"
           "reveal-md"
+          "pympress"
         ]
         pkgs;
 
