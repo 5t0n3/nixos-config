@@ -8,7 +8,7 @@
   # intel graphics stuffs
   boot.initrd.kernelModules = ["i915"];
   environment.variables.VDPAU_DRIVER = "va_gl";
-  hardware.opengl.extraPackages = with pkgs; [
+  hardware.graphics.extraPackages = with pkgs; [
     intel-vaapi-driver
     libvdpau-va-gl
     intel-media-driver

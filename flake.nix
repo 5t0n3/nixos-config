@@ -102,7 +102,7 @@
 
           stone.programs.all = true;
 
-          home.stateVersion = "ggggg";
+          home.stateVersion = "23.11";
         };
       };
 

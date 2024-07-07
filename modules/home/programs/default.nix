@@ -78,7 +78,7 @@ in {
           "typst"
           "typst-lsp"
           "libreoffice"
-          "logseq"
+          # "logseq"
           "reveal-md"
           "pympress"
         ]
