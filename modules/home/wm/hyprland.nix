@@ -169,14 +169,14 @@ in {
       end
     '';
 
-    # hyprpaper for wallpaper :)
+    # hyprpaper for wallpaper :) (+ swaylock effects for locking)
     home.packages = [hyprpaper pkgs.swaylock-effects];
 
     # swayidle config
     # TODO: placement
     services.swayidle = let
       swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
-      hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
+      # hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
       systemctl = "${pkgs.systemd}/bin/systemctl";
     in {
       enable = true;
@@ -187,12 +187,13 @@ in {
           timeout = 180;
           command = "${swaylock} -fF -c 2e3440";
         }
-        {
-          # turn screen(s) off after 10 minutes
-          timeout = 600;
-          command = "${hyprctl} dispatch dpms off";
-          resumeCommand = "${hyprctl} dispatch dpms on";
-        }
+        # TODO: figure out why this permanently turns off laptop monitor until reboot
+        # {
+        #   # turn screen(s) off after 10 minutes
+        #   timeout = 600;
+        #   command = "${hyprctl} dispatch dpms off";
+        #   resumeCommand = "${hyprctl} dispatch dpms on";
+        # }
         {
           # turn off after 30 minutes
           timeout = 1800;

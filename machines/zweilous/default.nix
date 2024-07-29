@@ -50,5 +50,16 @@
   # can't get rid of docker yet :(
   virtualisation.docker.enable = true;
 
+  # testing out systemd idle stuff?
+  services.logind = {
+    powerKey = "suspend"; # defaults to `poweroff`
+    # suspend after 10 minutes (since laptop monitor never recovers from hyprland dpms)
+    # idk if this actually works but hopefully swayidle does something here
+    extraConfig = ''
+      IdleAction=suspend
+      IdleActionSec=600
+    '';
+  };
+
   system.stateVersion = "23.11";
 }
