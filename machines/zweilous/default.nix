@@ -19,12 +19,6 @@
   # group moment
   users.users.stone.extraGroups = ["libvirtd" "dialout" "docker"];
 
-  # gpg time?
-  programs.gnupg.agent = {
-    enable = true;
-    pinentryPackage = pkgs.pinentry-gnome3;
-  };
-
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
       "veracrypt" # encryption of removable drives
