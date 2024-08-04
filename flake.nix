@@ -97,7 +97,7 @@
             extraConfig = {
               commit.gpgSign = true;
               gpg.format = "ssh";
-              user.signingKey = "key::sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPumr6HY35KGnXcL7rM1+3h4GN5Yqv7d0rOBGdcpclh/AAAABHNzaDo=";
+              user.signingKey = "~/.ssh/id_ed25519";
             };
           };
 
