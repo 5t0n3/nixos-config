@@ -70,7 +70,6 @@ in {
     })
     (mkIf cfg.chat {
       home.packages = [pkgs.vesktop];
-      programs.nheko.enable = true;
     })
     (mkIf cfg.prod {
       home.packages =
