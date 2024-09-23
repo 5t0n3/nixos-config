@@ -21,7 +21,13 @@
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
-      "veracrypt" # encryption of removable drives
+      # encryption of removable drives
+      "veracrypt"
+
+      # steam-related stuff
+      "steam"
+      "steam-original"
+      "steam-run"
     ];
 
   # man pages + python ig?
@@ -43,6 +49,9 @@
 
   # can't get rid of docker yet :(
   virtualisation.docker.enable = true;
+
+  # steam ig
+  programs.steam.enable = true;
 
   # testing out systemd idle stuff?
   services.logind = {
