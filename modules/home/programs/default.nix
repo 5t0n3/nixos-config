@@ -65,11 +65,9 @@ in {
           pinentry = pkgs.pinentry-gnome3;
         };
       };
-
-      # TODO: bring GPG into here?
     })
     (mkIf cfg.chat {
-      home.packages = [pkgs.vesktop];
+      home.packages = [pkgs.dissent];
     })
     (mkIf cfg.prod {
       home.packages =
