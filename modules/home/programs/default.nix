@@ -57,12 +57,12 @@ in {
       nix.settings.keep-outputs = true;
     })
     (mkIf cfg.sec {
+      home.packages = [pkgs.pinentry-gnome3];
       programs.rbw = {
         enable = true;
         settings = {
           email = "zane.othman@gmail.com";
           base_url = "https://vault.othman.io";
-          pinentry = pkgs.pinentry-gnome3;
         };
       };
     })
