@@ -63,7 +63,7 @@ in {
         settings = {
           email = "zane.othman@gmail.com";
           base_url = "https://vault.othman.io";
-          pinentry = "pinentry-gnome3";
+          pinentry = pkgs.pinentry-gnome3;
         };
       };
     })
