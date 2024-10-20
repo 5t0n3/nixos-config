@@ -35,7 +35,30 @@
   documentation.dev.enable = true;
 
   # we do a little virtualization
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      # don't really care about non-x86 architectures
+      package = pkgs.qemu_kvm;
+
+      # emulated tpms wowow
+      swtpm.enable = true;
+
+      ovmf = {
+        enable = true;
+        packages = let
+          binbowsOVMF = pkgs.OVMF.override {
+            # I love microsoft
+            msVarsTemplate = true;
+            secureBoot = true;
+            tpmSupport = true;
+          };
+        in [
+          binbowsOVMF.fd
+        ];
+      };
+    };
+  };
   programs.virt-manager.enable = true;
 
   virtualisation.podman.enable = true;
