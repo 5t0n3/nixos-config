@@ -90,7 +90,7 @@ in {
 
     home.packages =
       lib.attrVals [
-        "oculante" # image viewer
+        "imv" # image viewer
         "dolphin" # file browser
         "pavucontrol" # volume control
         "wl-clipboard" # clipboard management
