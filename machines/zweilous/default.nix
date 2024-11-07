@@ -26,6 +26,7 @@
 
       # steam-related stuff
       "steam"
+      "steam-unwrapped"
       "steam-original"
       "steam-run"
     ];
