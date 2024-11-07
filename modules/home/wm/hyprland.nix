@@ -116,7 +116,6 @@ in {
               "$mainMod SHIFT, Return, exec, kitty"
               "$mainMod, C, killactive,"
               "$mainMod, M, exit,"
-              "$mainMod, E, exec, dolphin"
               "$mainMod, V, togglefloating,"
               "$mainMod, R, exec, wofi --show drun"
               "$mainMod, U, togglesplit,"

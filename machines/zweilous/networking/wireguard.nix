@@ -9,7 +9,7 @@
         {
           publicKey = "RHgmEgSpcSA1daZKGeY48UD66c5zESTrvEAe8k9ahxQ=";
           allowedIPs = ["0.0.0.0/0"];
-          endpoint = "50.39.160.194:51821";
+          endpoint = "50.39.168.190:51821";
           persistentKeepalive = 25;
         }
       ];

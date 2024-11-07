@@ -91,7 +91,6 @@ in {
     home.packages =
       lib.attrVals [
         "imv" # image viewer
-        "dolphin" # file browser
         "pavucontrol" # volume control
         "wl-clipboard" # clipboard management
         "xdg-utils" # mostly for xdg-open

@@ -31,6 +31,7 @@ in {
       "bat"
       "file"
       "hexyl"
+      "bind"
     ]
     pkgs;
 
