@@ -13,10 +13,6 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
     nix-index-db = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -48,7 +44,6 @@
     home-manager,
     home-manager-unstable,
     nix-index-db,
-    nixos-wsl,
     hyprpaper,
     agenix,
     pg-13,
@@ -112,14 +107,6 @@
 
       simulacrum = mkSystem {
         extraModules = [pg-13.nixosModules.default ./machines/simulacrum];
-        stoneConfig = {
-          home.stateVersion = "22.05";
-        };
-      };
-
-      spiritomb = mkSystem {
-        pkgs-input = inputs.nixpkgs-unstable;
-        extraModules = [nixos-wsl.nixosModules.wsl ./machines/spiritomb.nix];
         stoneConfig = {
           home.stateVersion = "22.05";
         };
