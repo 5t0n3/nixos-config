@@ -51,11 +51,13 @@
     hostSystem = "x86_64-linux";
     mkSystem = import ./modules/flake/mk-system.nix inputs;
     hostPkgs = nixpkgs-unstable.legacyPackages.${hostSystem};
-    deployNodes = {
-      simulacrum = "simulacrum.localdomain";
-      nacli = "nacli.localdomain";
-      altaria = "10.0.0.10";
-    };
+    # deployNodes = {
+    #   simulacrum = "simulacrum.localdomain";
+    #   nacli = "nacli.localdomain";
+    #   altaria = "10.0.0.10";
+    # };
+    # no other servers for now through series of unfortunate events
+    deployNodes = {};
     deployScripts = import ./modules/flake/deploy-scripts.nix hostPkgs deployNodes;
   in {
     nixosConfigurations = {
@@ -101,27 +103,6 @@
 
           stone.programs.all = true;
 
-          home.stateVersion = "23.11";
-        };
-      };
-
-      simulacrum = mkSystem {
-        extraModules = [pg-13.nixosModules.default ./machines/simulacrum];
-        stoneConfig = {
-          home.stateVersion = "22.05";
-        };
-      };
-
-      nacli = mkSystem {
-        extraModules = [./machines/nacli];
-        stoneConfig = {
-          home.stateVersion = "23.05";
-        };
-      };
-
-      altaria = mkSystem {
-        extraModules = [./machines/altaria];
-        stoneConfig = {
           home.stateVersion = "23.11";
         };
       };

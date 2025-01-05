@@ -15,9 +15,7 @@
 
   # install some fonts (I don't use a lot of these but eh)
   fonts.enableDefaultPackages = true;
-  fonts.packages = [
-    (pkgs.nerdfonts.override {
-      fonts = ["JetBrainsMono" "MPlus" "Ubuntu"];
-    })
-  ];
+
+  # FIXME: this breaks on non-unstable probably (?) - maybe move to individual systems?
+  fonts.packages = lib.attrVals ["jetbrains-mono" "mplus" "ubuntu"] pkgs.nerd-fonts;
 }
