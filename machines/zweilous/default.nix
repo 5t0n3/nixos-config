@@ -3,16 +3,14 @@
   lib,
   ...
 }: {
-  imports = [./hardware-configuration.nix ./laptop.nix ./networking];
+  imports = [./hardware-configuration.nix ./laptop.nix ./networking.nix];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # LUKS time?
+  # LUKS time
   boot.initrd.systemd.enable = true;
-
-  boot.supportedFilesystems = ["ntfs"];
 
   networking.hostName = "zweilous";
 
@@ -31,8 +29,14 @@
       "steam-run"
     ];
 
-  # man pages + python ig?
-  environment.systemPackages = [pkgs.man-pages pkgs.man-pages-posix pkgs.python3 pkgs.veracrypt pkgs.docker-compose];
+  # packages waow
+  environment.systemPackages = lib.attrVals [
+    "man-pages"
+    "man-pages-posix"
+    "python3"
+    "veracrypt"
+    "docker-compose"
+  ] pkgs;
   documentation.dev.enable = true;
 
   # we do a little virtualization
@@ -88,8 +92,6 @@
     # '';
   };
 
-  # tailscaleeee
-  services.tailscale.enable = true;
 
   system.stateVersion = "23.11";
 }
