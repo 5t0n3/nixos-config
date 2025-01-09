@@ -18,5 +18,5 @@
   ];
 
   # wireguard?
-  networking.firewall.allowedUDPPorts = [58666 58667];
+  networking.firewall.checkReversePath = "loose";
 }

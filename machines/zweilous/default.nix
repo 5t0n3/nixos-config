@@ -81,17 +81,10 @@
   # steam ig
   programs.steam.enable = true;
 
-  # testing out systemd idle stuff?
-  services.logind = {
-    powerKey = "suspend"; # defaults to `poweroff`
-    # suspend after 10 minutes (since laptop monitor never recovers from hyprland dpms)
-    # idk if this actually works but hopefully swayidle does something here
-    # extraConfig = ''
-    #   IdleAction=suspend
-    #   IdleActionSec=600
-    # '';
-  };
+  services.logind.powerKey = "suspend"; # defaults to `poweroff`
 
+  # TODO: not have ssh as part of base? don't want ssh exposed on this machin
+  services.openssh.enable = lib.mkForce false;
 
   system.stateVersion = "23.11";
 }
