@@ -1,4 +1,9 @@
 {
+  # there's no way it's dns
+  # it can't be dns
+  # it's always dns
+  services.resolved.enable = true;
+
   # networkmanager too
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.powersave = true;
