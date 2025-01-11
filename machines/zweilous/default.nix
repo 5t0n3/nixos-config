@@ -36,6 +36,7 @@
     "python3"
     "veracrypt"
     "docker-compose"
+    "signal-desktop"
   ] pkgs;
   documentation.dev.enable = true;
 
