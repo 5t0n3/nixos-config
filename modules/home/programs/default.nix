@@ -57,7 +57,7 @@ in {
       nix.settings.keep-outputs = true;
     })
     (mkIf cfg.sec {
-      home.packages = [pkgs.pinentry-gnome3];
+      home.packages = [pkgs.pinentry-gnome3 pkgs.bitwarden-desktop];
       programs.rbw = {
         enable = true;
         settings = {
