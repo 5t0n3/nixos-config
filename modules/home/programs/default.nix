@@ -68,7 +68,7 @@ in {
       };
     })
     (mkIf cfg.chat {
-      home.packages = [pkgs.dissent pkgs.thunderbird];
+      home.packages = [pkgs.thunderbird];
     })
     (mkIf cfg.prod {
       home.packages =
