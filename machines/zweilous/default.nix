@@ -9,6 +9,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # binbows
+  boot.supportedFilesystems = ["ntfs"];
+
   # LUKS time
   boot.initrd.systemd.enable = true;
 
