@@ -84,6 +84,8 @@
 
   services.logind.powerKey = "suspend"; # defaults to `poweroff`
 
+  services.fwupd.enable = true;
+
   # TODO: not have ssh as part of base? don't want ssh exposed on this machin
   services.openssh.enable = lib.mkForce false;
 
