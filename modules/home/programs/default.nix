@@ -74,7 +74,7 @@ in {
       home.packages =
         lib.attrVals [
           "typst"
-          "typst-lsp"
+          "tinymist"
           "libreoffice"
           # "logseq"
           "reveal-md"
