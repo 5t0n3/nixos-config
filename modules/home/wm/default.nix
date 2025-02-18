@@ -86,7 +86,7 @@ in {
     };
 
     programs.firefox.enable = true;
-    programs.librewolf.enable = true;
+    # programs.librewolf.enable = true;
 
     home.packages =
       lib.attrVals [
@@ -95,6 +95,7 @@ in {
         "wl-clipboard" # clipboard management
         "xdg-utils" # mostly for xdg-open
         "brightnessctl" # for brightness
+        "librewolf" # browser wow
 
         # screenshots
         "grim"
