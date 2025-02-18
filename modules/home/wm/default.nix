@@ -85,8 +85,8 @@ in {
       };
     };
 
-    # TODO: profile config with arkenfox user.js?
     programs.firefox.enable = true;
+    programs.librewolf.enable = true;
 
     home.packages =
       lib.attrVals [
