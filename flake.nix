@@ -68,9 +68,9 @@
           stone.wm.enable = true;
           stone.wm.hyprland.extraSettings = {
             monitor = [
-              "eDP-1,2560x1600,2560x1200,1" # laptop screen
-              "DP-1,2560x1440,0x0,1" # home - external monitor
-              ",preferred,5120x1200,1" # position all other monitors to right of laptop screen
+              "eDP-1,preferred,auto,1" # laptop screen
+              "DP-1,preferred,auto-left,1" # home - external monitor
+              ",preferred,auto,1" # position all other monitors to right of laptop screen
             ];
 
             # workspace bindings

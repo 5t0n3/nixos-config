@@ -33,14 +33,16 @@
     ];
 
   # packages waow
-  environment.systemPackages = lib.attrVals [
-    "man-pages"
-    "man-pages-posix"
-    "python3"
-    "veracrypt"
-    "docker-compose"
-    "signal-desktop"
-  ] pkgs;
+  environment.systemPackages =
+    lib.attrVals [
+      "man-pages"
+      "man-pages-posix"
+      "python3"
+      "veracrypt"
+      "docker-compose"
+      "signal-desktop"
+    ]
+    pkgs;
   documentation.dev.enable = true;
 
   # we do a little virtualization

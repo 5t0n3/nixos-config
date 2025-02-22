@@ -54,18 +54,9 @@ in {
       # (nix-)direnv stuff
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true;
-      nix.settings.keep-outputs = true;
     })
     (mkIf cfg.sec {
       home.packages = [pkgs.pinentry-gnome3 pkgs.bitwarden-desktop];
-      programs.rbw = {
-        enable = true;
-        settings = {
-          email = "zane.othman@gmail.com";
-          base_url = "https://vault.othman.io";
-          pinentry = pkgs.pinentry-gnome3;
-        };
-      };
     })
     (mkIf cfg.chat {
       home.packages = [pkgs.thunderbird];
@@ -83,12 +74,10 @@ in {
         pkgs;
 
       programs.zathura.enable = true;
-      programs.pandoc.enable = true;
       services.nextcloud-client.enable = true;
       services.nextcloud-client.startInBackground = true;
     })
     (mkIf cfg.ctf {
-      # TODO: bring in blizzard stuff
       home.packages =
         lib.attrVals [
           "ghidra"

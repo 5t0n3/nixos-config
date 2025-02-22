@@ -37,10 +37,17 @@ in {
 
   config = lib.mkIf cfg.enable {
     # TODO: bring waybar config into here/wm section (or separate out)
+    # TODO: eww?
 
     wayland.windowManager.hyprland = {
       enable = true;
       systemd.enable = true;
+      # settings = let
+      # TODO: better swaylock stuffs
+      # swaylock-effects = pkgs.swaylock-effects;
+      # lock-screenshot = "${swaylock-effects} --clock -S --effect-pixelate 10 --effect-vignette 0.5:0.5 --indicator --indicator-radius 200 --indicator-thickness 20 --inside-color 2e3440 --inside-wrong-color 3cc48b --ring-wrong-color=32996e --text-ver hmmm... --text-wrong cringe";
+      # lock-bsod = "${swaylock-effects} -i ~/Pictures/bsod.png";
+      # in
       settings =
         lib.recursiveUpdate {
           exec-once = [
@@ -51,7 +58,7 @@ in {
             kb_layout = "us";
             kb_options = "caps:swapescape";
             numlock_by_default = true;
-            follow_mouse = 2; # TODO: test
+            follow_mouse = 2;
             touchpad.natural_scroll = true;
           };
 
@@ -112,7 +119,7 @@ in {
               "$mainMod SHIFT, S, exec, grim -g \"$(slurp)\" - | wl-copy -t image/png"
               "$mainMod CONTROL_L, S, exec, grim -g \"$(slurp)\" \"/tmp/$(date +\"%Y-%m-%d-%H:%M:%S\").png\""
 
-              # launching programs
+              # launching/yeeting stuff
               "$mainMod SHIFT, Return, exec, kitty"
               "$mainMod, C, killactive,"
               "$mainMod, M, exit,"
@@ -124,7 +131,7 @@ in {
               ",XF86MonBrightnessUp, exec, brightnessctl set +10%"
               ",XF86MonBrightnessDown, exec, brightnessctl set 10%-"
 
-              # Move focus with mainMod + HJKL (vim ftw)
+              # Move focus with mainMod + HJKL
               "$mainMod, H, movefocus, l"
               "$mainMod, L, movefocus, r"
               "$mainMod, K, movefocus, u"
@@ -140,9 +147,13 @@ in {
               "$mainMod, mouse_down, workspace, e+1"
               "$mainMod, mouse_up, workspace, e-1"
 
-              # trying out a special workspace?
+              # trying out a special workspace? (ngl keep forgetting I have this)
               "$mainMod SHIFT, X, movetoworkspace, special"
               "$mainMod, S, togglespecialworkspace,"
+
+              # workspace 10 -> key 0 (doesn't quite fit in below chunk)
+              "$mainMod, 0, workspace, 10"
+              "$mainMod SHIFT, 0, movetoworkspace, 10"
             ]
             ++ (lib.concatMap (n: let
               nStr = toString n;
@@ -175,7 +186,6 @@ in {
     # TODO: placement
     services.swayidle = let
       swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
-      # hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
       systemctl = "${pkgs.systemd}/bin/systemctl";
     in {
       enable = true;
@@ -186,13 +196,6 @@ in {
           timeout = 180;
           command = "${swaylock} -fF -c 2e3440";
         }
-        # TODO: figure out why this permanently turns off laptop monitor until reboot
-        # {
-        #   # turn screen(s) off after 10 minutes
-        #   timeout = 600;
-        #   command = "${hyprctl} dispatch dpms off";
-        #   resumeCommand = "${hyprctl} dispatch dpms on";
-        # }
         {
           # turn off after 30 minutes
           timeout = 1800;
