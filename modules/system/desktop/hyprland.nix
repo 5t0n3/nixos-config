@@ -18,6 +18,9 @@
   # swaylock needs this to work
   security.pam.services.swaylock = {};
 
+  # avoid xwayland whenever possible (looking at you electron)
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
   # add hyprland cachix server (not that I think I've ever been able to use it)
   nix.settings = {
     substituters = [
