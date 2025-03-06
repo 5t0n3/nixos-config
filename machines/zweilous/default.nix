@@ -94,5 +94,11 @@
   # TODO: not have ssh as part of base? don't want ssh exposed on this machin
   services.openssh.enable = lib.mkForce false;
 
+  # bluetooth waow
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+
+  services.blueman.enable = true;
+
   system.stateVersion = "23.11";
 }
