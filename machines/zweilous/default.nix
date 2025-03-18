@@ -100,5 +100,8 @@
 
   services.blueman.enable = true;
 
+  # also smartcards (???)
+  services.pcscd.enable = true;
+
   system.stateVersion = "23.11";
 }
