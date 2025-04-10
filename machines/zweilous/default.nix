@@ -41,6 +41,7 @@
       "veracrypt"
       "docker-compose"
       "signal-desktop"
+      "whois"
     ]
     pkgs;
   documentation.dev.enable = true;
