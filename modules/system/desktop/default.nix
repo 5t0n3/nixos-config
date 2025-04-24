@@ -17,5 +17,6 @@
   fonts.enableDefaultPackages = true;
 
   # FIXME: this breaks on non-unstable probably (?) - maybe move to individual systems?
-  fonts.packages = lib.attrVals ["jetbrains-mono" "mplus" "ubuntu"] pkgs.nerd-fonts;
+  fonts.packages = [pkgs.noto-fonts-cjk-sans] ++ lib.attrVals ["jetbrains-mono" "mplus" "ubuntu"] pkgs.nerd-fonts;
+  fonts.fontconfig.useEmbeddedBitmaps = true; # ???
 }

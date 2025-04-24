@@ -70,6 +70,7 @@ in {
           # "logseq"
           "reveal-md"
           "pympress"
+          "anki"
         ]
         pkgs;
 
