@@ -67,10 +67,10 @@ in {
           "typst"
           "tinymist"
           "libreoffice"
-          # "logseq"
           "reveal-md"
-          "pympress"
           "anki"
+          # "pympress"
+          # "logseq"
         ]
         pkgs;
 
