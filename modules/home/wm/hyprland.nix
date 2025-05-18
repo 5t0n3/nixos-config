@@ -120,7 +120,7 @@ in {
               "$mainMod CONTROL_L, S, exec, grim -g \"$(slurp)\" \"/tmp/$(date +\"%Y-%m-%d-%H:%M:%S\").png\""
 
               # launching/yeeting stuff
-              "$mainMod SHIFT, Return, exec, kitty"
+              "$mainMod SHIFT, Return, exec, wezterm"
               "$mainMod, C, killactive,"
               "$mainMod, M, exit,"
               "$mainMod, V, togglefloating,"
