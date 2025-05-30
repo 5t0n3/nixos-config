@@ -30,6 +30,10 @@
       "steam-unwrapped"
       "steam-original"
       "steam-run"
+
+      # michaelsoft fonts
+      "vista-fonts"
+      "corefonts"
     ];
 
   # packages waow
@@ -45,6 +49,9 @@
     ]
     pkgs;
   documentation.dev.enable = true;
+
+  # microsoft fonts :(
+  fonts.packages = lib.attrVals ["vista-fonts" "corefonts"] pkgs;
 
   # we do a little virtualization
   virtualisation.libvirtd = {
