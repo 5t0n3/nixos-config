@@ -52,6 +52,7 @@
 
   # microsoft fonts :(
   fonts.packages = lib.attrVals ["vista-fonts" "corefonts"] pkgs;
+  fonts.fontconfig.subpixel.rgba = "rgb";
 
   # we do a little virtualization
   virtualisation.libvirtd = {
