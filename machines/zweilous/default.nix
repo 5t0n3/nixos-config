@@ -34,6 +34,9 @@
       # michaelsoft fonts
       "vista-fonts"
       "corefonts"
+
+      # zoom :(
+      "zoom-us"
     ];
 
   # packages waow
@@ -46,6 +49,7 @@
       "docker-compose"
       "signal-desktop"
       "whois"
+      "zoom-us"
     ]
     pkgs;
   documentation.dev.enable = true;
