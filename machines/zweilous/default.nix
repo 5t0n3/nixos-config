@@ -36,7 +36,7 @@
       "corefonts"
 
       # zoom :(
-      "zoom-us"
+      "zoom"
     ];
 
   # packages waow
