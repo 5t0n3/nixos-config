@@ -49,6 +49,7 @@
       "docker-compose"
       "signal-desktop"
       "whois"
+      "zotero"
       "zoom-us"
     ]
     pkgs;
