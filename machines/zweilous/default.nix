@@ -31,10 +31,6 @@
       "steam-original"
       "steam-run"
 
-      # michaelsoft fonts
-      "vista-fonts"
-      "corefonts"
-
       # zoom :(
       "zoom"
     ];
@@ -54,10 +50,6 @@
     ]
     pkgs;
   documentation.dev.enable = true;
-
-  # microsoft fonts :(
-  fonts.packages = lib.attrVals ["vista-fonts" "corefonts"] pkgs;
-  fonts.fontconfig.subpixel.rgba = "rgb";
 
   # we do a little virtualization
   virtualisation.libvirtd = {
