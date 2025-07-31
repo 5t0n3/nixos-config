@@ -1,4 +1,6 @@
 {
+  networking.hostName = "balls";
+
   # there's no way it's dns
   # it can't be dns
   # it's always dns
