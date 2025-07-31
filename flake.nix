@@ -21,6 +21,10 @@
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    lix = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.3-1.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     # wayland :)
     hyprpaper = {
@@ -49,6 +53,7 @@
     home-manager-unstable,
     nix-index-db,
     lanzaboote,
+    lix,
     hyprpaper,
     agenix,
     pg-13,
@@ -115,6 +120,7 @@
       balls = mkSystem {
         pkgs-input = inputs.nixpkgs-unstable;
         extraModules = [
+          lix.nixosModules.default
           lanzaboote.nixosModules.lanzaboote
           ./modules/system/desktop
           ./machines/balls
