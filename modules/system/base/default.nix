@@ -24,7 +24,6 @@ in {
       "vis"
       "helix"
       "du-dust"
-      "eza"
       "lsd"
       "ripgrep"
       "bottom"
@@ -32,6 +31,7 @@ in {
       "file"
       "hexyl"
       "bind"
+      "inetutils"
     ]
     pkgs;
 
@@ -48,6 +48,7 @@ in {
   };
 
   # system-level vis configuration
+  # TODO: do these even like work? it's been years
   environment.etc = {
     "vis/visrc.lua".source = ./vis/visrc.lua;
     "vis/lexers/nix.lua".source = ./vis/nix.lua;
@@ -71,6 +72,7 @@ in {
   time.timeZone = "America/Los_Angeles";
   boot.tmp.cleanOnBoot = true;
 
+  # TODO: remove?
   security.doas = {
     enable = true;
     extraRules = [

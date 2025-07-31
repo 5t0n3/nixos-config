@@ -17,6 +17,10 @@
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     # wayland :)
     hyprpaper = {
@@ -44,6 +48,7 @@
     home-manager,
     home-manager-unstable,
     nix-index-db,
+    lanzaboote,
     hyprpaper,
     agenix,
     pg-13,
@@ -104,6 +109,36 @@
           stone.programs.all = true;
 
           home.stateVersion = "23.11";
+        };
+      };
+
+      balls = mkSystem {
+        pkgs-input = inputs.nixpkgs-unstable;
+        extraModules = [
+          lanzaboote.nixosModules.lanzaboote
+          ./modules/system/desktop
+          ./machines/balls
+        ];
+        stoneConfig = {
+          stone.wm.enable = true;
+          stone.wm.hyprland.extraSettings = {
+            monitor = [
+              ",preferred,auto,1" # position all other monitors to right of laptop screen
+            ];
+
+            exec-once = [
+              "waybar &"
+              "hyprpaper &"
+            ];
+          };
+
+          stone.programs = {
+            dev = true;
+          };
+
+          programs.zathura.enable = true;
+
+          home.stateVersion = "25.11";
         };
       };
     };
