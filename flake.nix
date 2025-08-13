@@ -73,7 +73,11 @@
     nixosConfigurations = {
       zweilous = mkSystem {
         pkgs-input = inputs.nixpkgs-unstable;
-        extraModules = [./modules/system/desktop ./machines/zweilous];
+        extraModules = [
+          lix.nixosModules.default
+          ./modules/system/desktop
+          ./machines/zweilous
+        ];
         stoneConfig = {
           stone.wm.enable = true;
           stone.wm.hyprland.extraSettings = {
