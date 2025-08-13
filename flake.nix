@@ -21,9 +21,15 @@
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
     lix = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.3-1.tar.gz";
+      url = "git+https://git.lix.systems/lix-project/lix?ref=release-2.93";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    lix-module = {
+      url = "git+https://git.lix.systems/lix-project/nixos-module?ref=release-2.93";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.lix.follows = "lix";
     };
 
     # wayland :)
@@ -54,6 +60,7 @@
     nix-index-db,
     lanzaboote,
     lix,
+    lix-module,
     hyprpaper,
     agenix,
     pg-13,
@@ -74,7 +81,7 @@
       zweilous = mkSystem {
         pkgs-input = inputs.nixpkgs-unstable;
         extraModules = [
-          lix.nixosModules.default
+          lix-module.nixosModules.default
           ./modules/system/desktop
           ./machines/zweilous
         ];
@@ -124,7 +131,7 @@
       balls = mkSystem {
         pkgs-input = inputs.nixpkgs-unstable;
         extraModules = [
-          lix.nixosModules.default
+          lix-module.nixosModules.default
           lanzaboote.nixosModules.lanzaboote
           ./modules/system/desktop
           ./machines/balls
