@@ -93,7 +93,7 @@
   # steam ig
   programs.steam.enable = true;
 
-  services.logind.powerKey = "suspend"; # defaults to `poweroff`
+  services.logind.settings.Login.HandlePowerKey = "suspend"; # defaults to `poweroff`
 
   services.fwupd.enable = true;
 
