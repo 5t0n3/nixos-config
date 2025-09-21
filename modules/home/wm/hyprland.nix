@@ -98,7 +98,10 @@ in {
 
           dwindle.smart_split = true;
 
-          gestures.workspace_swipe = true;
+          # breaking change in hyprland 0.51.0
+          gesture = [
+            "3, horizontal, workspace"
+          ];
 
           # TODO: find a better place for this
           windowrulev2 = [
