@@ -109,5 +109,8 @@
   # also smartcards (???)
   services.pcscd.enable = true;
 
+  # pain and suffering and kernel panics
+  boot.crashDump.enable = true;
+
   system.stateVersion = "23.11";
 }
