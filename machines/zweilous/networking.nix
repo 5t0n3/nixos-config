@@ -11,9 +11,6 @@
   # gotta be able to manage it
   users.users.stone.extraGroups = ["networkmanager"];
 
-  # tailscaleeee
-  services.tailscale.enable = true;
-
   # exposing to local network or smth
   networking.firewall.allowedTCPPortRanges = [
     {
