@@ -60,20 +60,6 @@
 
       # emulated tpms wowow
       swtpm.enable = true;
-
-      ovmf = {
-        enable = true;
-        packages = let
-          binbowsOVMF = pkgs.OVMF.override {
-            # I love microsoft
-            msVarsTemplate = true;
-            secureBoot = true;
-            tpmSupport = true;
-          };
-        in [
-          binbowsOVMF.fd
-        ];
-      };
     };
   };
   programs.virt-manager.enable = true;
