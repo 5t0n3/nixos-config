@@ -107,19 +107,11 @@
             ];
           };
 
-          programs.git = {
-            userName = "Zane";
-            userEmail = "git@formulaic.cloud";
-
-            # sure let's sign everything, why not :) (this time with SSH)
-            extraConfig = {
-              commit.gpgSign = true;
-              gpg.format = "ssh";
-              user.signingKey = "~/.ssh/id_ed25519";
-            };
+          programs.git.settings.user = {
+            name = "Zane";
+            email = "git@formulaic.cloud";
           };
 
-          # I think git needs this for signing?
           services.ssh-agent.enable = true;
 
           stone.programs.all = true;
