@@ -98,5 +98,8 @@
   # pain and suffering and kernel panics
   boot.crashDump.enable = true;
 
+  # pain and suffering (2)
+  services.taiscale.enable = true;
+
   system.stateVersion = "23.11";
 }
