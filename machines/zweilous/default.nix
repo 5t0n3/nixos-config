@@ -99,7 +99,7 @@
   boot.crashDump.enable = true;
 
   # pain and suffering (2)
-  services.taiscale.enable = true;
+  services.tailscale.enable = true;
 
   system.stateVersion = "23.11";
 }
