@@ -67,6 +67,7 @@ in {
         lib.attrVals [
           "typst"
           "tinymist"
+          "harper"
           "libreoffice"
           "reveal-md"
           "anki"
