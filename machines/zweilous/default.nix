@@ -101,5 +101,7 @@
   # pain and suffering (2)
   services.tailscale.enable = true;
 
+  i18n.defaultLocale = "es_PR.UTF-8";
+
   system.stateVersion = "23.11";
 }
