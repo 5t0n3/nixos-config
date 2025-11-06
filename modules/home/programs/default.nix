@@ -71,6 +71,7 @@ in {
           "libreoffice"
           "reveal-md"
           "anki"
+          "gimp3"
           # "pympress"
           # "logseq"
         ]

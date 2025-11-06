@@ -116,6 +116,8 @@
 
           stone.programs.all = true;
 
+          services.remmina.enable = true;
+
           home.stateVersion = "23.11";
         };
       };
