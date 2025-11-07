@@ -23,7 +23,7 @@ in {
     lib.attrVals [
       "vis"
       "helix"
-      "du-dust"
+      "dust"
       "lsd"
       "ripgrep"
       "bottom"
