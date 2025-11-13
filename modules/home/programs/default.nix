@@ -72,6 +72,7 @@ in {
           "reveal-md"
           "anki"
           "gimp3"
+          "inkscape"
           # "pympress"
           # "logseq"
         ]
