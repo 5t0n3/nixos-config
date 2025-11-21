@@ -11,7 +11,6 @@ inputs: let
       else inputs.home-manager-unstable;
   in
     pkgs-input.lib.nixosSystem {
-      inherit system;
       modules =
         [
           hm-input.nixosModules.default
@@ -20,6 +19,12 @@ inputs: let
 
           # flake plumbing (config rev, nix path)
           (import ./plumbing.nix inputs pkgs-input)
+
+          # TODO: move into plumbing mayb?
+          {
+            # https://discourse.nixos.org/t/how-to-fix-evaluation-warning-system-has-been-renamed-to-replaced-by-stdenv-hostplatform-system/72120/3
+            nixpkgs.hostPlatform = system;
+          }
 
           # base system config
           ../system/base

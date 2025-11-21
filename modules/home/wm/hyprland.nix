@@ -5,8 +5,9 @@
   inputs,
   ...
 }: let
+  system = pkgs.stdenv.hostPlatform.system;
   cfg = config.stone.wm.hyprland;
-  hyprpaper = inputs.hyprpaper.packages.${pkgs.system}.hyprpaper;
+  hyprpaper = inputs.hyprpaper.packages.${system}.hyprpaper;
 in {
   options = {
     stone.wm.hyprland = {
