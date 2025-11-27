@@ -71,16 +71,4 @@ in {
   # other miscellaneous settings
   time.timeZone = "America/Los_Angeles";
   boot.tmp.cleanOnBoot = true;
-
-  # TODO: remove?
-  security.doas = {
-    enable = true;
-    extraRules = [
-      {
-        groups = ["wheel"];
-        noPass = false;
-        keepEnv = true;
-      }
-    ];
-  };
 }
