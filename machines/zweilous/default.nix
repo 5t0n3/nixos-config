@@ -73,9 +73,6 @@
     };
   };
 
-  # can't get rid of docker yet :(
-  virtualisation.docker.enable = true;
-
   # steam ig
   programs.steam.enable = true;
 
@@ -92,16 +89,14 @@
 
   services.blueman.enable = true;
 
-  # also smartcards (???)
-  services.pcscd.enable = true;
-
   # pain and suffering and kernel panics
   boot.crashDump.enable = true;
 
-  # pain and suffering (2)
-  services.tailscale.enable = true;
-
   i18n.defaultLocale = "es_PR.UTF-8";
+
+  security.pki.certificateFiles = [
+    "/etc/internal_root.crt"
+  ];
 
   system.stateVersion = "23.11";
 }
