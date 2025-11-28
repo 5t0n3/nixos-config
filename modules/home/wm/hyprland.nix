@@ -57,7 +57,7 @@ in {
           ];
 
           monitor = [
-            "monitor = , preferred, auto-left, 1"
+            ", preferred, auto-left, 1"
           ];
 
           exec-once = [
