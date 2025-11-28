@@ -88,22 +88,11 @@
         stoneConfig = {
           stone.wm.enable = true;
           stone.wm.hyprland.extraSettings = {
-            monitor = [
-              "eDP-1,preferred,auto,1" # laptop screen
-              "DP-1,preferred,auto-left,1" # home - external monitor
-              ",preferred,auto,1" # position all other monitors to right of laptop screen
-            ];
-
             # workspace bindings
             workspace = [
               "eDP-1, 1"
               "DP-1, 2"
               "DP-1, 3"
-            ];
-
-            exec-once = [
-              "waybar &"
-              "hyprpaper &"
             ];
           };
 
@@ -132,16 +121,6 @@
         ];
         stoneConfig = {
           stone.wm.enable = true;
-          stone.wm.hyprland.extraSettings = {
-            monitor = [
-              ",preferred,auto,1" # position all other monitors to right of laptop screen
-            ];
-
-            exec-once = [
-              "waybar &"
-              "hyprpaper &"
-            ];
-          };
 
           stone.programs = {
             dev = true;

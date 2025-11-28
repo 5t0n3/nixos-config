@@ -51,8 +51,18 @@ in {
       # in
       settings =
         lib.recursiveUpdate {
+          # dynamic monitor setup attempt
+          source = [
+            "~/.config/hypr/conf.d/*"
+          ];
+
+          monitor = [
+            "monitor = , preferred, auto-left, 1"
+          ];
+
           exec-once = [
             "waybar &"
+            "hyprpaper &"
           ];
 
           input = {
@@ -148,13 +158,19 @@ in {
               "$mainMod SHIFT, K, swapwindow, u"
               "$mainMod SHIFT, L, swapwindow, r"
 
-              # scroll between open workspaces
-              "$mainMod, mouse_down, workspace, e+1"
-              "$mainMod, mouse_up, workspace, e-1"
-
-              # trying out a special workspace? (ngl keep forgetting I have this)
+              # special workspace
               "$mainMod SHIFT, X, movetoworkspace, special"
               "$mainMod, S, togglespecialworkspace,"
+
+              # toggle window fullscreen (0 -> cover status bar)
+              "$mainMod SHIFT, F, fullscreen, 0, toggle"
+              "$mainMod, N, cyclenext"
+
+              # grouping
+              "$mainMod, G, togglegroup"
+              "$mainMod SHIFT, I, moveintogroup, u"
+              "$mainMod SHIFT, G, moveoutofgroup"
+              "$mainMod SHIFT, N, changegroupactive, f"
 
               # workspace 10 -> key 0 (doesn't quite fit in below chunk)
               "$mainMod, 0, workspace, 10"
