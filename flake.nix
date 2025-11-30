@@ -133,26 +133,53 @@
       };
     };
 
-    packages.${hostSystem}.installer = let
-      installerSystem = nixpkgs-unstable.lib.nixosSystem {
-        modules = [
-          ({
-            modulesPath,
-            ...
-          }: {
-            imports = [
-              (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
-            ];
+    # TODO: combine/reduce boilerplate
+    packages.${hostSystem} = {
+      cd-installer = let
+        installerSystem = nixpkgs-unstable.lib.nixosSystem {
+          modules = [
+            ({modulesPath, ...}: {
+              imports = [
+                (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
+              ];
 
-            # TODO: parameterize? or not worth
-            nixpkgs.hostPlatform = "x86_64-linux";
-          })
-          ./modules/system/base/users.nix
-          ./modules/system/base/openssh.nix
-        ];
-      };
-    in
-      installerSystem.config.system.build.isoImage;
+              # TODO: parameterize? or not worth
+              nixpkgs.hostPlatform = "x86_64-linux";
+            })
+            ./modules/system/base/users.nix
+            ./modules/system/base/openssh.nix
+          ];
+        };
+      in
+        installerSystem.config.system.build.isoImage;
+
+      pxe-installer = let
+        installerSystem = nixpkgs-unstable.lib.nixosSystem {
+          modules = [
+            ({modulesPath, ...}: {
+              imports = [
+                (modulesPath + "/installer/netboot/netboot-minimal.nix")
+              ];
+
+              # TODO: parameterize? or not worth
+              nixpkgs.hostPlatform = "x86_64-linux";
+            })
+            ./modules/system/base/users.nix
+            ./modules/system/base/openssh.nix
+          ];
+        };
+        build = installerSystem.config.system.build;
+      in
+        # stolen from nixos/release.nix in nixpkgs
+        hostPkgs.symlinkJoin {
+          name = "pxe-installer";
+          paths = [
+            build.netbootRamdisk
+            build.kernel
+            build.netbootIpxeScript
+          ];
+        };
+    };
 
     devShells.${hostSystem}.default = hostPkgs.mkShell {
       NIX_SSHOPTS = "-t";
